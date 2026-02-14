@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greek Menu — Vilseck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+  :root {
+    --blue-dark: #0d1b4a;
+    --blue: #1a3a7a;
+    --blue-light: #2856a8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a0;
+    --white: #f8f6f0;
+    --cream: #f0ece0;
+    --red: #c0392b;
+    --green: #27ae60;
+    --text: #1a1a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--blue-dark);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+
+  .menu-board {
+    background: var(--white);
+    max-width: 900px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  /* Header */
+  .menu-header {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    padding: 2.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .menu-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5L35 15L45 15L37 22L40 32L30 26L20 32L23 22L15 15L25 15Z' fill='none' stroke='rgba(201,168,76,0.08)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+  }
+  .menu-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+  }
+  .menu-header .subtitle {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .menu-header .location {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 0.8rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Decorative divider */
+  .greek-divider {
+    height: 6px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--blue) 0px, var(--blue) 12px,
+      var(--white) 12px, var(--white) 14px,
+      var(--gold) 14px, var(--gold) 26px,
+      var(--white) 26px, var(--white) 28px
+    );
+  }
+
+  .menu-body {
+    padding: 1.5rem 2rem 2rem;
+  }
+
+  /* Category Section */
+  .category {
+    margin-bottom: 2rem;
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--gold);
+  }
+  .cat-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .cat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--blue-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .cat-subtitle {
+    font-size: 0.75rem;
+    color: var(--blue-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* Menu Items */
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+  }
+  .menu-item + .menu-item {
+    border-top: 1px dotted #ddd;
+  }
+
+  .item-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .item-veg {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+  .item-new {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--blue-dark);
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+  .item-dots {
+    flex: 1;
+    border-bottom: 1px dotted #ccc;
+    min-width: 20px;
+    margin-bottom: 4px;
+  }
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--blue-dark);
+    white-space: nowrap;
+  }
+  .item-price-tbd {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--red);
+    white-space: nowrap;
+    font-style: italic;
+  }
+
+  .item-desc {
+    font-size: 0.78rem;
+    color: #777;
+    padding-left: 0;
+    margin-top: -0.2rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  /* Build Your Own special section */
+  .byo-section {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    border: 2px solid var(--gold-light);
+  }
+  .byo-section .cat-header {
+    border-bottom-color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .byo-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  .byo-step {
+    background: white;
+    border-radius: 8px;
+    padding: 0.7rem;
+  }
+  .byo-step-num {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 22px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-right: 0.3rem;
+  }
+  .byo-step-title {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--blue-dark);
+    display: inline;
+  }
+  .byo-step-options {
+    font-size: 0.72rem;
+    color: #666;
+    margin-top: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .byo-prices {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--gold-light);
+  }
+  .byo-price-item {
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .byo-price-item span {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--blue-dark);
+  }
+
+  /* Hot Mezze special styling */
+  .hot-badge {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+    margin-left: 0.3rem;
+  }
+
+  /* Pick 3 banner */
+  .pick3-banner {
+    background: var(--blue);
+    color: white;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .pick3-banner .pick3-price {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+  }
+
+  /* Subsection header */
+  .sub-header {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.8rem;
+    margin-bottom: 0.3rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--gold-light);
+  }
+  .sub-header:first-of-type {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  /* Extras row */
+  .extras-row {
+    background: var(--blue-dark);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .extras-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-right: 0.5rem;
+  }
+  .extra-item {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+  .extra-price {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* Sauces */
+  .sauces-bar {
+    background: var(--cream);
+    padding: 0.8rem 2rem;
+    text-align: center;
+  }
+  .sauces-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    margin-bottom: 0.3rem;
+  }
+  .sauces-list {
+    font-size: 0.75rem;
+    color: #777;
+    letter-spacing: 0.02em;
+  }
+  .sauces-note {
+    font-size: 0.65rem;
+    color: var(--blue-light);
+    margin-top: 0.3rem;
+    font-weight: 600;
+  }
+
+  /* Footer */
+  .menu-footer {
+    background: var(--blue-dark);
+    padding: 1.2rem 2rem;
+    text-align: center;
+  }
+  .menu-footer p {
+    color: rgba(255,255,255,0.35);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; padding: 0; }
+    .menu-board { box-shadow: none; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="menu-board">
+
+  <!-- HEADER -->
+  <div class="menu-header">
+    <h1>Greek</h1>
+    <div class="subtitle">Street Food</div>
+    <div class="location">Vilseck</div>
+  </div>
+
+  <div class="greek-divider"></div>
+
+  <div class="menu-body">
+
+    <!-- 1. PITA (Choose your Sauce · 1 included) -->
+    <div class="category">
+      <div class="cat-header">
+        <div class="cat-icon">🔥</div>
+        <div class="cat-title">Pita</div>
+        <div class="cat-subtitle">Choose your Sauce &bull; 1 included</div>
+      </div>
+
+      <div class="menu-item">
+        <span class="item-name">Chicken Pita</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 11,99</span>
+      </div>
+      <div class="item-desc">Shoarma Chicken, Greek Salad, Feta</div>
+
+      <div class="menu-item">
+        <span class="item-name">Spicy Chicken Pita</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 11,99</span>
+      </div>
+      <div class="item-desc">Garlic Chicken, Red Cabbage, Chili, Fresh Mint</div>
+
+      <div class="menu-item">
+        <span class="item-name">Brisket Pita</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 12,99</span>
+      </div>
+      <div class="item-desc">Pulled Brisket, Greek Salad, Sumac</div>
+
+      <div class="menu-item">
+        <span class="item-name">Avocado Pita</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 11,49</span>
+      </div>
+      <div class="item-desc">Fresh Avocado, Hummus, Greek Salad, Feta</div>
+
+      <div class="menu-item">
+        <span class="item-name">Fire-Roasted Veggie Pita</span>
+        <span class="item-veg">V</span>
+        <span class="item-new">New</span>
+        <span class="item-dots"></span>
+        <span class="item-price-tbd">TBD</span>
+      </div>
+      <div class="item-desc">Grilled Eggplant, Zucchini, Peppers, Mushroom, Feta</div>
+    </div>
+
+    <!-- 2. BUILD YOUR OWN BOWL -->
+    <div class="byo-section">
+      <div class="cat-header">
+        <div class="cat-icon">🥗</div>
+        <div class="cat-title">Build Your Own Bowl</div>
+      </div>
+
+      <div class="byo-steps">
+        <div class="byo-step">
+          <span class="byo-step-num">1</span>
+          <span class="byo-step-title">Base</span>
+          <div class="byo-step-options">Bulgur &bull; Mixed Greens &bull; Half &amp; Half</div>
+        </div>
+        <div class="byo-step">
+          <span class="byo-step-num">2</span>
+          <span class="byo-step-title">Main</span>
+          <div class="byo-step-options">Shoarma &bull; Rotisserie &bull; Garlic &bull; Brisket &bull; Avocado</div>
+        </div>
+        <div class="byo-step">
+          <span class="byo-step-num">3</span>
+          <span class="byo-step-title">3 Toppings</span>
+          <div class="byo-step-options">Olives &bull; Hummus &bull; Red Cabbage &bull; Chickpeas &bull; Corn &bull; Beetroot &bull; Grilled Veggie &bull; Feta &bull; Giant Beans</div>
+        </div>
+        <div class="byo-step">
+          <span class="byo-step-num">4</span>
+          <span class="byo-step-title">Sauce</span>
+          <div class="byo-step-options">Tzatziki &bull; Tahini &bull; Oregano &bull; Lemon-Herb &bull; Greek &bull; Herbed Yogurt &bull; Flying Greek</div>
+        </div>
+      </div>
+
+      <div class="byo-prices">
+        <div class="byo-price-item">Chicken <span>&euro; 12,99</span></div>
+        <div class="byo-price-item">Brisket <span>&euro; 13,99</span></div>
+        <div class="byo-price-item">Veggie <span>&euro; 12,49</span></div>
+      </div>
+    </div>
+
+    <!-- 3. PITA MELTS -->
+    <div class="category">
+      <div class="cat-header">
+        <div class="cat-icon">🧀</div>
+        <div class="cat-title">Pita Melts</div>
+        <div class="cat-subtitle">Pressed &bull; Melted</div>
+      </div>
+
+      <div class="menu-item">
+        <span class="item-name">Chicken Pita Melt</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 10,99</span>
+      </div>
+      <div class="item-desc">Rotisserie Chicken, Red Cabbage, Onions, Mozzarella</div>
+
+      <div class="menu-item">
+        <span class="item-name">Brisket Pita Melt</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 11,99</span>
+      </div>
+      <div class="item-desc">Pulled Brisket, Flying Greek Sauce, Mozzarella</div>
+
+      <div class="menu-item">
+        <span class="item-name">Spinach Feta Melt</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 9,99</span>
+      </div>
+      <div class="item-desc">Spinach, Feta, Cream Cheese, Garlic, Fresh Parsley</div>
+
+      <div class="menu-item">
+        <span class="item-name">Veggie Melt</span>
+        <span class="item-veg">V</span>
+        <span class="item-new">New</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 10,99</span>
+      </div>
+      <div class="item-desc">Grilled Veggies, Feta, Hummus, Mozzarella</div>
+    </div>
+
+    <!-- 4. HOT MEZZE -->
+    <div class="category">
+      <div class="cat-header">
+        <div class="cat-icon">🫕</div>
+        <div class="cat-title">Hot Mezze</div>
+        <div class="cat-subtitle">Served with warm Pita</div>
+      </div>
+
+      <div class="menu-item">
+        <span class="item-name">Baked Feta</span>
+        <span class="hot-badge">Hot</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 6,99</span>
+      </div>
+      <div class="item-desc">Oven-Baked Feta, Olive Oil, Chili Flakes, Kalamata Olives</div>
+
+      <div class="menu-item">
+        <span class="item-name">Honey Chili Feta</span>
+        <span class="hot-badge">Hot</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 6,99</span>
+      </div>
+      <div class="item-desc">Oven-Baked Feta, Honey, Sesame Seeds, Chili Flakes</div>
+
+      <div class="menu-item">
+        <span class="item-name">Hot Hummus Chicken</span>
+        <span class="hot-badge">Hot</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 7,99</span>
+      </div>
+      <div class="item-desc">Warm Hummus, Shoarma Chicken, Olive Oil, Paprika</div>
+
+      <div class="menu-item">
+        <span class="item-name">Hot Hummus Brisket</span>
+        <span class="hot-badge">Hot</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 8,99</span>
+      </div>
+      <div class="item-desc">Warm Hummus, Pulled Brisket, Flying Greek Drizzle, Olive Oil</div>
+    </div>
+
+    <!-- 5. MEZZE & SIDES (Pick Any 3 → €12.99) -->
+    <div class="category">
+      <div class="cat-header">
+        <div class="cat-icon">🫙</div>
+        <div class="cat-title">Mezze &amp; Sides</div>
+        <div class="cat-subtitle">Served with warm Pita</div>
+      </div>
+
+      <div class="pick3-banner">
+        Pick Any 3 &rarr; <span class="pick3-price">&euro; 12,99</span>
+        &nbsp;&nbsp;|&nbsp;&nbsp; Extra Pita +&euro;1,50
+      </div>
+
+      <div class="sub-header">Dips</div>
+
+      <div class="menu-item">
+        <span class="item-name">Tirokafteri</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Spicy Feta Whip, Roasted Peppers, Chili</div>
+
+      <div class="menu-item">
+        <span class="item-name">Htipiti</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Smoky Roasted Red Pepper &amp; Feta Dip</div>
+
+      <div class="menu-item">
+        <span class="item-name">Skordalia</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Greek Garlic Potato Dip, Olive Oil, Lemon</div>
+
+      <div class="menu-item">
+        <span class="item-name">Pantzarosalata</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Beetroot Dip with Yogurt &amp; Walnuts</div>
+
+      <div class="menu-item">
+        <span class="item-name">Hummus</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Classic Hummus</div>
+
+      <div class="sub-header">Antipasti</div>
+
+      <div class="menu-item">
+        <span class="item-name">Grilled Veggies</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Eggplant, Zucchini, Peppers</div>
+
+      <div class="menu-item">
+        <span class="item-name">Dolmades</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Stuffed Vine Leaves (Palirria)</div>
+
+      <div class="menu-item">
+        <span class="item-name">Gigantes</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Giant Beans in Tomato (Palirria)</div>
+
+      <div class="menu-item">
+        <span class="item-name">Stuffed Peppers</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 4,99</span>
+      </div>
+      <div class="item-desc">Cream Cheese Peppers (Arfiyato)</div>
+
+      <div class="sub-header">Salads &amp; Olives</div>
+
+      <div class="menu-item">
+        <span class="item-name">Greek Salad</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 5,99</span>
+      </div>
+      <div class="item-desc">Tomato, Cucumber, Red Onion, Bell Pepper, Feta, Olives, Oregano Vinaigrette</div>
+
+      <div class="menu-item">
+        <span class="item-name">Olives</span>
+        <span class="item-veg">V</span>
+        <span class="item-dots"></span>
+        <span class="item-price">&euro; 3,99</span>
+      </div>
+      <div class="item-desc">Kalamata or Garlic Olives</div>
+    </div>
+
+  </div>
+
+  <!-- EXTRAS BAR -->
+  <div class="extras-row">
+    <span class="extras-title">Extras</span>
+    <span class="extra-item">Double Meat <span class="extra-price">+&euro;2,50</span></span>
+    <span class="extra-item">Avocado <span class="extra-price">+&euro;1,50</span></span>
+    <span class="extra-item">Extra Pita <span class="extra-price">+&euro;1,50</span></span>
+    <span class="extra-item">Extra Topping <span class="extra-price">+&euro;1,00</span></span>
+    <span class="extra-item">Extra Sauce <span class="extra-price">+&euro;1,00</span></span>
+    <span class="extra-item">Extra Feta <span class="extra-price">+&euro;1,00</span></span>
+    <span class="extra-item">Hummus <span class="extra-price">+&euro;1,00</span></span>
+    <span class="extra-item">Premium Sauce (Dip) <span class="extra-price">+&euro;2,00</span></span>
+  </div>
+
+  <!-- SAUCES BAR -->
+  <div class="sauces-bar">
+    <div class="sauces-title">Sauces &mdash; Choose Yours</div>
+    <div class="sauces-list">Tzatziki &bull; Tahini &bull; Oregano Vinaigrette &bull; Lemon-Herb &bull; Greek Vinaigrette &bull; Herbed Yogurt &bull; Flying Greek</div>
+    <div class="sauces-note">1 sauce included with every Pita &amp; Bowl &bull; Extra sauce +&euro;1,00</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="menu-footer">
+    <p>All our chicken &amp; beef is pre-cooked from premium sources &bull; Ask about allergens</p>
+  </div>
+
+</div>
+
+</body>
+</html>
