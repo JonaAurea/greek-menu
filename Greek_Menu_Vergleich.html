@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greek Menu Vergleich — Alt vs. Neu</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    --red: #c0392b;
+    --green: #27ae60;
+    --blue: #1a3a7a;
+    --gold: #c9a84c;
+    --text: #1a1a1a;
+    --muted: #888;
+    --bg: #f0ece0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 1.5rem;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 0.3rem;
+    color: var(--blue);
+  }
+  .sub { text-align: center; color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (max-width: 800px) { .compare { grid-template-columns: 1fr; } }
+
+  .side {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .side-header {
+    padding: 1rem 1.5rem;
+    color: white;
+    text-align: center;
+  }
+  .side-header.old { background: linear-gradient(135deg, #7f8c8d, #95a5a6); }
+  .side-header.new { background: linear-gradient(135deg, var(--blue), #2856a8); }
+  .side-header h2 { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+  .side-header .label { font-size: 0.7rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.2rem; }
+
+  .side-body { padding: 1rem 1.5rem 1.5rem; }
+
+  .cat {
+    margin-bottom: 1.2rem;
+  }
+  .cat:last-child { margin-bottom: 0; }
+
+  .cat-name {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid var(--gold);
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .cat-count {
+    background: var(--blue);
+    color: white;
+    font-size: 0.6rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.3rem 0;
+    font-size: 0.82rem;
+    border-bottom: 1px dotted #e8e0d8;
+  }
+  .item:last-child { border-bottom: none; }
+  .item-name { font-weight: 600; flex: 1; }
+  .item-price { font-weight: 700; color: var(--blue); white-space: nowrap; margin-left: 0.5rem; }
+  .item-missing { color: var(--red); font-weight: 700; }
+  .item-desc { font-size: 0.7rem; color: var(--muted); padding: 0 0 0.2rem; }
+  .item-tag {
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+  }
+  .tag-v { background: var(--green); color: white; }
+  .tag-new { background: var(--gold); color: var(--blue); }
+  .tag-hot { background: var(--red); color: white; }
+  .tag-byo { background: var(--blue); color: white; }
+
+  /* Summary section */
+  .summary {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  .summary h2 { font-size: 1.1rem; font-weight: 800; color: var(--blue); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .diff-card {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.82rem;
+  }
+  .diff-card.pro { background: #e8f5e9; border-left: 4px solid var(--green); }
+  .diff-card.con { background: #fce4ec; border-left: 4px solid var(--red); }
+  .diff-card.change { background: #e3f2fd; border-left: 4px solid var(--blue); }
+  .diff-card strong { display: block; font-weight: 700; margin-bottom: 0.2rem; }
+
+  .stats-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .stat {
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+  }
+  .stat-num { font-size: 2rem; font-weight: 800; color: var(--blue); }
+  .stat-vs { font-size: 1.2rem; color: var(--muted); }
+  .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 0.2rem; }
+</style>
+</head>
+<body>
+
+<h1>Greek Menu Vilseck — Vergleich</h1>
+<p class="sub">Sein Vorschlag vs. Unser neues Konzept</p>
+
+<div class="compare">
+
+  <!-- ═══ LEFT: ORIGINAL NEW MENU ═══ -->
+  <div class="side">
+    <div class="side-header old">
+      <div class="label">Sein Vorschlag</div>
+      <h2>Ursprüngliches Neues Menü</h2>
+    </div>
+    <div class="side-body">
+
+      <div class="cat">
+        <div class="cat-name">Greek Pita Wraps <span class="cat-count">5 Items</span></div>
+        <div class="item"><span class="item-name">Shawarma Chicken Pita</span><span class="item-price">€11,99</span></div>
+        <div class="item-desc">Shawarma chicken, lettuce, Greek Salad, tzatziki, lemon-olive oil, herbs</div>
+        <div class="item"><span class="item-name">Rotisserie Chicken Pita</span><span class="item-price">€12,49</span></div>
+        <div class="item-desc">Rotisserie chicken, Greek Salad, feta, parsley, tzatziki, oregano</div>
+        <div class="item"><span class="item-name">Spicy Garlic Chicken Pita</span><span class="item-price">€11,99</span></div>
+        <div class="item-desc">Spicy garlic chicken, lettuce, pickled red cabbage, tzatziki, mint, lemon</div>
+        <div class="item"><span class="item-name">Brisket Beef Pita</span><span class="item-price">€12,99</span></div>
+        <div class="item-desc">Slow-cooked brisket, Greek Salad, feta, herbed yogurt sauce, sumac</div>
+        <div class="item"><span class="item-name">Avocado Greek Pita <span class="item-tag tag-v">V</span></span><span class="item-price item-missing">FEHLT!</span></div>
+        <div class="item-desc">Avocado, Greek Salad, feta, olives, lemon-herb dressing</div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Bulgur Bowls <span class="cat-count">5 Items</span></div>
+        <div class="item"><span class="item-name">Shawarma Chicken Bulgur Bowl</span><span class="item-price">€13,49</span></div>
+        <div class="item"><span class="item-name">Rotisserie Chicken Greek Bowl</span><span class="item-price">€13,99</span></div>
+        <div class="item"><span class="item-name">Spicy Garlic Chicken Power Bowl</span><span class="item-price">€13,49</span></div>
+        <div class="item"><span class="item-name">Brisket Beef Mediterranean Bowl</span><span class="item-price">€14,99</span></div>
+        <div class="item"><span class="item-name">Avocado Superfood Bowl <span class="item-tag tag-v">V</span></span><span class="item-price item-missing">FEHLT!</span></div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Greek Salads <span class="cat-count">5 Items</span></div>
+        <div class="item"><span class="item-name">Shawarma Chicken Greek Salad</span><span class="item-price">€12,99</span></div>
+        <div class="item"><span class="item-name">Rotisserie Chicken Garden Salad</span><span class="item-price">€13,49</span></div>
+        <div class="item"><span class="item-name">Spicy Garlic Chicken Crunch Salad</span><span class="item-price">€12,99</span></div>
+        <div class="item"><span class="item-name">Brisket Beef Mediterranean Salad</span><span class="item-price">€14,49</span></div>
+        <div class="item"><span class="item-name">Avocado Greek Village Salad <span class="item-tag tag-v">V</span></span><span class="item-price">€13,49</span></div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Extras <span class="cat-count">5 Items</span></div>
+        <div class="item"><span class="item-name">Double Meat</span><span class="item-price">+€2,50</span></div>
+        <div class="item"><span class="item-name">Avocado</span><span class="item-price">+€1,50</span></div>
+        <div class="item"><span class="item-name">Cheese</span><span class="item-price">+€1,00</span></div>
+        <div class="item"><span class="item-name">Hummus</span><span class="item-price">+€1,00</span></div>
+        <div class="item"><span class="item-name">Mezzes</span><span class="item-price">+€2,00</span></div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name" style="color: var(--red); border-color: var(--red);">Fehlt komplett</div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ Keine Sides (Hummus, Tzatziki, Oliven...)</span></div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ Keine Saucen-Auswahl sichtbar</span></div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ Kein Build-Your-Own</span></div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ Keine Hot Mezze</span></div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ Keine Pita Melts</span></div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ Kein "Gyros" im Namen</span></div>
+        <div class="item" style="color: var(--red);"><span class="item-name">❌ 2 Preise fehlen</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ RIGHT: OUR NEW MENU ═══ -->
+  <div class="side">
+    <div class="side-header new">
+      <div class="label">Unser Konzept</div>
+      <h2>Greek Street Food</h2>
+    </div>
+    <div class="side-body">
+
+      <div class="cat">
+        <div class="cat-name">Gyros <span class="cat-count">4 Items</span></div>
+        <div class="item"><span class="item-name">Chicken Gyros</span><span class="item-price">€11,99</span></div>
+        <div class="item-desc">Shoarma Chicken, Tzatziki, Greek Salad, Feta</div>
+        <div class="item"><span class="item-name">Spicy Chicken Gyros</span><span class="item-price">€11,99</span></div>
+        <div class="item-desc">Garlic Chicken, Pickled Red Cabbage, Chili, Tzatziki, Mint</div>
+        <div class="item"><span class="item-name">Brisket Gyros</span><span class="item-price">€12,99</span></div>
+        <div class="item-desc">Pulled Brisket, Herbed Yogurt, Greek Salad, Sumac</div>
+        <div class="item"><span class="item-name">Avocado Gyros <span class="item-tag tag-v">V</span></span><span class="item-price">€11,49</span></div>
+        <div class="item-desc">Avocado, Hummus, Greek Salad, Feta, Lemon-Herb</div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Build Your Own Bowl <span class="item-tag tag-byo">BYO</span></div>
+        <div class="item-desc" style="padding: 0.3rem 0;">① Base: Bulgur / Mixed Greens / Half & Half</div>
+        <div class="item-desc" style="padding: 0.3rem 0;">② Protein: Shoarma / Rotisserie / Garlic / Brisket / Avocado</div>
+        <div class="item-desc" style="padding: 0.3rem 0;">③ 3 Toppings aus 8+ Optionen</div>
+        <div class="item-desc" style="padding: 0.3rem 0;">④ Sauce nach Wahl (6 Saucen)</div>
+        <div class="item" style="margin-top: 0.3rem;"><span class="item-name">Chicken Bowl</span><span class="item-price">€12,99</span></div>
+        <div class="item"><span class="item-name">Brisket Bowl</span><span class="item-price">€13,99</span></div>
+        <div class="item"><span class="item-name">Veggie Bowl <span class="item-tag tag-v">V</span></span><span class="item-price">€12,49</span></div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Pita Melts <span class="item-tag tag-new">NEU</span></div>
+        <div class="item"><span class="item-name">Chicken Pita Melt</span><span class="item-price">€10,99</span></div>
+        <div class="item-desc">Shoarma Chicken, Mozzarella, Greek Salad, Tzatziki</div>
+        <div class="item"><span class="item-name">Brisket Pita Melt</span><span class="item-price">€11,99</span></div>
+        <div class="item-desc">Pulled Brisket, Mozzarella, Pickled Cabbage, Herbed Yogurt</div>
+        <div class="item"><span class="item-name">Spinach Feta Melt <span class="item-tag tag-v">V</span></span><span class="item-price">€9,99</span></div>
+        <div class="item-desc">Spinach, Feta, Cream Cheese, Garlic</div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Hot Mezze <span class="item-tag tag-hot">HOT</span> <span class="item-tag tag-new">NEU</span></div>
+        <div class="item"><span class="item-name">Baked Feta</span><span class="item-price">€6,99</span></div>
+        <div class="item-desc">Feta, Olive Oil, Chili Flakes, Olives + warm Pita</div>
+        <div class="item"><span class="item-name">Honey Chili Feta</span><span class="item-price">€6,99</span></div>
+        <div class="item-desc">Feta, Honey, Sesame, Chili + warm Pita</div>
+        <div class="item"><span class="item-name">Loaded Hummus</span><span class="item-price">€7,99</span></div>
+        <div class="item-desc">Warm Hummus, Chicken or Brisket, Olive Oil + Pita</div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Sides</div>
+        <div class="item"><span class="item-name">Hummus Pita <span class="item-tag tag-v">V</span></span><span class="item-price">€4,99</span></div>
+        <div class="item"><span class="item-name">Tzatziki Pita <span class="item-tag tag-v">V</span></span><span class="item-price">€4,99</span></div>
+        <div class="item"><span class="item-name">Greek Salad <span class="item-tag tag-v">V</span></span><span class="item-price">€5,99</span></div>
+        <div class="item"><span class="item-name">Oliven <span class="item-tag tag-v">V</span></span><span class="item-price">€3,99</span></div>
+      </div>
+
+      <div class="cat">
+        <div class="cat-name">Extras & Sauces</div>
+        <div class="item"><span class="item-name">Double Meat / Avocado / Feta / Hummus / Mezze Dip</span></div>
+        <div class="item-desc">6 Sauces: Tzatziki, Tahini, Oregano, Lemon-Herb, Greek, Herbed Yogurt</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ SUMMARY ═══ -->
+<div class="summary">
+  <div class="stats-row">
+    <div class="stat">
+      <div><span class="stat-num">15</span> <span class="stat-vs">→</span> <span class="stat-num">14</span></div>
+      <div class="stat-label">Hauptgerichte</div>
+    </div>
+    <div class="stat">
+      <div><span class="stat-num">3</span> <span class="stat-vs">→</span> <span class="stat-num">6</span></div>
+      <div class="stat-label">Kategorien</div>
+    </div>
+    <div class="stat">
+      <div><span class="stat-num">0</span> <span class="stat-vs">→</span> <span class="stat-num">7</span></div>
+      <div class="stat-label">Sides & Mezze</div>
+    </div>
+    <div class="stat">
+      <div><span class="stat-num">0</span> <span class="stat-vs">→</span> <span class="stat-num">6</span></div>
+      <div class="stat-label">Sauces sichtbar</div>
+    </div>
+  </div>
+
+  <h2>Was ist besser am neuen Konzept?</h2>
+  <div class="diff-grid">
+    <div class="diff-card pro">
+      <strong>✅ "Gyros" statt "Pita Wraps"</strong>
+      Jeder Ami kennt Gyros. Das Wort allein verkauft.
+    </div>
+    <div class="diff-card pro">
+      <strong>✅ Build Your Own Bowl</strong>
+      Kunden lieben Auswahl. Statt 5 fixe Bowls + 5 fixe Salads → 1 System mit endlosen Kombis. Auch Salad möglich (Base = Mixed Greens).
+    </div>
+    <div class="diff-card pro">
+      <strong>✅ Pita Melts — Alleinstellung</strong>
+      Komplett neue Kategorie die sonst keiner hat. Gepresst auf dem Kontaktgrill, mit Käse. Günstiger Einstiegspreis.
+    </div>
+    <div class="diff-card pro">
+      <strong>✅ Hot Mezze — Wow-Faktor</strong>
+      Baked Feta und Honey Chili Feta sind Social-Media-Hits. Kosten fast nichts, mega Marge, und jeder will ein Foto machen.
+    </div>
+    <div class="diff-card pro">
+      <strong>✅ Sides sind zurück</strong>
+      Hummus Pita, Tzatziki Pita, Greek Salad, Oliven. Impulskäufe, kleine Hunger, Beilagen zum Teilen.
+    </div>
+    <div class="diff-card pro">
+      <strong>✅ Weniger Wiederholung</strong>
+      Jede Kategorie fühlt sich anders an: Gyros (handheld), Bowl (customizable), Melt (pressed cheese), Hot Mezze (shared/snack), Sides (quick).
+    </div>
+
+    <div class="diff-card con">
+      <strong>⚠️ Was beim alten Vorschlag problematisch war</strong>
+      5× gleiche Proteine in 3 Formaten = 15 Items die sich kaum unterscheiden. Keine Sides, kein BYO, kein Gyros-Wort, 2 Preise fehlen.
+    </div>
+    <div class="diff-card change">
+      <strong>🔄 Rotisserie Chicken</strong>
+      Nicht mehr als eigenes Gyros, aber im Bowl-System wählbar. Weniger Items auf der Karte, gleiche Auswahl für den Kunden.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
