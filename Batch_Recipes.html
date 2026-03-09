@@ -22,7 +22,7 @@
   .batch-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; }
   .batch-header:hover { background: #faf7f4; }
   .batch-name { font-weight: 700; font-size: 16px; }
-  .batch-meta { display: flex; gap: 12px; align-items: center; font-size: 12px; color: #8b7355; }
+  .batch-meta { display: flex; gap: 12px; align-items: center; font-size: 12px; color: #8b7355; flex-wrap: wrap; }
   .tag { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
   .tag-time { background: #fff3e0; color: #e65100; }
   .tag-yield { background: #e8f5e9; color: #2e7d32; }
@@ -46,827 +46,680 @@
   .cost-row { font-weight: 600; background: #faf7f4; }
   .arrow { transition: transform 0.2s; font-size: 18px; color: #bbb; }
   .arrow.open { transform: rotate(90deg); }
-  .prep-info { display: flex; gap: 8px; align-items: center; margin-top: 10px; padding: 8px 12px; background: #fff8e1; border-radius: 8px; font-size: 12px; }
+  .prep-info { margin-top: 10px; padding: 10px 14px; background: #fff8e1; border-radius: 8px; font-size: 12px; line-height: 1.6; }
+  .prep-info b { color: #e65100; }
+  .prep-step { display: flex; gap: 6px; align-items: baseline; margin: 2px 0; }
+  .prep-step .step-icon { flex-shrink: 0; }
+  .ready-tag { background: #e8f5e9; color: #2e7d32; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+  .fresh-tag { background: #fff3e0; color: #e65100; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
   .total-row { margin-top: 15px; padding: 12px 16px; background: #faf7f4; border-radius: 8px; display: flex; justify-content: space-between; font-size: 13px; }
-  .total-label { color: #8b7355; }
-  .total-val { font-weight: 700; color: #5c3d2e; }
-  @media (max-width: 600px) {
-    .batch-meta { flex-wrap: wrap; gap: 6px; }
-    .stats { gap: 10px; }
-    .stat { min-width: 100px; padding: 10px 14px; }
-  }
-  .print-btn { position: fixed; bottom: 20px; right: 20px; background: #5c3d2e; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 100; }
-  .print-btn:hover { background: #7a5540; }
-  @media print { .print-btn { display: none; } .batch-body { display: block !important; } .arrow { display: none; } }
+  .parallel-section { margin-top: 35px; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .parallel-section h2 { font-size: 18px; color: #5c3d2e; margin-bottom: 15px; }
+  .parallel-block { background: #faf7f4; border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+  .parallel-block h3 { font-size: 14px; color: #5c3d2e; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .parallel-block ul { list-style: none; font-size: 13px; }
+  .parallel-block li { padding: 3px 0; display: flex; align-items: center; gap: 6px; }
+  .time-badge { background: #e65100; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  table.summary { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+  table.summary th { background: #5c3d2e; color: white; padding: 8px 10px; text-align: left; font-size: 11px; text-transform: uppercase; }
+  table.summary td { padding: 6px 10px; border-bottom: 1px solid #f0ece8; }
+  table.summary tr:nth-child(even) { background: #faf7f4; }
+  .filter-bar { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border: 2px solid #d4c5b5; border-radius: 20px; background: white; cursor: pointer; font-size: 12px; font-weight: 600; color: #5c3d2e; transition: all 0.2s; }
+  .filter-btn:hover { border-color: #5c3d2e; }
+  .filter-btn.active { background: #5c3d2e; color: white; border-color: #5c3d2e; }
+  @media (max-width: 600px) { body { padding: 10px; } .batch-meta { gap: 6px; } .tag { font-size: 10px; padding: 2px 7px; } }
 </style>
 </head>
 <body>
 
-<h1>🍳 Alle Batch Rezepte</h1>
-<p class="subtitle">Spudz & Greek Concept — 28 Batches mit Zutaten, Kosten & Zubereitungszeit</p>
+<h1>🥔 Spudz & Greek — Batch Rezepte</h1>
+<p class="subtitle">28 Batches · Realistische Prep-Zeiten basierend auf echten Produktformaten</p>
 
 <div class="stats">
-  <div class="stat"><div class="num">28</div><div class="label">Batches</div></div>
-  <div class="stat"><div class="num">16</div><div class="label">Spudz</div></div>
-  <div class="stat"><div class="num">12</div><div class="label">Greek</div></div>
-  <div class="stat"><div class="num">~2h 30m</div><div class="label">Parallel Prep</div></div>
+  <div class="stat"><div class="num">16</div><div class="label">Spudz Batches</div></div>
+  <div class="stat"><div class="num">12</div><div class="label">Greek Batches</div></div>
+  <div class="stat"><div class="num">~55 min</div><div class="label">Alle Spudz (parallel)</div></div>
+  <div class="stat"><div class="num">~40 min</div><div class="label">Alle Greek (parallel)</div></div>
 </div>
 
-<div class="concept-section">
-  <div class="concept-title concept-spudz">🥔 Spudz Concept <span style="font-size:13px;font-weight:400;color:#8b7355">(16 Batches)</span></div>
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterBatches('all')">Alle (28)</button>
+  <button class="filter-btn" onclick="filterBatches('spudz')">🥔 Spudz (16)</button>
+  <button class="filter-btn" onclick="filterBatches('greek')">🫒 Greek (12)</button>
+  <button class="filter-btn" onclick="filterBatches('sauce')">Saucen</button>
+  <button class="filter-btn" onclick="filterBatches('dip')">Dips</button>
+  <button class="filter-btn" onclick="filterBatches('meat')">Fleisch</button>
+  <button class="filter-btn" onclick="filterBatches('mix')">Mixes</button>
+</div>
 
-  <!-- SPUDZ BATCH 1: Avocado Dressing -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div>
-        <div class="batch-name">1. Avocado Dressing</div>
-      </div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">900 g</span>
-        <span class="tag tag-portions">22 Port.</span>
-        <span class="tag tag-cost">0,19 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Alles in Blender/Mixer → pürieren bis glatt. Abschmecken mit Salz/Pfeffer.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Olivenöl ARO 5L</td><td>200 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,12 €</td></tr>
-        <tr><td>Rauch Zitronensaft 1L</td><td>150 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,41 €</td></tr>
-        <tr><td>Apfelessig MC</td><td>50 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,10 €</td></tr>
-        <tr><td>Avocado Cubes TK</td><td>200 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,00 €</td></tr>
-        <tr><td>Petersilie glatt 1kg</td><td>150 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,99 €</td></tr>
-        <tr><td>Knoblauch geschält</td><td>40 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,24 €</td></tr>
-        <tr><td>Jalapeño 2900g</td><td>30 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,07 €</td></tr>
-        <tr><td>Rote Zwiebel 10kg</td><td>20 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,02 €</td></tr>
-        <tr><td>Tomaten 6kg</td><td>30 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,07 €</td></tr>
-        <tr><td>Salz, Pfeffer, Oregano</td><td>30 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,23 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>4,24 €</strong></td></tr>
-      </table>
-    </div>
+<div id="batches-container"></div>
+
+<div class="parallel-section">
+  <h2>⚡ Parallel-Prep Guide — Alle 28 Batches</h2>
+  <p style="font-size:13px;color:#8b7355;margin-bottom:15px;">Wenn du ALLE Batches auf einmal machst, bereitest du gemeinsame Zutaten einmal vor. TK-Fleisch muss am Vortag raus!</p>
+
+  <div class="parallel-block">
+    <h3><span class="time-badge">VORTAG</span> TK auftauen</h3>
+    <ul>
+      <li>❄️ Pulled Chicken (3kg), Pork Carnitas (3kg), Chargrilled Chicken (8kg) → Kühlschrank</li>
+      <li>❄️ Avocado Cubes (200g), Mango TK (150g) → Kühlschrank</li>
+    </ul>
   </div>
 
-  <!-- SPUDZ BATCH 2: Buffalo Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">2. Buffalo Sauce</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">1.400 g</span>
-        <span class="tag tag-portions">35 Port.</span>
-        <span class="tag tag-cost">0,33 €/Port.</span>
-        <span class="tag tag-shelf">5 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Butter schmelzen, Sriracha + Worcester + Cayenne einrühren. Kurz aufkochen, abkühlen lassen.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Sriracha Flying Goose</td><td>1000 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">8,21 €</td></tr>
-        <tr><td>Worcester Sauce</td><td>300 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,93 €</td></tr>
-        <tr><td>Lurpak Butter</td><td>50 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">0,49 €</td></tr>
-        <tr><td>Cayennepfeffer MC</td><td>50 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,75 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>11,39 €</strong></td></tr>
-      </table>
-    </div>
+  <div class="parallel-block">
+    <h3><span class="time-badge">0–10 min</span> Gemeinsame Frische-Prep</h3>
+    <ul>
+      <li>🌿 Petersilie waschen + hacken — 1kg reicht für: Avocado Dressing, Chimichurri, Magic Green, Mushroom Mix, Bean Mix, Sweet & Spicy Mango</li>
+      <li>🧅 Rote Zwiebel schneiden — für: Avocado Dressing, Chimichurri, Piri Piri</li>
+      <li>🍅 Tomaten würfeln — für: Avocado Dressing, Chimichurri</li>
+      <li>🥒 Gurke raspeln + ausdrücken — für: Tzatziki</li>
+      <li>🌶️ Chili Rawit hacken — für: Piri Piri Homemade</li>
+    </ul>
   </div>
 
-  <!-- SPUDZ BATCH 3: Spudz Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">3. Spudz Sauce</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">760 g</span>
-        <span class="tag tag-portions">19 Port.</span>
-        <span class="tag tag-cost">0,14 €/Port.</span>
-        <span class="tag tag-shelf">7 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Alle Zutaten im Mixer pürieren. Kalt servieren als Dip-Sauce.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Heinz BBQ 10L</td><td>300 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,09 €</td></tr>
-        <tr><td>Senf medium ARO</td><td>200 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,35 €</td></tr>
-        <tr><td>Sriracha Flying Goose</td><td>50 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,41 €</td></tr>
-        <tr><td>Essig 5% ARO</td><td>100 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,15 €</td></tr>
-        <tr><td>Knoblauch geschält</td><td>40 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,24 €</td></tr>
-        <tr><td>Honig ARO 2.5kg</td><td>50 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,30 €</td></tr>
-        <tr><td>Salz + Pfeffer</td><td>20 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,13 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>2,66 €</strong></td></tr>
-      </table>
-    </div>
+  <div class="parallel-block">
+    <h3><span class="time-badge">10–15 min</span> Bulgur aufsetzen + Dosen öffnen</h3>
+    <ul>
+      <li>🫘 Bulgur mit heißem Wasser aufgießen, quellen lassen (macht sich selbst!)</li>
+      <li>🥫 ALLE Dosen öffnen + abtropfen: Kidney, Kichererbsen, Mais, Champignons, Rote Bete, Jalapeños, Paprika Strips, Roasted Red Peppers</li>
+    </ul>
   </div>
 
-  <!-- SPUDZ BATCH 4: Chimichurri -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">4. Chimichurri</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.670 g</span>
-        <span class="tag tag-portions">42 Port.</span>
-        <span class="tag tag-cost">0,22 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Petersilie grob hacken, alle Zutaten vermengen. NICHT pürieren — grobe Textur!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Olivenöl ARO 5L</td><td>1000 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">5,60 €</td></tr>
-        <tr><td>Rauch Limettensaft</td><td>100 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,26 €</td></tr>
-        <tr><td>Petersilie glatt 1kg</td><td>450 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">2,97 €</td></tr>
-        <tr><td>Knoblauch geschält</td><td>40 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,24 €</td></tr>
-        <tr><td>Jalapeño + Zwiebel + Tomaten</td><td>80 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,15 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>9,21 €</strong></td></tr>
-      </table>
-    </div>
+  <div class="parallel-block">
+    <h3><span class="time-badge">15–40 min</span> Mixen & Zusammenrühren</h3>
+    <ul>
+      <li>🥣 Alle Saucen/Dressings mixen (Blender/Stabmixer): Avo Dressing, Buffalo, Spudz Sauce, Chimichurri, Chipotle, Magic Green, Lemon Vinaigrette, Sriracha Lime, Sweet & Spicy Mango, Piri Piri</li>
+      <li>🥣 Griechische Dips: Tzatziki, Tahini, Tirokafteri, Htipiti, Skordalia, Pantzarosalata, Flying Greek</li>
+      <li>🥣 Griechische Dressings: Oregano Vin., Greek Vin., Lemon-Herb, Herbed Yogurt</li>
+      <li>🫘 Bean Mix + Mushroom Mix: Dosen-Inhalt + Gewürze/Sauce zusammenrühren</li>
+    </ul>
   </div>
 
-  <!-- SPUDZ BATCH 5: Chipotle Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">5. Chipotle Sauce ⭐</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 5 min</span>
-        <span class="tag tag-yield">15 kg!</span>
-        <span class="tag tag-portions">375 Port.</span>
-        <span class="tag tag-cost">0,07 €/Port.</span>
-        <span class="tag tag-shelf">14 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Einfach Mayo + Piri Piri mischen. Größter Batch, günstigste Sauce!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Mayo 50% ARO 10kg</td><td>10.000 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">20,40 €</td></tr>
-        <tr><td>Piri Piri Lions 2.27L</td><td>2.500 ml</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">7,18 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>27,58 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 6: Magic Green Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">6. Magic Green Sauce</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.640 g</span>
-        <span class="tag tag-portions">41 Port.</span>
-        <span class="tag tag-cost">0,13 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Joghurt-basierte Sauce. Kräuter + Joghurt + Mayo + Olivenöl im Blender pürieren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Kløver Joghurt 10%</td><td>1.000 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">2,65 €</td></tr>
-        <tr><td>Petersilie glatt 1kg</td><td>150 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,99 €</td></tr>
-        <tr><td>Mayo 50% ARO</td><td>250 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,51 €</td></tr>
-        <tr><td>Olivenöl ARO 5L</td><td>100 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,56 €</td></tr>
-        <tr><td>Limettensaft + Knoblauch + Jalapeño</td><td>120 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,44 €</td></tr>
-        <tr><td>Salz + Pfeffer</td><td>20 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,13 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>5,27 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 7: Lemon Vinaigrette -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">7. Lemon Vinaigrette</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 5 min</span>
-        <span class="tag tag-yield">1.235 g</span>
-        <span class="tag tag-portions">31 Port.</span>
-        <span class="tag tag-cost">0,21 €/Port.</span>
-        <span class="tag tag-shelf">7 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Öl + Limette + Senf emulgieren. Oregano + Knoblauch einrühren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Olivenöl ARO 5L</td><td>1.000 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">5,60 €</td></tr>
-        <tr><td>Rauch Limettensaft</td><td>75 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,19 €</td></tr>
-        <tr><td>Senf medium ARO</td><td>100 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,17 €</td></tr>
-        <tr><td>Knoblauch + Oregano + Salz + Pfeffer</td><td>60 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,45 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>6,41 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 8: Sriracha Lime Dressing -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">8. Sriracha Lime Dressing</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 5 min</span>
-        <span class="tag tag-yield">1.275 g</span>
-        <span class="tag tag-portions">32 Port.</span>
-        <span class="tag tag-cost">0,29 €/Port.</span>
-        <span class="tag tag-shelf">7 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Sriracha + Limette + Öl + Honig verquirlen. Scharf-süß-sauer Balance!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Sriracha Flying Goose</td><td>1.000 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">8,21 €</td></tr>
-        <tr><td>Olivenöl + Essig + Limette</td><td>225 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,83 €</td></tr>
-        <tr><td>Honig + Knoblauch</td><td>50 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,30 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>9,33 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 9: Sweet & Spicy Mango -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">9. Sweet & Spicy Mango</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.000 g</span>
-        <span class="tag tag-portions">25 Port.</span>
-        <span class="tag tag-cost">0,17 €/Port.</span>
-        <span class="tag tag-shelf">5 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Mango TK auftauen, mit OJ + Öl + Limette + Chili pürieren. Kräuter unterheben.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Olivenöl ARO 5L</td><td>300 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,68 €</td></tr>
-        <tr><td>Orangensaft ARO</td><td>280 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,53 €</td></tr>
-        <tr><td>Mango TK 1kg</td><td>150 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,68 €</td></tr>
-        <tr><td>Petersilie + Knoblauch + Limette</td><td>170 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,91 €</td></tr>
-        <tr><td>Very Hot Chili Lions</td><td>50 ml</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">0,15 €</td></tr>
-        <tr><td>Honig + Salz + Pfeffer</td><td>50 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,30 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>4,24 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 10: Piri Piri Homemade -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">10. Piri Piri Homemade 🌶️</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 20 min</span>
-        <span class="tag tag-yield">1.245 g</span>
-        <span class="tag tag-portions">31 Port.</span>
-        <span class="tag tag-cost">0,26 €/Port.</span>
-        <span class="tag tag-shelf">7 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Chili Rawit rösten, mit Öl + Limette + Knoblauch pürieren. SCHARF! Handschuhe tragen!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Olivenöl ARO 5L</td><td>600 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">3,36 €</td></tr>
-        <tr><td>Chili Rawit rot</td><td>250 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">3,75 €</td></tr>
-        <tr><td>Rauch Limettensaft</td><td>200 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,51 €</td></tr>
-        <tr><td>Rote Zwiebel + Knoblauch</td><td>175 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,39 €</td></tr>
-        <tr><td>Salz + Pfeffer</td><td>20 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,13 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>8,14 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 11: Mushroom Mix -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">11. Mushroom Mix 🍄</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 25 min</span>
-        <span class="tag tag-yield">14,3 kg</span>
-        <span class="tag tag-portions">358 Port.</span>
-        <span class="tag tag-cost">0,10 €/Port.</span>
-        <span class="tag tag-shelf">5 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Champignons abtropfen, mit Piri Piri + Senf + Petersilie mischen. Großer Batch!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Champignons geschn. 2.65L</td><td>12.750 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">31,49 €</td></tr>
-        <tr><td>Petersilie glatt 1kg</td><td>300 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,98 €</td></tr>
-        <tr><td>Piri Piri Lions 2.27L</td><td>1.000 ml</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">2,87 €</td></tr>
-        <tr><td>Senf medium ARO</td><td>200 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,35 €</td></tr>
-        <tr><td>Oregano + Salz + Pfeffer</td><td>70 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,63 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>37,31 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 12: Bean Mix -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">12. Bean Mix 🫘</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 20 min</span>
-        <span class="tag tag-yield">18,2 kg</span>
-        <span class="tag tag-portions">456 Port.</span>
-        <span class="tag tag-cost">0,07 €/Port.</span>
-        <span class="tag tag-shelf">5 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Bohnen + Kichererbsen + Mais abgießen, mit Very Hot Chili + Kräutern mischen. Größter Batch!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Kidney Bohnen 2650ml</td><td>10.000 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">16,00 €</td></tr>
-        <tr><td>Kichererbsen 2650ml</td><td>5.000 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">6,00 €</td></tr>
-        <tr><td>Mais 2650ml</td><td>1.350 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">2,15 €</td></tr>
-        <tr><td>Petersilie glatt 1kg</td><td>300 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,98 €</td></tr>
-        <tr><td>Very Hot Chili Lions</td><td>1.500 ml</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">4,35 €</td></tr>
-        <tr><td>Salz + Pfeffer + Kreuzkümmel</td><td>90 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,75 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>31,22 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 13: Buffalo Pulled Chicken -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">13. Buffalo Pulled Chicken (Texan Cowboy)</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">3.800 g</span>
-        <span class="tag tag-portions">48 Port.</span>
-        <span class="tag tag-cost">0,76 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Pulled Chicken kommt fertig von Food-Kings (TK) → auftauen, mit Buffalo Sauce (Batch #2) marinieren. Kein Kochen!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Pulled Chicken Art.6953</td><td>3.000 g</td><td><span class="supplier-dot dot-foodkings"></span>Food-Kings</td><td style="text-align:right">29,40 €</td></tr>
-        <tr><td>Buffalo Sauce (Batch #2)</td><td>800 g</td><td><span class="supplier-dot dot-batch"></span>Batch</td><td style="text-align:right">6,51 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>35,91 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 14: Honey BBQ Pork -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">14. Honey BBQ Pork</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">3.800 g</span>
-        <span class="tag tag-portions">45 Port.</span>
-        <span class="tag tag-cost">0,74 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Pork Carnitas kommt fertig von Food-Kings (TK) → auftauen, mit BBQ Sauce marinieren. Kein Kochen!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Pork Carnitas Art.5291</td><td>3.000 g</td><td><span class="supplier-dot dot-foodkings"></span>Food-Kings</td><td style="text-align:right">30,66 €</td></tr>
-        <tr><td>BBQ Sauce Lions</td><td>800 g</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">2,30 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>32,96 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 15: Honey BBQ Chicken -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">15. Honey BBQ Chicken</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">3.800 g</span>
-        <span class="tag tag-portions">48 Port.</span>
-        <span class="tag tag-cost">0,66 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Chargrilled Chicken kommt fertig von Food-Kings (TK) → auftauen, mit BBQ Sauce marinieren. Kein Kochen!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Chargrilled Chicken Art.6602</td><td>3.000 g</td><td><span class="supplier-dot dot-foodkings"></span>Food-Kings</td><td style="text-align:right">29,10 €</td></tr>
-        <tr><td>BBQ Sauce Lions</td><td>800 g</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">2,30 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>31,40 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- SPUDZ BATCH 16: Chipotle Chicken -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">16. Chipotle Chicken</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">5.600 g</span>
-        <span class="tag tag-portions">66 Port.</span>
-        <span class="tag tag-cost">0,76 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Chargrilled Chicken kommt fertig von Food-Kings (TK) → auftauen, mit Piri Piri marinieren. Kein Kochen!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Chargrilled Chicken Art.6602</td><td>5.000 g</td><td><span class="supplier-dot dot-foodkings"></span>Food-Kings</td><td style="text-align:right">48,50 €</td></tr>
-        <tr><td>Piri Piri Lions 2.27L</td><td>600 ml</td><td><span class="supplier-dot dot-lions"></span>Lions</td><td style="text-align:right">1,72 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>50,22 €</strong></td></tr>
-      </table>
-    </div>
+  <div class="parallel-block">
+    <h3><span class="time-badge">40–55 min</span> Fleisch-Batches + Abfüllen</h3>
+    <ul>
+      <li>🍗 4 Fleisch-Batches: aufgetautes Fleisch + Sauce verrühren (je ~2 min)</li>
+      <li>📦 Alles in GN-Behälter abfüllen, beschriften, datieren</li>
+      <li>🧹 Aufräumen</li>
+    </ul>
   </div>
 </div>
 
-<!-- GREEK SECTION -->
-<div class="concept-section">
-  <div class="concept-title concept-greek">🏛️ Greek Concept <span style="font-size:13px;font-weight:400;color:#5a7a8b">(12 Batches)</span></div>
-
-  <!-- GREEK BATCH 17: Tzatziki -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">17. Tzatziki</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">2.500 g</span>
-        <span class="tag tag-portions">63 Port.</span>
-        <span class="tag tag-cost">0,11 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Gurke reiben + ausdrücken! Joghurt + Knoblauch + Dill + Zitrone + EVOO vermischen.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Kløver Yoghurt 10%</td><td>2.000 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">5,30 €</td></tr>
-        <tr><td>Cucumber (frisch)</td><td>500 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,43 €</td></tr>
-        <tr><td>Knoblauch + Zitrone + Dill + EVOO + Salz</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,45 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>7,18 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 18: Tahini Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">18. Tahini Sauce</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 5 min</span>
-        <span class="tag tag-yield">1.000 g</span>
-        <span class="tag tag-portions">25 Port.</span>
-        <span class="tag tag-cost">0,12 €/Port.</span>
-        <span class="tag tag-shelf">5 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Tahini + Wasser + Zitrone + Knoblauch + Kreuzkümmel verrühren bis cremig.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Tahini Daabool</td><td>400 g</td><td><span class="supplier-dot dot-arfiyato"></span>Arfiyato</td><td style="text-align:right">2,70 €</td></tr>
-        <tr><td>Wasser</td><td>300 ml</td><td>—</td><td style="text-align:right">0,00 €</td></tr>
-        <tr><td>Zitronensaft + Knoblauch + Salz + Kreuzkümmel</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,36 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>3,06 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 19: Oregano Vinaigrette -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">19. Oregano Vinaigrette</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 5 min</span>
-        <span class="tag tag-yield">1.000 ml</span>
-        <span class="tag tag-portions">25 Port.</span>
-        <span class="tag tag-cost">0,17 €/Port.</span>
-        <span class="tag tag-shelf">7 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 EVOO + Rotweinessig + Zitrone + Honig + Senf + Oregano emulgieren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>EVOO (Olivenöl)</td><td>500 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">3,15 €</td></tr>
-        <tr><td>Rotweinessig</td><td>200 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,40 €</td></tr>
-        <tr><td>Zitrone + Oregano + Honig + Senf + Gewürze</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,59 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>4,14 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 20: Lemon-Herb Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">20. Lemon-Herb Sauce</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">1.000 ml</span>
-        <span class="tag tag-portions">25 Port.</span>
-        <span class="tag tag-cost">0,12 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Joghurt + EVOO + Zitrone + Petersilie + Dill + Knoblauch verrühren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Kløver Yoghurt 10%</td><td>400 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">1,06 €</td></tr>
-        <tr><td>EVOO</td><td>200 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">1,26 €</td></tr>
-        <tr><td>Zitrone + Petersilie + Dill + Knoblauch + Gewürze</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,79 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>3,11 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 21: Greek Vinaigrette -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">21. Greek Vinaigrette</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 5 min</span>
-        <span class="tag tag-yield">800 ml</span>
-        <span class="tag tag-portions">20 Port.</span>
-        <span class="tag tag-cost">0,20 €/Port.</span>
-        <span class="tag tag-shelf">7 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Wie Oregano Vinaigrette, etwas weniger Menge. Standard-Dressing für Salate.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>EVOO</td><td>500 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">3,15 €</td></tr>
-        <tr><td>Rotweinessig + Zitrone + Oregano + Honig + Senf + Gewürze</td><td>300 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,77 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>3,92 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 22: Herbed Yogurt -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">22. Herbed Yogurt</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">1.600 g</span>
-        <span class="tag tag-portions">40 Port.</span>
-        <span class="tag tag-cost">0,12 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Joghurt + Petersilie + Minze + Dill + Sumac + Knoblauch + EVOO vermengen.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Kløver Yoghurt 10%</td><td>1.500 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">3,98 €</td></tr>
-        <tr><td>Petersilie + Minze + Dill + Sumac + Knoblauch + Zitrone + EVOO + Salz</td><td>100 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,78 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>4,75 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 23: Flying Greek Sauce -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">23. Flying Greek Sauce</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.000 g</span>
-        <span class="tag tag-portions">25 Port.</span>
-        <span class="tag tag-cost">0,11 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Paprika-Streifen + Joghurt + EVOO + Tomatenmark + Balsamico + Worcester + Gewürze pürieren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Tomato Pepper Strips</td><td>300 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,56 €</td></tr>
-        <tr><td>Kløver Yoghurt 10%</td><td>400 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">1,06 €</td></tr>
-        <tr><td>EVOO + Tomatenmark + Balsamico + Worcester</td><td>195 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,93 €</td></tr>
-        <tr><td>Paprika + Knoblauch + Oregano + Gewürze</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,32 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>2,86 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 24: Tirokafteri -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">24. Tirokafteri (Spicy Feta Whip) 🌶️</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.000 g</span>
-        <span class="tag tag-portions">17 Port.</span>
-        <span class="tag tag-cost">0,29 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Feta + Joghurt + geröstete Paprika + EVOO + Chili im Mixer cremig pürieren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Apetina Feta</td><td>500 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">3,46 €</td></tr>
-        <tr><td>Kløver Yoghurt 10%</td><td>200 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">0,53 €</td></tr>
-        <tr><td>Roasted Red Peppers + EVOO + Zitrone + Knoblauch + Chili + Oregano</td><td>250 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,90 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>4,89 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 25: Htipiti -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">25. Htipiti (Smoky Roasted Pepper Feta)</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.000 g</span>
-        <span class="tag tag-portions">17 Port.</span>
-        <span class="tag tag-cost">0,21 €/Port.</span>
-        <span class="tag tag-shelf">4 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Geröstete Paprika + Feta + EVOO + Smoked Paprika pürieren. Rauchig-cremig!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Roasted Red Peppers</td><td>400 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,75 €</td></tr>
-        <tr><td>Apetina Feta</td><td>300 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">2,08 €</td></tr>
-        <tr><td>EVOO + Zitrone + Knoblauch + Paprika + Chili + Gewürze</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,75 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>3,58 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 26: Skordalia -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">26. Skordalia (Knoblauch-Kartoffel Dip)</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 10 min</span>
-        <span class="tag tag-yield">1.200 g</span>
-        <span class="tag tag-portions">20 Port.</span>
-        <span class="tag tag-cost">0,09 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Baked Potatoes (schon fertig!) stampfen. EVOO + Zitrone + Knoblauch + Weißweinessig unterrühren.</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Baked Potatoes (Spudz Side)</td><td>800 g</td><td><span class="supplier-dot dot-other"></span>Spudz</td><td style="text-align:right">0,48 €</td></tr>
-        <tr><td>EVOO</td><td>150 ml</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,95 €</td></tr>
-        <tr><td>Zitronensaft + Knoblauch + Weißweinessig + Gewürze</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,36 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>1,78 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 27: Pantzarosalata -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">27. Pantzarosalata (Rote Bete Joghurt Dip)</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 15 min</span>
-        <span class="tag tag-yield">1.100 g</span>
-        <span class="tag tag-portions">18 Port.</span>
-        <span class="tag tag-cost">0,13 €/Port.</span>
-        <span class="tag tag-shelf">3 Tage</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Rote Bete pürieren + Joghurt + Walnüsse + EVOO + Dill vermengen. Nicht zu fein!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Beetroot (Dose)</td><td>500 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,62 €</td></tr>
-        <tr><td>Kløver Yoghurt 10%</td><td>250 g</td><td><span class="supplier-dot dot-arla"></span>Arla</td><td style="text-align:right">0,66 €</td></tr>
-        <tr><td>Walnüsse</td><td>60 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,50 €</td></tr>
-        <tr><td>EVOO + Zitrone + Knoblauch + Rotweinessig + Dill + Gewürze</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,62 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>2,40 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- GREEK BATCH 28: Bulgur -->
-  <div class="batch-card" onclick="toggleBatch(this)">
-    <div class="batch-header">
-      <div><div class="batch-name">28. Bulgur (Base for Greek Bowls)</div></div>
-      <div class="batch-meta">
-        <span class="tag tag-time">⏱ 20 min</span>
-        <span class="tag tag-yield">2.000 g</span>
-        <span class="tag tag-portions">13 Port.</span>
-        <span class="tag tag-cost">0,22 €/Port.</span>
-        <span class="tag tag-shelf" style="background:#ffcdd2;color:#b71c1c">⚠ 1 Tag!</span>
-        <span class="arrow">›</span>
-      </div>
-    </div>
-    <div class="batch-body">
-      <div class="prep-info">💡 Bulgur mit 2x Wasser aufkochen, 15 min quellen lassen. EVOO + Salz. TÄGLICH FRISCH!</div>
-      <table class="ing-table">
-        <tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr>
-        <tr><td>Bulgur (trocken)</td><td>750 g</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">2,50 €</td></tr>
-        <tr><td>Wasser</td><td>1.500 ml</td><td>—</td><td style="text-align:right">0,00 €</td></tr>
-        <tr><td>EVOO + Salz</td><td>—</td><td><span class="supplier-dot dot-metro"></span>Metro</td><td style="text-align:right">0,32 €</td></tr>
-        <tr class="cost-row"><td colspan="3"><strong>Gesamt Batch</strong></td><td style="text-align:right"><strong>2,82 €</strong></td></tr>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- SUMMARY TABLE -->
-<div style="background:white;border-radius:12px;padding:20px;margin-top:20px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
-  <h2 style="font-size:18px;color:#5c3d2e;margin-bottom:15px;">📊 Zusammenfassung — Prep-Zeiten</h2>
-  <table class="ing-table" style="font-size:14px;">
-    <tr><th>#</th><th>Batch</th><th>Concept</th><th>⏱ Prep</th><th>Yield</th><th>Portionen</th><th style="text-align:right">€/Port.</th><th>Haltbar</th></tr>
-    <tr><td>1</td><td>Avocado Dressing</td><td>🥔</td><td><strong>15 min</strong></td><td>900 g</td><td>22</td><td style="text-align:right">0,19 €</td><td>3 Tage</td></tr>
-    <tr><td>2</td><td>Buffalo Sauce</td><td>🥔</td><td><strong>10 min</strong></td><td>1.400 g</td><td>35</td><td style="text-align:right">0,33 €</td><td>5 Tage</td></tr>
-    <tr><td>3</td><td>Spudz Sauce</td><td>🥔</td><td><strong>10 min</strong></td><td>760 g</td><td>19</td><td style="text-align:right">0,14 €</td><td>7 Tage</td></tr>
-    <tr><td>4</td><td>Chimichurri</td><td>🥔</td><td><strong>15 min</strong></td><td>1.670 g</td><td>42</td><td style="text-align:right">0,22 €</td><td>4 Tage</td></tr>
-    <tr><td>5</td><td>Chipotle Sauce ⭐</td><td>🥔</td><td><strong>5 min</strong></td><td>15.000 g</td><td>375</td><td style="text-align:right">0,07 €</td><td>14 Tage</td></tr>
-    <tr><td>6</td><td>Magic Green Sauce</td><td>🥔</td><td><strong>15 min</strong></td><td>1.640 g</td><td>41</td><td style="text-align:right">0,13 €</td><td>4 Tage</td></tr>
-    <tr><td>7</td><td>Lemon Vinaigrette</td><td>🥔</td><td><strong>5 min</strong></td><td>1.235 g</td><td>31</td><td style="text-align:right">0,21 €</td><td>7 Tage</td></tr>
-    <tr><td>8</td><td>Sriracha Lime Dressing</td><td>🥔</td><td><strong>5 min</strong></td><td>1.275 g</td><td>32</td><td style="text-align:right">0,29 €</td><td>7 Tage</td></tr>
-    <tr><td>9</td><td>Sweet & Spicy Mango</td><td>🥔</td><td><strong>15 min</strong></td><td>1.000 g</td><td>25</td><td style="text-align:right">0,17 €</td><td>5 Tage</td></tr>
-    <tr><td>10</td><td>Piri Piri Homemade 🌶️</td><td>🥔</td><td><strong>20 min</strong></td><td>1.245 g</td><td>31</td><td style="text-align:right">0,26 €</td><td>7 Tage</td></tr>
-    <tr><td>11</td><td>Mushroom Mix 🍄</td><td>🥔</td><td><strong>25 min</strong></td><td>14.320 g</td><td>358</td><td style="text-align:right">0,10 €</td><td>5 Tage</td></tr>
-    <tr><td>12</td><td>Bean Mix 🫘</td><td>🥔</td><td><strong>20 min</strong></td><td>18.240 g</td><td>456</td><td style="text-align:right">0,07 €</td><td>5 Tage</td></tr>
-    <tr><td>13</td><td>Buffalo Pulled Chicken</td><td>🥔</td><td><strong>10 min</strong></td><td>3.800 g</td><td>48</td><td style="text-align:right">0,76 €</td><td>3 Tage</td></tr>
-    <tr><td>14</td><td>Honey BBQ Pork</td><td>🥔</td><td><strong>10 min</strong></td><td>3.800 g</td><td>45</td><td style="text-align:right">0,74 €</td><td>3 Tage</td></tr>
-    <tr><td>15</td><td>Honey BBQ Chicken</td><td>🥔</td><td><strong>10 min</strong></td><td>3.800 g</td><td>48</td><td style="text-align:right">0,66 €</td><td>3 Tage</td></tr>
-    <tr><td>16</td><td>Chipotle Chicken</td><td>🥔</td><td><strong>10 min</strong></td><td>5.600 g</td><td>66</td><td style="text-align:right">0,76 €</td><td>3 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>17</td><td>Tzatziki</td><td>🏛️</td><td><strong>15 min</strong></td><td>2.500 g</td><td>63</td><td style="text-align:right">0,11 €</td><td>3 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>18</td><td>Tahini Sauce</td><td>🏛️</td><td><strong>5 min</strong></td><td>1.000 g</td><td>25</td><td style="text-align:right">0,12 €</td><td>5 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>19</td><td>Oregano Vinaigrette</td><td>🏛️</td><td><strong>5 min</strong></td><td>1.000 ml</td><td>25</td><td style="text-align:right">0,17 €</td><td>7 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>20</td><td>Lemon-Herb Sauce</td><td>🏛️</td><td><strong>10 min</strong></td><td>1.000 ml</td><td>25</td><td style="text-align:right">0,12 €</td><td>4 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>21</td><td>Greek Vinaigrette</td><td>🏛️</td><td><strong>5 min</strong></td><td>800 ml</td><td>20</td><td style="text-align:right">0,20 €</td><td>7 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>22</td><td>Herbed Yogurt</td><td>🏛️</td><td><strong>10 min</strong></td><td>1.600 g</td><td>40</td><td style="text-align:right">0,12 €</td><td>4 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>23</td><td>Flying Greek Sauce</td><td>🏛️</td><td><strong>15 min</strong></td><td>1.000 g</td><td>25</td><td style="text-align:right">0,11 €</td><td>4 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>24</td><td>Tirokafteri 🌶️</td><td>🏛️</td><td><strong>15 min</strong></td><td>1.000 g</td><td>17</td><td style="text-align:right">0,29 €</td><td>4 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>25</td><td>Htipiti</td><td>🏛️</td><td><strong>15 min</strong></td><td>1.000 g</td><td>17</td><td style="text-align:right">0,21 €</td><td>4 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>26</td><td>Skordalia</td><td>🏛️</td><td><strong>10 min</strong></td><td>1.200 g</td><td>20</td><td style="text-align:right">0,09 €</td><td>3 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>27</td><td>Pantzarosalata</td><td>🏛️</td><td><strong>15 min</strong></td><td>1.100 g</td><td>18</td><td style="text-align:right">0,13 €</td><td>3 Tage</td></tr>
-    <tr style="background:#e3f2fd;"><td>28</td><td>Bulgur</td><td>🏛️</td><td><strong>20 min</strong></td><td>2.000 g</td><td>13</td><td style="text-align:right">0,22 €</td><td style="color:#b71c1c;font-weight:bold">1 Tag!</td></tr>
-    <tr class="cost-row"><td colspan="3"><strong>GESAMT (einzeln)</strong></td><td><strong>~3h 40min</strong></td><td></td><td><strong>2.160</strong></td><td style="text-align:right"><strong>Ø 0,22 €</strong></td><td></td></tr>
+<div class="parallel-section" style="margin-top:20px;">
+  <h2>📊 Übersichtstabelle</h2>
+  <table class="summary" id="summary-table">
+    <thead>
+      <tr><th>Batch</th><th>Konzept</th><th>Prep</th><th>Portionen</th><th>€/Portion</th><th>Haltbar</th><th>Was tun?</th></tr>
+    </thead>
+    <tbody id="summary-body"></tbody>
   </table>
-  <div style="margin-top:15px;padding:12px;background:#fff8e1;border-radius:8px;font-size:13px;">
-    <strong>⏱ Realistische Parallel-Prep (~2,5 Stunden mit 1 Person):</strong><br><br>
-    <strong>Block 1 — Mixer-Saucen (30 min):</strong> Knoblauch + Petersilie EINMAL hacken, dann nacheinander: Avocado Dressing → Chimichurri → Magic Green → Piri Piri → Sweet Mango. Mixer dazwischen nur kurz spülen.<br><br>
-    <strong>Block 2 — Rühr-Saucen (15 min):</strong> Chipotle (Mayo+Piri Piri), Spudz Sauce, Buffalo Sauce, Lemon Vin., Sriracha Lime, Oregano Vin., Greek Vin. — nur mischen/verquirlen.<br><br>
-    <strong>Block 3 — Fleisch marinieren (15 min):</strong> Alle 4 Meats (Food-Kings TK fertig!) auftauen + Sauce drauf. Kein Kochen nötig!<br><br>
-    <strong>Block 4 — Großbatches (30 min):</strong> Mushroom Mix + Bean Mix — Dosen öffnen, abtropfen, mischen.<br><br>
-    <strong>Block 5 — Greek Dips (30 min):</strong> Tzatziki, Tahini, Herbed Yogurt, Flying Greek, Tirokafteri, Htipiti, Lemon-Herb — Joghurt-basiert, nacheinander im Mixer.<br><br>
-    <strong>Block 6 — Rest (20 min):</strong> Skordalia (Kartoffeln schon fertig!), Pantzarosalata, Bulgur kochen.<br><br>
-    <strong>💡 Tipp:</strong> Bulgur zuerst aufsetzen (kocht 15 min alleine), währenddessen Block 5 machen!
-  </div>
 </div>
-
-<button class="print-btn" onclick="window.print()">🖨️ Drucken</button>
 
 <script>
-function toggleBatch(card) {
-  const body = card.querySelector('.batch-body');
-  const arrow = card.querySelector('.arrow');
+const BATCHES = [
+  // ===== SPUDZ SAUCEN =====
+  {
+    name: "Avocado Dressing", concept: "Spudz", category: "sauce",
+    yield: "900g", portions: 22, costPortion: 0.188, shelf: "3 Tage",
+    prepMin: 8,
+    prepSteps: "Frisches hacken (Petersilie, Zwiebel, Tomate, Knoblauch pressen), Avocado Cubes TK (aufgetaut) dazu, alles in Blender → fertig",
+    whyFast: "Avocado Cubes kommen TK fertig gewürfelt. Knoblauch kommt geschält. Nur Petersilie+Zwiebel+Tomate = echte Prep.",
+    ingredients: [
+      {name:"Olivenöl ARO 5L", amount:"200ml", supplier:"Metro", cost:1.12, ready:true},
+      {name:"Rauch Zitronensaft 1L", amount:"150ml", supplier:"Metro", cost:0.414, ready:true},
+      {name:"Apfelessig MC", amount:"50ml", supplier:"Metro", cost:0.1, ready:true},
+      {name:"Avocado Cubes TK", amount:"200g", supplier:"Metro", cost:0.998, ready:true},
+      {name:"Petersilie glatt 1kg", amount:"150g", supplier:"Metro", cost:0.989, ready:false},
+      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Jalapeño 2900g", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
+      {name:"Rote Zwiebel 10kg", amount:"20g", supplier:"Metro", cost:0.015, ready:false},
+      {name:"Tomaten 6kg", amount:"30g", supplier:"Metro", cost:0.066, ready:false},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Oregano", amount:"10g", supplier:"Metro", cost:0.1, ready:true}
+    ]
+  },
+  {
+    name: "Buffalo Sauce", concept: "Spudz", category: "sauce",
+    yield: "1400g", portions: 35, costPortion: 0.325, shelf: "5 Tage",
+    prepMin: 3,
+    prepSteps: "Sriracha + Worcester + geschmolzene Butter + Cayenne verrühren → fertig",
+    whyFast: "Alles Flaschen-/Dosenware. Butter schmelzen = 1 min Mikrowelle. Zusammenrühren = 2 min.",
+    ingredients: [
+      {name:"Sriracha Flying Goose", amount:"1000ml", supplier:"Metro", cost:8.21, ready:true},
+      {name:"Worcester Sauce", amount:"300ml", supplier:"Metro", cost:1.932, ready:true},
+      {name:"Lurpak Butter", amount:"50g", supplier:"Arla", cost:0.493, ready:true},
+      {name:"Cayennepfeffer MC", amount:"50g", supplier:"Metro", cost:0.75, ready:true}
+    ]
+  },
+  {
+    name: "Spudz Sauce", concept: "Spudz", category: "sauce",
+    yield: "760g", portions: 19, costPortion: 0.14, shelf: "7 Tage",
+    prepMin: 4,
+    prepSteps: "BBQ + Senf + Sriracha + Essig + Honig abmessen, Knoblauch pressen, alles verrühren → fertig",
+    whyFast: "Alles Flaschen-Ware. Nur Knoblauch pressen (geschält aus Metro). Rest = abmessen + rühren.",
+    ingredients: [
+      {name:"Heinz BBQ 10L", amount:"300ml", supplier:"Metro", cost:1.089, ready:true},
+      {name:"Senf medium ARO", amount:"200ml", supplier:"Metro", cost:0.348, ready:true},
+      {name:"Sriracha Flying Goose", amount:"50ml", supplier:"Metro", cost:0.411, ready:true},
+      {name:"Essig 5% ARO", amount:"100ml", supplier:"Metro", cost:0.15, ready:true},
+      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Honig ARO 2.5kg", amount:"50g", supplier:"Metro", cost:0.295, ready:true},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+    ]
+  },
+  {
+    name: "Chimichurri", concept: "Spudz", category: "sauce",
+    yield: "1670g", portions: 42, costPortion: 0.221, shelf: "4 Tage",
+    prepMin: 8,
+    prepSteps: "Petersilie hacken (größte Menge!), Knoblauch pressen, Zwiebel+Tomate fein schneiden, mit Öl+Limette vermengen → fertig",
+    whyFast: "450g Petersilie hacken ist die Hauptarbeit. Rest ist abmessen. Kein Kochen, kein Blender nötig.",
+    ingredients: [
+      {name:"Olivenöl ARO 5L", amount:"1000ml", supplier:"Metro", cost:5.6, ready:true},
+      {name:"Rauch Limettensaft", amount:"100ml", supplier:"Metro", cost:0.256, ready:true},
+      {name:"Petersilie glatt 1kg", amount:"450g", supplier:"Metro", cost:2.966, ready:false},
+      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Jalapeño 2900g", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
+      {name:"Rote Zwiebel 10kg", amount:"20g", supplier:"Metro", cost:0.015, ready:false},
+      {name:"Tomaten 6kg", amount:"30g", supplier:"Metro", cost:0.066, ready:false}
+    ]
+  },
+  {
+    name: "Chipotle Sauce", concept: "Spudz", category: "sauce",
+    yield: "15000g", portions: 375, costPortion: 0.074, shelf: "14 Tage",
+    prepMin: 3,
+    prepSteps: "10kg Mayo + 2.5L Piri Piri in großen Behälter → verrühren → fertig",
+    whyFast: "Nur 2 Zutaten, beide aus Eimer/Flasche. Einfach zusammenkippen und rühren.",
+    ingredients: [
+      {name:"Mayo 50% ARO 10kg", amount:"10000g", supplier:"Metro", cost:20.4, ready:true},
+      {name:"Piri Piri Lions", amount:"2500ml", supplier:"Lions", cost:7.175, ready:true}
+    ]
+  },
+  {
+    name: "Magic Green Sauce", concept: "Spudz", category: "sauce",
+    yield: "1640g", portions: 41, costPortion: 0.129, shelf: "4 Tage",
+    prepMin: 5,
+    prepSteps: "Petersilie hacken, Knoblauch pressen, alles mit Joghurt+Mayo+Öl+Limette in Blender → fertig",
+    whyFast: "Jalapeño aus Dose (ready). Knoblauch geschält. Nur Petersilie = echte Prep. Rest abmessen + blenden.",
+    ingredients: [
+      {name:"Olivenöl ARO 5L", amount:"100ml", supplier:"Metro", cost:0.56, ready:true},
+      {name:"Mayo 50% ARO", amount:"250g", supplier:"Metro", cost:0.51, ready:true},
+      {name:"Rauch Limettensaft", amount:"50ml", supplier:"Metro", cost:0.128, ready:true},
+      {name:"Petersilie glatt 1kg", amount:"150g", supplier:"Metro", cost:0.989, ready:false},
+      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Jalapeño 2900g", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Kløver Joghurt 10%", amount:"1000g", supplier:"Arla", cost:2.65, ready:true}
+    ]
+  },
+  {
+    name: "Lemon Vinaigrette", concept: "Spudz", category: "sauce",
+    yield: "1235g", portions: 31, costPortion: 0.208, shelf: "7 Tage",
+    prepMin: 3,
+    prepSteps: "Öl + Limette + Senf + Gewürze abmessen, Knoblauch pressen, verrühren → fertig",
+    whyFast: "Alles Flaschen-/Dosenware. Knoblauch geschält. Null echte Prep — nur abmessen und schütteln.",
+    ingredients: [
+      {name:"Olivenöl ARO 5L", amount:"1000ml", supplier:"Metro", cost:5.6, ready:true},
+      {name:"Rauch Limettensaft", amount:"75ml", supplier:"Metro", cost:0.192, ready:true},
+      {name:"Senf medium ARO", amount:"100ml", supplier:"Metro", cost:0.174, ready:true},
+      {name:"Knoblauch geschält", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Oregano", amount:"20g", supplier:"Metro", cost:0.2, ready:true},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+    ]
+  },
+  {
+    name: "Sriracha Lime Dressing", concept: "Spudz", category: "sauce",
+    yield: "1275g", portions: 32, costPortion: 0.293, shelf: "7 Tage",
+    prepMin: 2,
+    prepSteps: "Sriracha + Öl + Essig + Limette + Honig abmessen, Knoblauch pressen, verrühren → fertig",
+    whyFast: "100% Flaschenware. Knoblauch geschält. Einfach abmessen + rühren. Fertig.",
+    ingredients: [
+      {name:"Sriracha Flying Goose", amount:"1000ml", supplier:"Metro", cost:8.21, ready:true},
+      {name:"Olivenöl ARO 5L", amount:"100ml", supplier:"Metro", cost:0.56, ready:true},
+      {name:"Essig 5% ARO", amount:"50ml", supplier:"Metro", cost:0.075, ready:true},
+      {name:"Knoblauch geschält", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Rauch Limettensaft", amount:"75ml", supplier:"Metro", cost:0.192, ready:true},
+      {name:"Honig ARO 2.5kg", amount:"40g", supplier:"Metro", cost:0.236, ready:true}
+    ]
+  },
+  {
+    name: "Sweet & Spicy Mango", concept: "Spudz", category: "sauce",
+    yield: "1000g", portions: 25, costPortion: 0.17, shelf: "5 Tage",
+    prepMin: 5,
+    prepSteps: "Mango TK (aufgetaut) + Petersilie hacken + alle Flüssigkeiten in Blender → pürieren → fertig",
+    whyFast: "Mango TK = aufgetaut, ready. Nur Petersilie hacken = echte Prep. Rest = Flaschen abmessen + blenden.",
+    ingredients: [
+      {name:"Olivenöl ARO 5L", amount:"300ml", supplier:"Metro", cost:1.68, ready:true},
+      {name:"Rauch Limettensaft", amount:"50ml", supplier:"Metro", cost:0.128, ready:true},
+      {name:"Mango TK 1kg", amount:"150g", supplier:"Metro", cost:0.675, ready:true},
+      {name:"Petersilie glatt", amount:"100g", supplier:"Metro", cost:0.659, ready:false},
+      {name:"Knoblauch geschält", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Very Hot Chili Lions", amount:"50ml", supplier:"Lions", cost:0.145, ready:true},
+      {name:"Honig ARO 2.5kg", amount:"30g", supplier:"Metro", cost:0.177, ready:true},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Orangensaft ARO", amount:"280ml", supplier:"Metro", cost:0.529, ready:true}
+    ]
+  },
+  {
+    name: "Piri Piri Homemade", concept: "Spudz", category: "sauce",
+    yield: "1245g", portions: 31, costPortion: 0.261, shelf: "7 Tage",
+    prepMin: 8,
+    prepSteps: "Chili Rawit waschen+hacken, Zwiebel schneiden, Knoblauch pressen → alles mit Öl+Limette in Blender → pürieren",
+    whyFast: "Einziges Spudz-Rezept mit FRISCHEM Chili (250g Rawit). Das Hacken ist die Hauptarbeit. Rest = abmessen.",
+    ingredients: [
+      {name:"Olivenöl ARO 5L", amount:"600ml", supplier:"Metro", cost:3.36, ready:true},
+      {name:"Rauch Limettensaft", amount:"200ml", supplier:"Metro", cost:0.512, ready:true},
+      {name:"Chili Rawit rot", amount:"250g", supplier:"Metro", cost:3.75, ready:false},
+      {name:"Rote Zwiebel 10kg", amount:"125g", supplier:"Metro", cost:0.091, ready:false},
+      {name:"Knoblauch geschält", amount:"50g", supplier:"Metro", cost:0.3, ready:true},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+    ]
+  },
+  // ===== SPUDZ MIXES =====
+  {
+    name: "Mushroom Mix", concept: "Spudz", category: "mix",
+    yield: "14320g", portions: 358, costPortion: 0.104, shelf: "5 Tage",
+    prepMin: 5,
+    prepSteps: "5× Champignons-Dosen öffnen + abtropfen, Petersilie hacken, mit Piri Piri + Senf + Gewürzen verrühren → fertig",
+    whyFast: "Champignons kommen GESCHNITTEN in 2.65L Dosen (Metro ARO). Nur öffnen, abtropfen, verrühren. Petersilie = einzige echte Prep.",
+    ingredients: [
+      {name:"Champignons geschn. 2.65L", amount:"12750g", supplier:"Metro", cost:31.493, ready:true},
+      {name:"Petersilie glatt 1kg", amount:"300g", supplier:"Metro", cost:1.977, ready:false},
+      {name:"Piri Piri Lions 2.27L", amount:"1000ml", supplier:"Lions", cost:2.87, ready:true},
+      {name:"Senf medium ARO", amount:"200ml", supplier:"Metro", cost:0.348, ready:true},
+      {name:"Oregano", amount:"50g", supplier:"Metro", cost:0.5, ready:true},
+      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+    ]
+  },
+  {
+    name: "Bean Mix", concept: "Spudz", category: "mix",
+    yield: "18240g", portions: 456, costPortion: 0.068, shelf: "5 Tage",
+    prepMin: 5,
+    prepSteps: "Dosen öffnen (Kidney, Kichererbsen, Mais) → abtropfen → Petersilie hacken → mit Chili-Sauce + Gewürzen verrühren → fertig",
+    whyFast: "ALLE Hülsenfrüchte kommen in 2650ml Dosen (Metro ARO). Mais ebenso. Nur Dosen öffnen, abtropfen, zusammenkippen, würzen. Petersilie = einzige Frische-Prep.",
+    ingredients: [
+      {name:"Kidney Bohnen 2650ml", amount:"10000g", supplier:"Metro", cost:16, ready:true},
+      {name:"Kichererbsen 2650ml", amount:"5000g", supplier:"Metro", cost:6, ready:true},
+      {name:"Mais 2650ml", amount:"1350g", supplier:"Metro", cost:2.147, ready:true},
+      {name:"Petersilie glatt 1kg", amount:"300g", supplier:"Metro", cost:1.977, ready:false},
+      {name:"Very Hot Chili Lions", amount:"1500ml", supplier:"Lions", cost:4.35, ready:true},
+      {name:"Salz ARO", amount:"20g", supplier:"Metro", cost:0.01, ready:true},
+      {name:"Pfeffer schwarz", amount:"20g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Kreuzkümmel MC", amount:"50g", supplier:"Metro", cost:0.5, ready:true}
+    ]
+  },
+  // ===== SPUDZ FLEISCH =====
+  {
+    name: "Buffalo Pulled Chicken", concept: "Spudz", category: "meat",
+    yield: "3800g", portions: 48, costPortion: 0.756, shelf: "3 Tage",
+    prepMin: 2,
+    prepSteps: "Aufgetautes Pulled Chicken + Buffalo Sauce verrühren → fertig",
+    whyFast: "Pulled Chicken (Food-Kings TK) kommt fertig gegart — auftauen am Vortag. Buffalo Sauce ist ein eigener Batch. Einfach beides zusammenmischen.",
+    ingredients: [
+      {name:"Pulled Chicken Art.6953", amount:"3000g", supplier:"Food Kings", cost:29.4, ready:true},
+      {name:"Buffalo Sauce (Batch #2)", amount:"800g", supplier:"Batch", cost:6.506, ready:true}
+    ]
+  },
+  {
+    name: "Honey BBQ Pork", concept: "Spudz", category: "meat",
+    yield: "3800g", portions: 45, costPortion: 0.737, shelf: "3 Tage",
+    prepMin: 2,
+    prepSteps: "Aufgetaute Pork Carnitas + BBQ Sauce verrühren → fertig",
+    whyFast: "Pork Carnitas (Food-Kings TK) kommt fertig gegart. BBQ Sauce aus Flasche. Zusammenmischen = 2 min.",
+    ingredients: [
+      {name:"Pork Carnitas Art.5291", amount:"3000g", supplier:"Food Kings", cost:30.66, ready:true},
+      {name:"BBQ Sauce Lions", amount:"800g", supplier:"Lions", cost:2.296, ready:true}
+    ]
+  },
+  {
+    name: "Honey BBQ Chicken", concept: "Spudz", category: "meat",
+    yield: "3800g", portions: 48, costPortion: 0.661, shelf: "3 Tage",
+    prepMin: 2,
+    prepSteps: "Aufgetautes Chargrilled Chicken + BBQ Sauce verrühren → fertig",
+    whyFast: "Chargrilled Chicken (Food-Kings TK) kommt fertig gegrillt. BBQ Sauce aus Flasche. Zusammenmischen = 2 min.",
+    ingredients: [
+      {name:"Chargrilled Chicken Art.6602", amount:"3000g", supplier:"Food Kings", cost:29.1, ready:true},
+      {name:"BBQ Sauce Lions", amount:"800g", supplier:"Lions", cost:2.296, ready:true}
+    ]
+  },
+  {
+    name: "Chipotle Chicken", concept: "Spudz", category: "meat",
+    yield: "5600g", portions: 66, costPortion: 0.762, shelf: "3 Tage",
+    prepMin: 2,
+    prepSteps: "Aufgetautes Chargrilled Chicken + Piri Piri Sauce verrühren → fertig",
+    whyFast: "Chargrilled Chicken (Food-Kings TK) fertig gegrillt. Piri Piri aus Flasche (Lions 2.27L). Zusammenmischen = 2 min.",
+    ingredients: [
+      {name:"Chargrilled Chicken Art.6602", amount:"5000g", supplier:"Food Kings", cost:48.5, ready:true},
+      {name:"Piri Piri Lions 2.27L", amount:"600ml", supplier:"Lions", cost:1.722, ready:true}
+    ]
+  },
+  // ===== GREEK DIPS =====
+  {
+    name: "Tzatziki", concept: "Greek", category: "dip",
+    yield: "2500g", portions: 63, costPortion: 0.114, shelf: "3 Tage",
+    prepMin: 8,
+    prepSteps: "Gurke raspeln + ausdrücken (Hauptarbeit!), Knoblauch pressen, mit Joghurt + Zitrone + Dill + Öl verrühren → fertig",
+    whyFast: "Einzige echte Arbeit = Gurke raspeln und Wasser ausdrücken. Joghurt (Arla 10%) + geschälter Knoblauch + Zitronensaft = alles ready.",
+    ingredients: [
+      {name:"Kløver Yoghurt 10%", amount:"2000g", supplier:"Arla", cost:5.3, ready:true},
+      {name:"Cucumber", amount:"500g", supplier:"Metro", cost:1.43, ready:false},
+      {name:"Peeled Garlic", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Lemon Juice", amount:"30ml", supplier:"Metro", cost:0.083, ready:true},
+      {name:"Dried Dill", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
+      {name:"EVOO", amount:"30ml", supplier:"Metro", cost:0.189, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true}
+    ]
+  },
+  {
+    name: "Tahini Sauce", concept: "Greek", category: "dip",
+    yield: "1000g", portions: 25, costPortion: 0.122, shelf: "5 Tage",
+    prepMin: 3,
+    prepSteps: "Tahini + Wasser + Zitrone + Knoblauch + Gewürze verrühren → fertig",
+    whyFast: "Tahini (Arfiyato Daabool) aus Dose. Alles abmessen + verrühren. Knoblauch geschält → pressen. Null Schneidarbeit.",
+    ingredients: [
+      {name:"Tahini Daabool", amount:"400g", supplier:"Arfiyato", cost:2.7, ready:true},
+      {name:"Water", amount:"300ml", supplier:"—", cost:0, ready:true},
+      {name:"Lemon Juice", amount:"80ml", supplier:"Metro", cost:0.221, ready:true},
+      {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Cumin", amount:"3g", supplier:"Metro", cost:0.044, ready:true}
+    ]
+  },
+  {
+    name: "Oregano Vinaigrette", concept: "Greek", category: "sauce",
+    yield: "1000ml", portions: 25, costPortion: 0.166, shelf: "7 Tage",
+    prepMin: 3,
+    prepSteps: "Öl + Essig + Zitrone + Senf + Honig + Gewürze abmessen, Knoblauch pressen, schütteln → fertig",
+    whyFast: "100% Flaschen-/Dosenware. Knoblauch geschält. Einfach abmessen und emulgieren.",
+    ingredients: [
+      {name:"EVOO", amount:"500ml", supplier:"Metro", cost:3.149, ready:true},
+      {name:"Red Wine Vinegar", amount:"200ml", supplier:"Metro", cost:0.4, ready:true},
+      {name:"Lemon Juice", amount:"50ml", supplier:"Metro", cost:0.138, ready:true},
+      {name:"Dried Oregano", amount:"15g", supplier:"Metro", cost:0.15, ready:true},
+      {name:"Honey", amount:"30g", supplier:"Metro", cost:0.177, ready:true},
+      {name:"Senf ARO", amount:"15g", supplier:"Metro", cost:0.026, ready:true},
+      {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Pepper", amount:"3g", supplier:"Metro", cost:0.036, ready:true}
+    ]
+  },
+  {
+    name: "Lemon-Herb Sauce", concept: "Greek", category: "sauce",
+    yield: "1000ml", portions: 25, costPortion: 0.124, shelf: "4 Tage",
+    prepMin: 4,
+    prepSteps: "Petersilie hacken, Knoblauch pressen, mit Joghurt + Öl + Zitrone + Dill verrühren → fertig",
+    whyFast: "Joghurt (Arla) + Zitronensaft + Öl = ready. Nur Petersilie hacken = echte Prep.",
+    ingredients: [
+      {name:"Kløver Yoghurt 10%", amount:"400g", supplier:"Arla", cost:1.06, ready:true},
+      {name:"EVOO", amount:"200ml", supplier:"Metro", cost:1.26, ready:true},
+      {name:"Lemon Juice", amount:"100ml", supplier:"Metro", cost:0.276, ready:true},
+      {name:"Parsley", amount:"50g", supplier:"Metro", cost:0.33, ready:false},
+      {name:"Dried Dill", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
+      {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Pepper", amount:"3g", supplier:"Metro", cost:0.036, ready:true}
+    ]
+  },
+  {
+    name: "Greek Vinaigrette", concept: "Greek", category: "sauce",
+    yield: "800ml", portions: 20, costPortion: 0.196, shelf: "7 Tage",
+    prepMin: 3,
+    prepSteps: "Öl + Essig + Zitrone + Senf + Honig + Gewürze abmessen, Knoblauch pressen, schütteln → fertig",
+    whyFast: "Identisch wie Oregano Vinaigrette — 100% Flaschenware. Null Schneidarbeit.",
+    ingredients: [
+      {name:"EVOO", amount:"500ml", supplier:"Metro", cost:3.149, ready:true},
+      {name:"Red Wine Vinegar", amount:"150ml", supplier:"Metro", cost:0.3, ready:true},
+      {name:"Lemon Juice", amount:"50ml", supplier:"Metro", cost:0.138, ready:true},
+      {name:"Dried Oregano", amount:"10g", supplier:"Metro", cost:0.1, ready:true},
+      {name:"Honey", amount:"20g", supplier:"Metro", cost:0.118, ready:true},
+      {name:"Senf ARO", amount:"10g", supplier:"Metro", cost:0.017, ready:true},
+      {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Pepper", amount:"3g", supplier:"Metro", cost:0.036, ready:true}
+    ]
+  },
+  {
+    name: "Herbed Yogurt", concept: "Greek", category: "dip",
+    yield: "1600g", portions: 40, costPortion: 0.119, shelf: "4 Tage",
+    prepMin: 4,
+    prepSteps: "Petersilie hacken, Knoblauch pressen, mit Joghurt + getrocknete Kräuter + Zitrone + Öl verrühren → fertig",
+    whyFast: "Joghurt 1.5kg (Arla Eimer) + getrocknete Kräuter + Zitronensaft = alles ready. Nur 40g Petersilie hacken.",
+    ingredients: [
+      {name:"Kløver Yoghurt 10%", amount:"1500g", supplier:"Arla", cost:3.975, ready:true},
+      {name:"Parsley", amount:"40g", supplier:"Metro", cost:0.264, ready:false},
+      {name:"Dried Mint", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
+      {name:"Dried Dill", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
+      {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
+      {name:"Lemon Juice", amount:"30ml", supplier:"Metro", cost:0.083, ready:true},
+      {name:"EVOO", amount:"30ml", supplier:"Metro", cost:0.189, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Sumac", amount:"5g", supplier:"Metro", cost:0.05, ready:true}
+    ]
+  },
+  {
+    name: "Flying Greek Sauce", concept: "Greek", category: "sauce",
+    yield: "1000g", portions: 25, costPortion: 0.114, shelf: "4 Tage",
+    prepMin: 4,
+    prepSteps: "Tomato Pepper Strips (DOSE!) + Joghurt + Tomatenmark + Saucen + Gewürze in Blender → pürieren → fertig",
+    whyFast: "Tomato Pepper Strips kommen in 4250ml Metro-Dose (ARO) — READY! Kein Paprika schneiden. Alles in Blender, pürieren, fertig.",
+    ingredients: [
+      {name:"Tomato Pepper Strips", amount:"300g", supplier:"Metro", cost:0.557, ready:true},
+      {name:"Kløver Yoghurt 10%", amount:"400g", supplier:"Arla", cost:1.06, ready:true},
+      {name:"EVOO", amount:"100ml", supplier:"Metro", cost:0.63, ready:true},
+      {name:"Tomato Paste", amount:"50g", supplier:"Metro", cost:0.1, ready:true},
+      {name:"Balsamic Vinegar", amount:"30ml", supplier:"Metro", cost:0.102, ready:true},
+      {name:"Worcester Sauce", amount:"15ml", supplier:"Metro", cost:0.097, ready:true},
+      {name:"Smoked Paprika", amount:"10g", supplier:"Metro", cost:0.1, ready:true},
+      {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
+      {name:"Oregano", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Pepper+Chili", amount:"6g", supplier:"Metro", cost:0.072, ready:true}
+    ]
+  },
+  {
+    name: "Tirokafteri (Spicy Feta Whip)", concept: "Greek", category: "dip",
+    yield: "1000g", portions: 17, costPortion: 0.288, shelf: "4 Tage",
+    prepMin: 5,
+    prepSteps: "Feta zerbröseln, Roasted Red Peppers (DOSE!) + Joghurt + Öl + Gewürze in Blender → pürieren → fertig",
+    whyFast: "Roasted Red Peppers kommen aus Metro-Dose — READY, kein Rösten nötig! Feta (Arla Apetina) zerbröseln + alles blenden.",
+    ingredients: [
+      {name:"Apetina Feta", amount:"500g", supplier:"Arla", cost:3.461, ready:true},
+      {name:"Kløver Yoghurt 10%", amount:"200g", supplier:"Arla", cost:0.53, ready:true},
+      {name:"Roasted Red Peppers", amount:"150g", supplier:"Metro", cost:0.28, ready:true},
+      {name:"EVOO", amount:"60ml", supplier:"Metro", cost:0.378, ready:true},
+      {name:"Lemon Juice", amount:"20ml", supplier:"Metro", cost:0.055, ready:true},
+      {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Chili Flakes", amount:"5g", supplier:"Metro", cost:0.075, ready:true},
+      {name:"Oregano", amount:"3g", supplier:"Metro", cost:0.03, ready:true},
+      {name:"Pepper", amount:"2g", supplier:"Metro", cost:0.024, ready:true}
+    ]
+  },
+  {
+    name: "Htipiti (Smoky Roasted Pepper Feta)", concept: "Greek", category: "dip",
+    yield: "1000g", portions: 17, costPortion: 0.21, shelf: "4 Tage",
+    prepMin: 5,
+    prepSteps: "Roasted Red Peppers (DOSE!) + Feta zerbröseln + Öl + Gewürze in Blender → pürieren → fertig",
+    whyFast: "400g Roasted Red Peppers aus Metro-Dose — READY! Feta zerbröseln + blenden. Kein Paprika rösten.",
+    ingredients: [
+      {name:"Roasted Red Peppers", amount:"400g", supplier:"Metro", cost:0.747, ready:true},
+      {name:"Apetina Feta", amount:"300g", supplier:"Arla", cost:2.077, ready:true},
+      {name:"EVOO", amount:"80ml", supplier:"Metro", cost:0.504, ready:true},
+      {name:"Lemon Juice", amount:"20ml", supplier:"Metro", cost:0.055, ready:true},
+      {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Smoked Paprika", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
+      {name:"Chili Flakes", amount:"2g", supplier:"Metro", cost:0.03, ready:true},
+      {name:"Oregano", amount:"3g", supplier:"Metro", cost:0.03, ready:true},
+      {name:"Salt", amount:"2g", supplier:"Metro", cost:0.001, ready:true},
+      {name:"Pepper", amount:"2g", supplier:"Metro", cost:0.024, ready:true}
+    ]
+  },
+  {
+    name: "Skordalia (Greek Garlic Potato Dip)", concept: "Greek", category: "dip",
+    yield: "1200g", portions: 20, costPortion: 0.089, shelf: "3 Tage",
+    prepMin: 5,
+    prepSteps: "Gebackene Kartoffeln (Spudz Nebenprodukt!) schälen + stampfen, Knoblauch pressen, mit Öl + Zitrone + Essig verrühren → fertig",
+    whyFast: "Kartoffeln sind SCHON GEBACKEN (Spudz-Tagesproduktion). Nur schälen + stampfen + verrühren. Kein Kochen nötig!",
+    ingredients: [
+      {name:"Baked Potatoes", amount:"800g", supplier:"Spudz Side", cost:0.48, ready:true},
+      {name:"EVOO", amount:"150ml", supplier:"Metro", cost:0.945, ready:true},
+      {name:"Lemon Juice", amount:"60ml", supplier:"Metro", cost:0.166, ready:true},
+      {name:"Peeled Garlic", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"White Wine Vinegar", amount:"30ml", supplier:"Metro", cost:0.045, ready:true},
+      {name:"Salt", amount:"8g", supplier:"Metro", cost:0.004, ready:true},
+      {name:"White Pepper", amount:"2g", supplier:"Metro", cost:0.024, ready:true}
+    ]
+  },
+  {
+    name: "Pantzarosalata (Beetroot Yogurt Dip)", concept: "Greek", category: "dip",
+    yield: "1100g", portions: 18, costPortion: 0.133, shelf: "3 Tage",
+    prepMin: 5,
+    prepSteps: "Rote Bete (DOSE!) abtropfen, Walnüsse grob hacken, mit Joghurt + Öl + Zitrone + Essig in Blender → pürieren → fertig",
+    whyFast: "Rote Bete aus Metro-Dose (ARO Beetroot Slices) — READY! Walnüsse grob hacken = 1 min. Rest = abmessen + blenden.",
+    ingredients: [
+      {name:"Beetroot (canned)", amount:"500g", supplier:"Metro", cost:0.62, ready:true},
+      {name:"Kløver Yoghurt 10%", amount:"250g", supplier:"Arla", cost:0.663, ready:true},
+      {name:"Walnuts", amount:"60g", supplier:"Metro", cost:0.5, ready:false},
+      {name:"EVOO", amount:"60ml", supplier:"Metro", cost:0.378, ready:true},
+      {name:"Lemon Juice", amount:"30ml", supplier:"Metro", cost:0.083, ready:true},
+      {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Red Wine Vinegar", amount:"20ml", supplier:"Metro", cost:0.04, ready:true},
+      {name:"Dried Dill", amount:"3g", supplier:"Metro", cost:0.03, ready:true},
+      {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
+      {name:"Pepper", amount:"2g", supplier:"Metro", cost:0.024, ready:true}
+    ]
+  },
+  {
+    name: "Bulgur (Base for Greek Bowls)", concept: "Greek", category: "mix",
+    yield: "2000g", portions: 13, costPortion: 0.217, shelf: "1 Tag (verwerfen!)",
+    prepMin: 15,
+    prepSteps: "Bulgur mit heißem Wasser + Salz + Öl aufgießen → 10-12 min quellen lassen (passiv!) → auflockern → fertig",
+    whyFast: "Bulgur braucht kein aktives Kochen — nur heißes Wasser drüber, Deckel drauf, warten. Aktive Arbeit = 2 min, Wartezeit = 12 min.",
+    ingredients: [
+      {name:"Bulgur (dry)", amount:"750g", supplier:"Metro", cost:2.5, ready:false},
+      {name:"Water", amount:"1500ml", supplier:"—", cost:0, ready:true},
+      {name:"EVOO", amount:"50ml", supplier:"Metro", cost:0.315, ready:true},
+      {name:"Salt", amount:"10g", supplier:"Metro", cost:0.005, ready:true}
+    ]
+  }
+];
+
+function supplierDot(s) {
+  const map = {Metro:'metro',Arla:'arla',Arfiyato:'arfiyato',Lions:'lions','Food Kings':'foodkings',Batch:'batch'};
+  return `<span class="supplier-dot dot-${map[s]||'other'}"></span>${s}`;
+}
+
+function renderBatches(filter) {
+  const container = document.getElementById('batches-container');
+  const filtered = filter === 'all' ? BATCHES : BATCHES.filter(b => {
+    if (filter === 'spudz') return b.concept === 'Spudz';
+    if (filter === 'greek') return b.concept === 'Greek';
+    return b.category === filter;
+  });
+
+  const spudz = filtered.filter(b => b.concept === 'Spudz');
+  const greek = filtered.filter(b => b.concept === 'Greek');
+
+  let html = '';
+
+  if (spudz.length) {
+    html += `<div class="concept-section"><div class="concept-title concept-spudz">🥔 Spudz Batches (${spudz.length})</div>`;
+    spudz.forEach((b,i) => html += renderCard(b, 's'+i));
+    html += '</div>';
+  }
+  if (greek.length) {
+    html += `<div class="concept-section"><div class="concept-title concept-greek">🫒 Greek Batches (${greek.length})</div>`;
+    greek.forEach((b,i) => html += renderCard(b, 'g'+i));
+    html += '</div>';
+  }
+
+  container.innerHTML = html;
+  renderSummary(filtered);
+}
+
+function renderCard(b, id) {
+  const totalCost = b.ingredients.reduce((s,i) => s + (i.cost||0), 0);
+  const readyCount = b.ingredients.filter(i => i.ready).length;
+  const freshCount = b.ingredients.filter(i => !i.ready).length;
+
+  let ingRows = b.ingredients.map(i => `
+    <tr>
+      <td>${i.name} ${i.ready ? '<span class="ready-tag">READY</span>' : '<span class="fresh-tag">PREP</span>'}</td>
+      <td>${i.amount}</td>
+      <td>${supplierDot(i.supplier)}</td>
+      <td style="text-align:right">${i.cost.toFixed(2)}€</td>
+    </tr>`).join('');
+
+  return `
+  <div class="batch-card" data-concept="${b.concept.toLowerCase()}" data-cat="${b.category}">
+    <div class="batch-header" onclick="toggleCard('${id}')">
+      <div>
+        <div class="batch-name">${b.name}</div>
+        <div style="font-size:11px;color:#8b7355;margin-top:2px;">${readyCount} ready · ${freshCount} prep</div>
+      </div>
+      <div class="batch-meta">
+        <span class="tag tag-time">⏱ ${b.prepMin} min</span>
+        <span class="tag tag-portions">🍽 ${b.portions}</span>
+        <span class="tag tag-cost">💰 ${b.costPortion.toFixed(3)}€</span>
+        <span class="tag tag-shelf">📅 ${b.shelf}</span>
+        <span class="arrow" id="arrow-${id}">▶</span>
+      </div>
+    </div>
+    <div class="batch-body" id="body-${id}">
+      <div class="prep-info">
+        <div><b>⏱ ${b.prepMin} min — Was tun?</b></div>
+        <div class="prep-step">${b.prepSteps}</div>
+        <div style="margin-top:6px;color:#666;font-style:italic;">💡 ${b.whyFast}</div>
+      </div>
+      <table class="ing-table">
+        <thead><tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr></thead>
+        <tbody>${ingRows}
+          <tr class="cost-row"><td colspan="3">Batch-Gesamtkosten (${b.yield})</td><td style="text-align:right">${totalCost.toFixed(2)}€</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  const body = document.getElementById('body-'+id);
+  const arrow = document.getElementById('arrow-'+id);
   body.classList.toggle('open');
   arrow.classList.toggle('open');
 }
 
-// Expand all on print
-window.addEventListener('beforeprint', () => {
-  document.querySelectorAll('.batch-body').forEach(b => b.classList.add('open'));
-});
+function filterBatches(f) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderBatches(f);
+}
+
+function renderSummary(batches) {
+  const tbody = document.getElementById('summary-body');
+  let totalMin = 0;
+  tbody.innerHTML = batches.map(b => {
+    totalMin += b.prepMin;
+    const readyPct = Math.round(b.ingredients.filter(i=>i.ready).length / b.ingredients.length * 100);
+    return `<tr>
+      <td><b>${b.name}</b></td>
+      <td>${b.concept}</td>
+      <td>${b.prepMin} min</td>
+      <td>${b.portions}</td>
+      <td>${b.costPortion.toFixed(3)}€</td>
+      <td>${b.shelf}</td>
+      <td style="font-size:11px">${readyPct}% ready</td>
+    </tr>`;
+  }).join('') + `<tr class="cost-row"><td><b>GESAMT</b></td><td></td><td><b>${totalMin} min</b> (sequenziell)</td><td><b>${batches.reduce((s,b)=>s+b.portions,0)}</b></td><td></td><td></td><td></td></tr>`;
+}
+
+// Initial render
+renderBatches('all');
 </script>
 </body>
 </html>
