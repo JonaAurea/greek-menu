@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spudz & Greek — Alle Batch Rezepte</title>
+<title>Spudz & Greek — All Batch Recipes</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f0eb; color: #2d2420; padding: 20px; }
@@ -48,8 +48,6 @@
   .arrow.open { transform: rotate(90deg); }
   .prep-info { margin-top: 10px; padding: 10px 14px; background: #fff8e1; border-radius: 8px; font-size: 12px; line-height: 1.6; }
   .prep-info b { color: #e65100; }
-  .prep-step { display: flex; gap: 6px; align-items: baseline; margin: 2px 0; }
-  .prep-step .step-icon { flex-shrink: 0; }
   .ready-tag { background: #e8f5e9; color: #2e7d32; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
   .fresh-tag { background: #fff3e0; color: #e65100; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
   .total-row { margin-top: 15px; padding: 12px 16px; background: #faf7f4; border-radius: 8px; display: flex; justify-content: space-between; font-size: 13px; }
@@ -73,84 +71,84 @@
 </head>
 <body>
 
-<h1>🥔 Spudz & Greek — Batch Rezepte</h1>
-<p class="subtitle">28 Batches · Realistische Prep-Zeiten basierend auf echten Produktformaten</p>
+<h1>🥔 Spudz & Greek — Batch Recipes</h1>
+<p class="subtitle">28 Batches · Realistic prep times based on actual product formats</p>
 
 <div class="stats">
   <div class="stat"><div class="num">16</div><div class="label">Spudz Batches</div></div>
   <div class="stat"><div class="num">12</div><div class="label">Greek Batches</div></div>
-  <div class="stat"><div class="num">~55 min</div><div class="label">Alle Spudz (parallel)</div></div>
-  <div class="stat"><div class="num">~40 min</div><div class="label">Alle Greek (parallel)</div></div>
+  <div class="stat"><div class="num">~55 min</div><div class="label">All Spudz (parallel)</div></div>
+  <div class="stat"><div class="num">~40 min</div><div class="label">All Greek (parallel)</div></div>
 </div>
 
 <div class="filter-bar">
-  <button class="filter-btn active" onclick="filterBatches('all')">Alle (28)</button>
+  <button class="filter-btn active" onclick="filterBatches('all')">All (28)</button>
   <button class="filter-btn" onclick="filterBatches('spudz')">🥔 Spudz (16)</button>
   <button class="filter-btn" onclick="filterBatches('greek')">🫒 Greek (12)</button>
-  <button class="filter-btn" onclick="filterBatches('sauce')">Saucen</button>
+  <button class="filter-btn" onclick="filterBatches('sauce')">Sauces</button>
   <button class="filter-btn" onclick="filterBatches('dip')">Dips</button>
-  <button class="filter-btn" onclick="filterBatches('meat')">Fleisch</button>
+  <button class="filter-btn" onclick="filterBatches('meat')">Meat</button>
   <button class="filter-btn" onclick="filterBatches('mix')">Mixes</button>
 </div>
 
 <div id="batches-container"></div>
 
 <div class="parallel-section">
-  <h2>⚡ Parallel-Prep Guide — Alle 28 Batches</h2>
-  <p style="font-size:13px;color:#8b7355;margin-bottom:15px;">Wenn du ALLE Batches auf einmal machst, bereitest du gemeinsame Zutaten einmal vor. TK-Fleisch muss am Vortag raus!</p>
+  <h2>⚡ Parallel Prep Guide — All 28 Batches</h2>
+  <p style="font-size:13px;color:#8b7355;margin-bottom:15px;">When doing ALL batches at once, shared ingredients are prepped once. Frozen meat must be thawed the day before!</p>
 
   <div class="parallel-block">
-    <h3><span class="time-badge">VORTAG</span> TK auftauen</h3>
+    <h3><span class="time-badge">DAY BEFORE</span> Thaw frozen items</h3>
     <ul>
-      <li>❄️ Pulled Chicken (3kg), Pork Carnitas (3kg), Chargrilled Chicken (8kg) → Kühlschrank</li>
-      <li>❄️ Avocado Cubes (200g), Mango TK (150g) → Kühlschrank</li>
+      <li>❄️ Pulled Chicken (3kg), Pork Carnitas (3kg), Chargrilled Chicken (8kg) → fridge</li>
+      <li>❄️ Avocado Cubes (200g), Mango (150g) → fridge</li>
     </ul>
   </div>
 
   <div class="parallel-block">
-    <h3><span class="time-badge">0–10 min</span> Gemeinsame Frische-Prep</h3>
+    <h3><span class="time-badge">0–10 min</span> Shared fresh prep</h3>
     <ul>
-      <li>🌿 Petersilie waschen + hacken — 1kg reicht für: Avocado Dressing, Chimichurri, Magic Green, Mushroom Mix, Bean Mix, Sweet & Spicy Mango</li>
-      <li>🧅 Rote Zwiebel schneiden — für: Avocado Dressing, Chimichurri, Piri Piri</li>
-      <li>🍅 Tomaten würfeln — für: Avocado Dressing, Chimichurri</li>
-      <li>🥒 Gurke raspeln + ausdrücken — für: Tzatziki</li>
-      <li>🌶️ Chili Rawit hacken — für: Piri Piri Homemade</li>
+      <li>🌿 Wash + chop parsley — 1kg covers: Avocado Dressing, Chimichurri, Magic Green, Mushroom Mix, Bean Mix, Sweet & Spicy Mango</li>
+      <li>🧅 Dice red onion — for: Avocado Dressing, Chimichurri, Piri Piri</li>
+      <li>🍅 Dice tomatoes — for: Avocado Dressing, Chimichurri</li>
+      <li>🥒 Grate + squeeze cucumber — for: Tzatziki</li>
+      <li>🌶️ Chop Chili Rawit — for: Piri Piri Homemade</li>
     </ul>
   </div>
 
   <div class="parallel-block">
-    <h3><span class="time-badge">10–15 min</span> Bulgur aufsetzen + Dosen öffnen</h3>
+    <h3><span class="time-badge">10–15 min</span> Start bulgur + open cans</h3>
     <ul>
-      <li>🫘 Bulgur mit heißem Wasser aufgießen, quellen lassen (macht sich selbst!)</li>
-      <li>🥫 ALLE Dosen öffnen + abtropfen: Kidney, Kichererbsen, Mais, Champignons, Rote Bete, Jalapeños, Paprika Strips, Roasted Red Peppers</li>
+      <li>🫘 Pour hot water over bulgur, let it soak (does itself!)</li>
+      <li>🥫 Open + drain ALL cans: Kidney Beans, Chickpeas, Sweet Corn, Mushrooms, Beetroot, Jalapeños, Pepper Strips, Roasted Red Peppers</li>
     </ul>
   </div>
 
   <div class="parallel-block">
-    <h3><span class="time-badge">15–40 min</span> Mixen & Zusammenrühren</h3>
+    <h3><span class="time-badge">15–40 min</span> Mix & blend everything</h3>
     <ul>
-      <li>🥣 Alle Saucen/Dressings mixen (Blender/Stabmixer): Avo Dressing, Buffalo, Spudz Sauce, Chimichurri, Chipotle, Magic Green, Lemon Vinaigrette, Sriracha Lime, Sweet & Spicy Mango, Piri Piri</li>
-      <li>🥣 Griechische Dips: Tzatziki, Tahini, Tirokafteri, Htipiti, Skordalia, Pantzarosalata, Flying Greek</li>
-      <li>🥣 Griechische Dressings: Oregano Vin., Greek Vin., Lemon-Herb, Herbed Yogurt</li>
-      <li>🫘 Bean Mix + Mushroom Mix: Dosen-Inhalt + Gewürze/Sauce zusammenrühren</li>
+      <li>🥣 Blend all sauces/dressings: Avo Dressing, Buffalo, Spudz Sauce, Chimichurri, Chipotle, Magic Green, Lemon Vinaigrette, Sriracha Lime, Sweet & Spicy Mango, Piri Piri</li>
+      <li>🥣 Greek dips: Tzatziki, Tahini, Tirokafteri, Htipiti, Skordalia, Pantzarosalata, Flying Greek</li>
+      <li>🥣 Greek dressings: Oregano Vin., Greek Vin., Lemon-Herb, Herbed Yogurt</li>
+      <li>🫘 Bean Mix + Mushroom Mix: dump cans + seasoning/sauce, stir</li>
     </ul>
   </div>
 
   <div class="parallel-block">
-    <h3><span class="time-badge">40–55 min</span> Fleisch-Batches + Abfüllen</h3>
+    <h3><span class="time-badge">40–55 min</span> Meat batches + portioning</h3>
     <ul>
-      <li>🍗 4 Fleisch-Batches: aufgetautes Fleisch + Sauce verrühren (je ~2 min)</li>
-      <li>📦 Alles in GN-Behälter abfüllen, beschriften, datieren</li>
-      <li>🧹 Aufräumen</li>
+      <li>🍗 4 meat batches: thawed meat + sauce, mix (~2 min each)</li>
+      <li>📦 Portion into GN containers, label, date</li>
+      <li>🧹 Clean up</li>
     </ul>
   </div>
 </div>
 
 <div class="parallel-section" style="margin-top:20px;">
-  <h2>📊 Übersichtstabelle</h2>
+  <h2>📊 Summary Table</h2>
   <table class="summary" id="summary-table">
     <thead>
-      <tr><th>Batch</th><th>Konzept</th><th>Prep</th><th>Portionen</th><th>€/Portion</th><th>Haltbar</th><th>Was tun?</th></tr>
+      <tr><th>Batch</th><th>Concept</th><th>Prep</th><th>Portions</th><th>€/Portion</th><th>Shelf Life</th><th>Method</th></tr>
     </thead>
     <tbody id="summary-body"></tbody>
   </table>
@@ -158,80 +156,80 @@
 
 <script>
 const BATCHES = [
-  // ===== SPUDZ SAUCEN =====
+  // ===== SPUDZ SAUCES =====
   {
     name: "Avocado Dressing", concept: "Spudz", category: "sauce",
-    yield: "900g", portions: 22, costPortion: 0.188, shelf: "3 Tage",
+    yield: "900g", portions: 22, costPortion: 0.188, shelf: "3 days",
     prepMin: 8,
-    prepSteps: "Frisches hacken (Petersilie, Zwiebel, Tomate, Knoblauch pressen), Avocado Cubes TK (aufgetaut) dazu, alles in Blender → fertig",
-    whyFast: "Avocado Cubes kommen TK fertig gewürfelt. Knoblauch kommt geschält. Nur Petersilie+Zwiebel+Tomate = echte Prep.",
+    prepSteps: "Chop fresh items (parsley, onion, tomato, press garlic), add thawed avocado cubes, blend everything → done",
+    whyFast: "Avocado cubes come frozen pre-diced. Garlic comes peeled. Only parsley + onion + tomato = real prep.",
     ingredients: [
-      {name:"Olivenöl ARO 5L", amount:"200ml", supplier:"Metro", cost:1.12, ready:true},
-      {name:"Rauch Zitronensaft 1L", amount:"150ml", supplier:"Metro", cost:0.414, ready:true},
-      {name:"Apfelessig MC", amount:"50ml", supplier:"Metro", cost:0.1, ready:true},
-      {name:"Avocado Cubes TK", amount:"200g", supplier:"Metro", cost:0.998, ready:true},
-      {name:"Petersilie glatt 1kg", amount:"150g", supplier:"Metro", cost:0.989, ready:false},
-      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
-      {name:"Jalapeño 2900g", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
-      {name:"Rote Zwiebel 10kg", amount:"20g", supplier:"Metro", cost:0.015, ready:false},
-      {name:"Tomaten 6kg", amount:"30g", supplier:"Metro", cost:0.066, ready:false},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"EVOO ARO 5L", amount:"200ml", supplier:"Metro", cost:1.12, ready:true},
+      {name:"Rauch Lemon Juice 1L", amount:"150ml", supplier:"Metro", cost:0.414, ready:true},
+      {name:"Apple Cider Vinegar MC", amount:"50ml", supplier:"Metro", cost:0.1, ready:true},
+      {name:"Avocado Cubes (frozen)", amount:"200g", supplier:"Metro", cost:0.998, ready:true},
+      {name:"Flat Parsley 1kg", amount:"150g", supplier:"Metro", cost:0.989, ready:false},
+      {name:"Peeled Garlic", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Jalapeño 2900g (canned)", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
+      {name:"Red Onion 10kg", amount:"20g", supplier:"Metro", cost:0.015, ready:false},
+      {name:"Tomatoes 6kg", amount:"30g", supplier:"Metro", cost:0.066, ready:false},
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
       {name:"Oregano", amount:"10g", supplier:"Metro", cost:0.1, ready:true}
     ]
   },
   {
     name: "Buffalo Sauce", concept: "Spudz", category: "sauce",
-    yield: "1400g", portions: 35, costPortion: 0.325, shelf: "5 Tage",
+    yield: "1400g", portions: 35, costPortion: 0.325, shelf: "5 days",
     prepMin: 3,
-    prepSteps: "Sriracha + Worcester + geschmolzene Butter + Cayenne verrühren → fertig",
-    whyFast: "Alles Flaschen-/Dosenware. Butter schmelzen = 1 min Mikrowelle. Zusammenrühren = 2 min.",
+    prepSteps: "Mix sriracha + worcester + melted butter + cayenne → done",
+    whyFast: "All bottles/tubs. Melt butter = 1 min microwave. Stir together = 2 min.",
     ingredients: [
       {name:"Sriracha Flying Goose", amount:"1000ml", supplier:"Metro", cost:8.21, ready:true},
       {name:"Worcester Sauce", amount:"300ml", supplier:"Metro", cost:1.932, ready:true},
       {name:"Lurpak Butter", amount:"50g", supplier:"Arla", cost:0.493, ready:true},
-      {name:"Cayennepfeffer MC", amount:"50g", supplier:"Metro", cost:0.75, ready:true}
+      {name:"Cayenne Pepper MC", amount:"50g", supplier:"Metro", cost:0.75, ready:true}
     ]
   },
   {
     name: "Spudz Sauce", concept: "Spudz", category: "sauce",
-    yield: "760g", portions: 19, costPortion: 0.14, shelf: "7 Tage",
+    yield: "760g", portions: 19, costPortion: 0.14, shelf: "7 days",
     prepMin: 4,
-    prepSteps: "BBQ + Senf + Sriracha + Essig + Honig abmessen, Knoblauch pressen, alles verrühren → fertig",
-    whyFast: "Alles Flaschen-Ware. Nur Knoblauch pressen (geschält aus Metro). Rest = abmessen + rühren.",
+    prepSteps: "Measure BBQ + mustard + sriracha + vinegar + honey, press garlic, stir together → done",
+    whyFast: "All bottles. Only garlic to press (comes peeled from Metro). Rest = measure + stir.",
     ingredients: [
       {name:"Heinz BBQ 10L", amount:"300ml", supplier:"Metro", cost:1.089, ready:true},
-      {name:"Senf medium ARO", amount:"200ml", supplier:"Metro", cost:0.348, ready:true},
+      {name:"Medium Mustard ARO", amount:"200ml", supplier:"Metro", cost:0.348, ready:true},
       {name:"Sriracha Flying Goose", amount:"50ml", supplier:"Metro", cost:0.411, ready:true},
-      {name:"Essig 5% ARO", amount:"100ml", supplier:"Metro", cost:0.15, ready:true},
-      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
-      {name:"Honig ARO 2.5kg", amount:"50g", supplier:"Metro", cost:0.295, ready:true},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+      {name:"Vinegar 5% ARO", amount:"100ml", supplier:"Metro", cost:0.15, ready:true},
+      {name:"Peeled Garlic", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Honey ARO 2.5kg", amount:"50g", supplier:"Metro", cost:0.295, ready:true},
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
     ]
   },
   {
     name: "Chimichurri", concept: "Spudz", category: "sauce",
-    yield: "1670g", portions: 42, costPortion: 0.221, shelf: "4 Tage",
+    yield: "1670g", portions: 42, costPortion: 0.221, shelf: "4 days",
     prepMin: 8,
-    prepSteps: "Petersilie hacken (größte Menge!), Knoblauch pressen, Zwiebel+Tomate fein schneiden, mit Öl+Limette vermengen → fertig",
-    whyFast: "450g Petersilie hacken ist die Hauptarbeit. Rest ist abmessen. Kein Kochen, kein Blender nötig.",
+    prepSteps: "Chop parsley (biggest amount!), press garlic, finely dice onion + tomato, mix with oil + lime → done",
+    whyFast: "450g parsley chopping is the main work. Rest is measuring. No cooking, no blender needed.",
     ingredients: [
-      {name:"Olivenöl ARO 5L", amount:"1000ml", supplier:"Metro", cost:5.6, ready:true},
-      {name:"Rauch Limettensaft", amount:"100ml", supplier:"Metro", cost:0.256, ready:true},
-      {name:"Petersilie glatt 1kg", amount:"450g", supplier:"Metro", cost:2.966, ready:false},
-      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
-      {name:"Jalapeño 2900g", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
-      {name:"Rote Zwiebel 10kg", amount:"20g", supplier:"Metro", cost:0.015, ready:false},
-      {name:"Tomaten 6kg", amount:"30g", supplier:"Metro", cost:0.066, ready:false}
+      {name:"EVOO ARO 5L", amount:"1000ml", supplier:"Metro", cost:5.6, ready:true},
+      {name:"Rauch Lime Juice", amount:"100ml", supplier:"Metro", cost:0.256, ready:true},
+      {name:"Flat Parsley 1kg", amount:"450g", supplier:"Metro", cost:2.966, ready:false},
+      {name:"Peeled Garlic", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Jalapeño 2900g (canned)", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
+      {name:"Red Onion 10kg", amount:"20g", supplier:"Metro", cost:0.015, ready:false},
+      {name:"Tomatoes 6kg", amount:"30g", supplier:"Metro", cost:0.066, ready:false}
     ]
   },
   {
     name: "Chipotle Sauce", concept: "Spudz", category: "sauce",
-    yield: "15000g", portions: 375, costPortion: 0.074, shelf: "14 Tage",
+    yield: "15kg", portions: 375, costPortion: 0.074, shelf: "14 days",
     prepMin: 3,
-    prepSteps: "10kg Mayo + 2.5L Piri Piri in großen Behälter → verrühren → fertig",
-    whyFast: "Nur 2 Zutaten, beide aus Eimer/Flasche. Einfach zusammenkippen und rühren.",
+    prepSteps: "Dump 10kg mayo + 2.5L piri piri into big container → stir → done",
+    whyFast: "Only 2 ingredients, both from tub/bottle. Just pour and stir.",
     ingredients: [
       {name:"Mayo 50% ARO 10kg", amount:"10000g", supplier:"Metro", cost:20.4, ready:true},
       {name:"Piri Piri Lions", amount:"2500ml", supplier:"Lions", cost:7.175, ready:true}
@@ -239,174 +237,174 @@ const BATCHES = [
   },
   {
     name: "Magic Green Sauce", concept: "Spudz", category: "sauce",
-    yield: "1640g", portions: 41, costPortion: 0.129, shelf: "4 Tage",
+    yield: "1640g", portions: 41, costPortion: 0.129, shelf: "4 days",
     prepMin: 5,
-    prepSteps: "Petersilie hacken, Knoblauch pressen, alles mit Joghurt+Mayo+Öl+Limette in Blender → fertig",
-    whyFast: "Jalapeño aus Dose (ready). Knoblauch geschält. Nur Petersilie = echte Prep. Rest abmessen + blenden.",
+    prepSteps: "Chop parsley, press garlic, blend with yoghurt + mayo + oil + lime → done",
+    whyFast: "Jalapeño from can (ready). Garlic peeled. Only parsley = real prep. Rest measure + blend.",
     ingredients: [
-      {name:"Olivenöl ARO 5L", amount:"100ml", supplier:"Metro", cost:0.56, ready:true},
+      {name:"EVOO ARO 5L", amount:"100ml", supplier:"Metro", cost:0.56, ready:true},
       {name:"Mayo 50% ARO", amount:"250g", supplier:"Metro", cost:0.51, ready:true},
-      {name:"Rauch Limettensaft", amount:"50ml", supplier:"Metro", cost:0.128, ready:true},
-      {name:"Petersilie glatt 1kg", amount:"150g", supplier:"Metro", cost:0.989, ready:false},
-      {name:"Knoblauch geschält", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
-      {name:"Jalapeño 2900g", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
-      {name:"Kløver Joghurt 10%", amount:"1000g", supplier:"Arla", cost:2.65, ready:true}
+      {name:"Rauch Lime Juice", amount:"50ml", supplier:"Metro", cost:0.128, ready:true},
+      {name:"Flat Parsley 1kg", amount:"150g", supplier:"Metro", cost:0.989, ready:false},
+      {name:"Peeled Garlic", amount:"40g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Jalapeño 2900g (canned)", amount:"30g", supplier:"Metro", cost:0.071, ready:true},
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Kløver Yoghurt 10%", amount:"1000g", supplier:"Arla", cost:2.65, ready:true}
     ]
   },
   {
     name: "Lemon Vinaigrette", concept: "Spudz", category: "sauce",
-    yield: "1235g", portions: 31, costPortion: 0.208, shelf: "7 Tage",
+    yield: "1235g", portions: 31, costPortion: 0.208, shelf: "7 days",
     prepMin: 3,
-    prepSteps: "Öl + Limette + Senf + Gewürze abmessen, Knoblauch pressen, verrühren → fertig",
-    whyFast: "Alles Flaschen-/Dosenware. Knoblauch geschält. Null echte Prep — nur abmessen und schütteln.",
+    prepSteps: "Measure oil + lime + mustard + spices, press garlic, shake → done",
+    whyFast: "All bottles. Garlic peeled. Zero real prep — just measure and shake.",
     ingredients: [
-      {name:"Olivenöl ARO 5L", amount:"1000ml", supplier:"Metro", cost:5.6, ready:true},
-      {name:"Rauch Limettensaft", amount:"75ml", supplier:"Metro", cost:0.192, ready:true},
-      {name:"Senf medium ARO", amount:"100ml", supplier:"Metro", cost:0.174, ready:true},
-      {name:"Knoblauch geschält", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"EVOO ARO 5L", amount:"1000ml", supplier:"Metro", cost:5.6, ready:true},
+      {name:"Rauch Lime Juice", amount:"75ml", supplier:"Metro", cost:0.192, ready:true},
+      {name:"Medium Mustard ARO", amount:"100ml", supplier:"Metro", cost:0.174, ready:true},
+      {name:"Peeled Garlic", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
       {name:"Oregano", amount:"20g", supplier:"Metro", cost:0.2, ready:true},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
     ]
   },
   {
     name: "Sriracha Lime Dressing", concept: "Spudz", category: "sauce",
-    yield: "1275g", portions: 32, costPortion: 0.293, shelf: "7 Tage",
+    yield: "1275g", portions: 32, costPortion: 0.293, shelf: "7 days",
     prepMin: 2,
-    prepSteps: "Sriracha + Öl + Essig + Limette + Honig abmessen, Knoblauch pressen, verrühren → fertig",
-    whyFast: "100% Flaschenware. Knoblauch geschält. Einfach abmessen + rühren. Fertig.",
+    prepSteps: "Measure sriracha + oil + vinegar + lime + honey, press garlic, stir → done",
+    whyFast: "100% bottles. Garlic peeled. Just measure + stir. Done.",
     ingredients: [
       {name:"Sriracha Flying Goose", amount:"1000ml", supplier:"Metro", cost:8.21, ready:true},
-      {name:"Olivenöl ARO 5L", amount:"100ml", supplier:"Metro", cost:0.56, ready:true},
-      {name:"Essig 5% ARO", amount:"50ml", supplier:"Metro", cost:0.075, ready:true},
-      {name:"Knoblauch geschält", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
-      {name:"Rauch Limettensaft", amount:"75ml", supplier:"Metro", cost:0.192, ready:true},
-      {name:"Honig ARO 2.5kg", amount:"40g", supplier:"Metro", cost:0.236, ready:true}
+      {name:"EVOO ARO 5L", amount:"100ml", supplier:"Metro", cost:0.56, ready:true},
+      {name:"Vinegar 5% ARO", amount:"50ml", supplier:"Metro", cost:0.075, ready:true},
+      {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
+      {name:"Rauch Lime Juice", amount:"75ml", supplier:"Metro", cost:0.192, ready:true},
+      {name:"Honey ARO 2.5kg", amount:"40g", supplier:"Metro", cost:0.236, ready:true}
     ]
   },
   {
     name: "Sweet & Spicy Mango", concept: "Spudz", category: "sauce",
-    yield: "1000g", portions: 25, costPortion: 0.17, shelf: "5 Tage",
+    yield: "1000g", portions: 25, costPortion: 0.17, shelf: "5 days",
     prepMin: 5,
-    prepSteps: "Mango TK (aufgetaut) + Petersilie hacken + alle Flüssigkeiten in Blender → pürieren → fertig",
-    whyFast: "Mango TK = aufgetaut, ready. Nur Petersilie hacken = echte Prep. Rest = Flaschen abmessen + blenden.",
+    prepSteps: "Thawed mango + chop parsley + all liquids into blender → purée → done",
+    whyFast: "Mango frozen = thawed, ready. Only parsley to chop. Rest = measure bottles + blend.",
     ingredients: [
-      {name:"Olivenöl ARO 5L", amount:"300ml", supplier:"Metro", cost:1.68, ready:true},
-      {name:"Rauch Limettensaft", amount:"50ml", supplier:"Metro", cost:0.128, ready:true},
-      {name:"Mango TK 1kg", amount:"150g", supplier:"Metro", cost:0.675, ready:true},
-      {name:"Petersilie glatt", amount:"100g", supplier:"Metro", cost:0.659, ready:false},
-      {name:"Knoblauch geschält", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"EVOO ARO 5L", amount:"300ml", supplier:"Metro", cost:1.68, ready:true},
+      {name:"Rauch Lime Juice", amount:"50ml", supplier:"Metro", cost:0.128, ready:true},
+      {name:"Mango (frozen) 1kg", amount:"150g", supplier:"Metro", cost:0.675, ready:true},
+      {name:"Flat Parsley", amount:"100g", supplier:"Metro", cost:0.659, ready:false},
+      {name:"Peeled Garlic", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
       {name:"Very Hot Chili Lions", amount:"50ml", supplier:"Lions", cost:0.145, ready:true},
-      {name:"Honig ARO 2.5kg", amount:"30g", supplier:"Metro", cost:0.177, ready:true},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
-      {name:"Orangensaft ARO", amount:"280ml", supplier:"Metro", cost:0.529, ready:true}
+      {name:"Honey ARO 2.5kg", amount:"30g", supplier:"Metro", cost:0.177, ready:true},
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true},
+      {name:"Orange Juice ARO", amount:"280ml", supplier:"Metro", cost:0.529, ready:true}
     ]
   },
   {
     name: "Piri Piri Homemade", concept: "Spudz", category: "sauce",
-    yield: "1245g", portions: 31, costPortion: 0.261, shelf: "7 Tage",
+    yield: "1245g", portions: 31, costPortion: 0.261, shelf: "7 days",
     prepMin: 8,
-    prepSteps: "Chili Rawit waschen+hacken, Zwiebel schneiden, Knoblauch pressen → alles mit Öl+Limette in Blender → pürieren",
-    whyFast: "Einziges Spudz-Rezept mit FRISCHEM Chili (250g Rawit). Das Hacken ist die Hauptarbeit. Rest = abmessen.",
+    prepSteps: "Wash + chop Chili Rawit, dice onion, press garlic → blend with oil + lime → done",
+    whyFast: "Only Spudz recipe with FRESH chili (250g Rawit). Chopping is the main work. Rest = measuring.",
     ingredients: [
-      {name:"Olivenöl ARO 5L", amount:"600ml", supplier:"Metro", cost:3.36, ready:true},
-      {name:"Rauch Limettensaft", amount:"200ml", supplier:"Metro", cost:0.512, ready:true},
-      {name:"Chili Rawit rot", amount:"250g", supplier:"Metro", cost:3.75, ready:false},
-      {name:"Rote Zwiebel 10kg", amount:"125g", supplier:"Metro", cost:0.091, ready:false},
-      {name:"Knoblauch geschält", amount:"50g", supplier:"Metro", cost:0.3, ready:true},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+      {name:"EVOO ARO 5L", amount:"600ml", supplier:"Metro", cost:3.36, ready:true},
+      {name:"Rauch Lime Juice", amount:"200ml", supplier:"Metro", cost:0.512, ready:true},
+      {name:"Chili Rawit (fresh)", amount:"250g", supplier:"Metro", cost:3.75, ready:false},
+      {name:"Red Onion 10kg", amount:"125g", supplier:"Metro", cost:0.091, ready:false},
+      {name:"Peeled Garlic", amount:"50g", supplier:"Metro", cost:0.3, ready:true},
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
     ]
   },
   // ===== SPUDZ MIXES =====
   {
     name: "Mushroom Mix", concept: "Spudz", category: "mix",
-    yield: "14320g", portions: 358, costPortion: 0.104, shelf: "5 Tage",
+    yield: "14.3kg", portions: 358, costPortion: 0.104, shelf: "5 days",
     prepMin: 5,
-    prepSteps: "5× Champignons-Dosen öffnen + abtropfen, Petersilie hacken, mit Piri Piri + Senf + Gewürzen verrühren → fertig",
-    whyFast: "Champignons kommen GESCHNITTEN in 2.65L Dosen (Metro ARO). Nur öffnen, abtropfen, verrühren. Petersilie = einzige echte Prep.",
+    prepSteps: "Open + drain 5 mushroom cans, chop parsley, mix with piri piri + mustard + spices → done",
+    whyFast: "Mushrooms come PRE-SLICED in 2.65L cans (Metro ARO). Just open, drain, stir. Parsley = only real prep.",
     ingredients: [
-      {name:"Champignons geschn. 2.65L", amount:"12750g", supplier:"Metro", cost:31.493, ready:true},
-      {name:"Petersilie glatt 1kg", amount:"300g", supplier:"Metro", cost:1.977, ready:false},
+      {name:"Sliced Mushrooms 2.65L (canned)", amount:"12750g", supplier:"Metro", cost:31.493, ready:true},
+      {name:"Flat Parsley 1kg", amount:"300g", supplier:"Metro", cost:1.977, ready:false},
       {name:"Piri Piri Lions 2.27L", amount:"1000ml", supplier:"Lions", cost:2.87, ready:true},
-      {name:"Senf medium ARO", amount:"200ml", supplier:"Metro", cost:0.348, ready:true},
+      {name:"Medium Mustard ARO", amount:"200ml", supplier:"Metro", cost:0.348, ready:true},
       {name:"Oregano", amount:"50g", supplier:"Metro", cost:0.5, ready:true},
-      {name:"Salz ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
-      {name:"Pfeffer schwarz", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
+      {name:"Salt ARO", amount:"10g", supplier:"Metro", cost:0.005, ready:true},
+      {name:"Black Pepper", amount:"10g", supplier:"Metro", cost:0.12, ready:true}
     ]
   },
   {
     name: "Bean Mix", concept: "Spudz", category: "mix",
-    yield: "18240g", portions: 456, costPortion: 0.068, shelf: "5 Tage",
+    yield: "18.2kg", portions: 456, costPortion: 0.068, shelf: "5 days",
     prepMin: 5,
-    prepSteps: "Dosen öffnen (Kidney, Kichererbsen, Mais) → abtropfen → Petersilie hacken → mit Chili-Sauce + Gewürzen verrühren → fertig",
-    whyFast: "ALLE Hülsenfrüchte kommen in 2650ml Dosen (Metro ARO). Mais ebenso. Nur Dosen öffnen, abtropfen, zusammenkippen, würzen. Petersilie = einzige Frische-Prep.",
+    prepSteps: "Open cans (kidney, chickpeas, corn) → drain → chop parsley → mix with chili sauce + spices → done",
+    whyFast: "ALL legumes come in 2650ml cans (Metro ARO). Corn too. Just open, drain, dump together, season. Parsley = only fresh prep.",
     ingredients: [
-      {name:"Kidney Bohnen 2650ml", amount:"10000g", supplier:"Metro", cost:16, ready:true},
-      {name:"Kichererbsen 2650ml", amount:"5000g", supplier:"Metro", cost:6, ready:true},
-      {name:"Mais 2650ml", amount:"1350g", supplier:"Metro", cost:2.147, ready:true},
-      {name:"Petersilie glatt 1kg", amount:"300g", supplier:"Metro", cost:1.977, ready:false},
+      {name:"Kidney Beans 2650ml (canned)", amount:"10000g", supplier:"Metro", cost:16, ready:true},
+      {name:"Chickpeas 2650ml (canned)", amount:"5000g", supplier:"Metro", cost:6, ready:true},
+      {name:"Sweet Corn 2650ml (canned)", amount:"1350g", supplier:"Metro", cost:2.147, ready:true},
+      {name:"Flat Parsley 1kg", amount:"300g", supplier:"Metro", cost:1.977, ready:false},
       {name:"Very Hot Chili Lions", amount:"1500ml", supplier:"Lions", cost:4.35, ready:true},
-      {name:"Salz ARO", amount:"20g", supplier:"Metro", cost:0.01, ready:true},
-      {name:"Pfeffer schwarz", amount:"20g", supplier:"Metro", cost:0.24, ready:true},
-      {name:"Kreuzkümmel MC", amount:"50g", supplier:"Metro", cost:0.5, ready:true}
+      {name:"Salt ARO", amount:"20g", supplier:"Metro", cost:0.01, ready:true},
+      {name:"Black Pepper", amount:"20g", supplier:"Metro", cost:0.24, ready:true},
+      {name:"Cumin MC", amount:"50g", supplier:"Metro", cost:0.5, ready:true}
     ]
   },
-  // ===== SPUDZ FLEISCH =====
+  // ===== SPUDZ MEAT =====
   {
     name: "Buffalo Pulled Chicken", concept: "Spudz", category: "meat",
-    yield: "3800g", portions: 48, costPortion: 0.756, shelf: "3 Tage",
+    yield: "3800g", portions: 48, costPortion: 0.756, shelf: "3 days",
     prepMin: 2,
-    prepSteps: "Aufgetautes Pulled Chicken + Buffalo Sauce verrühren → fertig",
-    whyFast: "Pulled Chicken (Food-Kings TK) kommt fertig gegart — auftauen am Vortag. Buffalo Sauce ist ein eigener Batch. Einfach beides zusammenmischen.",
+    prepSteps: "Thawed pulled chicken + buffalo sauce → mix → done",
+    whyFast: "Pulled Chicken (Food-Kings frozen) comes fully cooked — thaw day before. Buffalo Sauce is its own batch. Just combine.",
     ingredients: [
-      {name:"Pulled Chicken Art.6953", amount:"3000g", supplier:"Food Kings", cost:29.4, ready:true},
+      {name:"Pulled Chicken Art.6953 (frozen, pre-cooked)", amount:"3000g", supplier:"Food Kings", cost:29.4, ready:true},
       {name:"Buffalo Sauce (Batch #2)", amount:"800g", supplier:"Batch", cost:6.506, ready:true}
     ]
   },
   {
     name: "Honey BBQ Pork", concept: "Spudz", category: "meat",
-    yield: "3800g", portions: 45, costPortion: 0.737, shelf: "3 Tage",
+    yield: "3800g", portions: 45, costPortion: 0.737, shelf: "3 days",
     prepMin: 2,
-    prepSteps: "Aufgetaute Pork Carnitas + BBQ Sauce verrühren → fertig",
-    whyFast: "Pork Carnitas (Food-Kings TK) kommt fertig gegart. BBQ Sauce aus Flasche. Zusammenmischen = 2 min.",
+    prepSteps: "Thawed pork carnitas + BBQ sauce → mix → done",
+    whyFast: "Pork Carnitas (Food-Kings frozen) comes fully cooked. BBQ sauce from bottle. Mix = 2 min.",
     ingredients: [
-      {name:"Pork Carnitas Art.5291", amount:"3000g", supplier:"Food Kings", cost:30.66, ready:true},
+      {name:"Pork Carnitas Art.5291 (frozen, pre-cooked)", amount:"3000g", supplier:"Food Kings", cost:30.66, ready:true},
       {name:"BBQ Sauce Lions", amount:"800g", supplier:"Lions", cost:2.296, ready:true}
     ]
   },
   {
     name: "Honey BBQ Chicken", concept: "Spudz", category: "meat",
-    yield: "3800g", portions: 48, costPortion: 0.661, shelf: "3 Tage",
+    yield: "3800g", portions: 48, costPortion: 0.661, shelf: "3 days",
     prepMin: 2,
-    prepSteps: "Aufgetautes Chargrilled Chicken + BBQ Sauce verrühren → fertig",
-    whyFast: "Chargrilled Chicken (Food-Kings TK) kommt fertig gegrillt. BBQ Sauce aus Flasche. Zusammenmischen = 2 min.",
+    prepSteps: "Thawed chargrilled chicken + BBQ sauce → mix → done",
+    whyFast: "Chargrilled Chicken (Food-Kings frozen) comes fully grilled. BBQ sauce from bottle. Mix = 2 min.",
     ingredients: [
-      {name:"Chargrilled Chicken Art.6602", amount:"3000g", supplier:"Food Kings", cost:29.1, ready:true},
+      {name:"Chargrilled Chicken Art.6602 (frozen, pre-cooked)", amount:"3000g", supplier:"Food Kings", cost:29.1, ready:true},
       {name:"BBQ Sauce Lions", amount:"800g", supplier:"Lions", cost:2.296, ready:true}
     ]
   },
   {
     name: "Chipotle Chicken", concept: "Spudz", category: "meat",
-    yield: "5600g", portions: 66, costPortion: 0.762, shelf: "3 Tage",
+    yield: "5600g", portions: 66, costPortion: 0.762, shelf: "3 days",
     prepMin: 2,
-    prepSteps: "Aufgetautes Chargrilled Chicken + Piri Piri Sauce verrühren → fertig",
-    whyFast: "Chargrilled Chicken (Food-Kings TK) fertig gegrillt. Piri Piri aus Flasche (Lions 2.27L). Zusammenmischen = 2 min.",
+    prepSteps: "Thawed chargrilled chicken + piri piri sauce → mix → done",
+    whyFast: "Chargrilled Chicken (Food-Kings frozen) fully grilled. Piri Piri from bottle (Lions 2.27L). Mix = 2 min.",
     ingredients: [
-      {name:"Chargrilled Chicken Art.6602", amount:"5000g", supplier:"Food Kings", cost:48.5, ready:true},
+      {name:"Chargrilled Chicken Art.6602 (frozen, pre-cooked)", amount:"5000g", supplier:"Food Kings", cost:48.5, ready:true},
       {name:"Piri Piri Lions 2.27L", amount:"600ml", supplier:"Lions", cost:1.722, ready:true}
     ]
   },
   // ===== GREEK DIPS =====
   {
     name: "Tzatziki", concept: "Greek", category: "dip",
-    yield: "2500g", portions: 63, costPortion: 0.114, shelf: "3 Tage",
+    yield: "2500g", portions: 63, costPortion: 0.114, shelf: "3 days",
     prepMin: 8,
-    prepSteps: "Gurke raspeln + ausdrücken (Hauptarbeit!), Knoblauch pressen, mit Joghurt + Zitrone + Dill + Öl verrühren → fertig",
-    whyFast: "Einzige echte Arbeit = Gurke raspeln und Wasser ausdrücken. Joghurt (Arla 10%) + geschälter Knoblauch + Zitronensaft = alles ready.",
+    prepSteps: "Grate + squeeze cucumber (main work!), press garlic, mix with yoghurt + lemon + dill + oil → done",
+    whyFast: "Only real work = grating cucumber and squeezing out water. Yoghurt (Arla 10%) + peeled garlic + lemon juice = all ready.",
     ingredients: [
       {name:"Kløver Yoghurt 10%", amount:"2000g", supplier:"Arla", cost:5.3, ready:true},
       {name:"Cucumber", amount:"500g", supplier:"Metro", cost:1.43, ready:false},
@@ -419,10 +417,10 @@ const BATCHES = [
   },
   {
     name: "Tahini Sauce", concept: "Greek", category: "dip",
-    yield: "1000g", portions: 25, costPortion: 0.122, shelf: "5 Tage",
+    yield: "1000g", portions: 25, costPortion: 0.122, shelf: "5 days",
     prepMin: 3,
-    prepSteps: "Tahini + Wasser + Zitrone + Knoblauch + Gewürze verrühren → fertig",
-    whyFast: "Tahini (Arfiyato Daabool) aus Dose. Alles abmessen + verrühren. Knoblauch geschält → pressen. Null Schneidarbeit.",
+    prepSteps: "Tahini + water + lemon + garlic + spices → stir → done",
+    whyFast: "Tahini (Arfiyato Daabool) from tin. All measuring + stirring. Garlic peeled → press. Zero chopping.",
     ingredients: [
       {name:"Tahini Daabool", amount:"400g", supplier:"Arfiyato", cost:2.7, ready:true},
       {name:"Water", amount:"300ml", supplier:"—", cost:0, ready:true},
@@ -434,17 +432,17 @@ const BATCHES = [
   },
   {
     name: "Oregano Vinaigrette", concept: "Greek", category: "sauce",
-    yield: "1000ml", portions: 25, costPortion: 0.166, shelf: "7 Tage",
+    yield: "1000ml", portions: 25, costPortion: 0.166, shelf: "7 days",
     prepMin: 3,
-    prepSteps: "Öl + Essig + Zitrone + Senf + Honig + Gewürze abmessen, Knoblauch pressen, schütteln → fertig",
-    whyFast: "100% Flaschen-/Dosenware. Knoblauch geschält. Einfach abmessen und emulgieren.",
+    prepSteps: "Measure oil + vinegar + lemon + mustard + honey + spices, press garlic, shake → done",
+    whyFast: "100% bottles. Garlic peeled. Just measure and emulsify.",
     ingredients: [
       {name:"EVOO", amount:"500ml", supplier:"Metro", cost:3.149, ready:true},
       {name:"Red Wine Vinegar", amount:"200ml", supplier:"Metro", cost:0.4, ready:true},
       {name:"Lemon Juice", amount:"50ml", supplier:"Metro", cost:0.138, ready:true},
       {name:"Dried Oregano", amount:"15g", supplier:"Metro", cost:0.15, ready:true},
       {name:"Honey", amount:"30g", supplier:"Metro", cost:0.177, ready:true},
-      {name:"Senf ARO", amount:"15g", supplier:"Metro", cost:0.026, ready:true},
+      {name:"Mustard ARO", amount:"15g", supplier:"Metro", cost:0.026, ready:true},
       {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
       {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
       {name:"Pepper", amount:"3g", supplier:"Metro", cost:0.036, ready:true}
@@ -452,15 +450,15 @@ const BATCHES = [
   },
   {
     name: "Lemon-Herb Sauce", concept: "Greek", category: "sauce",
-    yield: "1000ml", portions: 25, costPortion: 0.124, shelf: "4 Tage",
+    yield: "1000ml", portions: 25, costPortion: 0.124, shelf: "4 days",
     prepMin: 4,
-    prepSteps: "Petersilie hacken, Knoblauch pressen, mit Joghurt + Öl + Zitrone + Dill verrühren → fertig",
-    whyFast: "Joghurt (Arla) + Zitronensaft + Öl = ready. Nur Petersilie hacken = echte Prep.",
+    prepSteps: "Chop parsley, press garlic, mix with yoghurt + oil + lemon + dill → done",
+    whyFast: "Yoghurt (Arla) + lemon juice + oil = ready. Only parsley to chop.",
     ingredients: [
       {name:"Kløver Yoghurt 10%", amount:"400g", supplier:"Arla", cost:1.06, ready:true},
       {name:"EVOO", amount:"200ml", supplier:"Metro", cost:1.26, ready:true},
       {name:"Lemon Juice", amount:"100ml", supplier:"Metro", cost:0.276, ready:true},
-      {name:"Parsley", amount:"50g", supplier:"Metro", cost:0.33, ready:false},
+      {name:"Flat Parsley", amount:"50g", supplier:"Metro", cost:0.33, ready:false},
       {name:"Dried Dill", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
       {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
       {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
@@ -469,17 +467,17 @@ const BATCHES = [
   },
   {
     name: "Greek Vinaigrette", concept: "Greek", category: "sauce",
-    yield: "800ml", portions: 20, costPortion: 0.196, shelf: "7 Tage",
+    yield: "800ml", portions: 20, costPortion: 0.196, shelf: "7 days",
     prepMin: 3,
-    prepSteps: "Öl + Essig + Zitrone + Senf + Honig + Gewürze abmessen, Knoblauch pressen, schütteln → fertig",
-    whyFast: "Identisch wie Oregano Vinaigrette — 100% Flaschenware. Null Schneidarbeit.",
+    prepSteps: "Measure oil + vinegar + lemon + mustard + honey + spices, press garlic, shake → done",
+    whyFast: "Same as Oregano Vinaigrette — 100% bottles. Zero chopping.",
     ingredients: [
       {name:"EVOO", amount:"500ml", supplier:"Metro", cost:3.149, ready:true},
       {name:"Red Wine Vinegar", amount:"150ml", supplier:"Metro", cost:0.3, ready:true},
       {name:"Lemon Juice", amount:"50ml", supplier:"Metro", cost:0.138, ready:true},
       {name:"Dried Oregano", amount:"10g", supplier:"Metro", cost:0.1, ready:true},
       {name:"Honey", amount:"20g", supplier:"Metro", cost:0.118, ready:true},
-      {name:"Senf ARO", amount:"10g", supplier:"Metro", cost:0.017, ready:true},
+      {name:"Mustard ARO", amount:"10g", supplier:"Metro", cost:0.017, ready:true},
       {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
       {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
       {name:"Pepper", amount:"3g", supplier:"Metro", cost:0.036, ready:true}
@@ -487,13 +485,13 @@ const BATCHES = [
   },
   {
     name: "Herbed Yogurt", concept: "Greek", category: "dip",
-    yield: "1600g", portions: 40, costPortion: 0.119, shelf: "4 Tage",
+    yield: "1600g", portions: 40, costPortion: 0.119, shelf: "4 days",
     prepMin: 4,
-    prepSteps: "Petersilie hacken, Knoblauch pressen, mit Joghurt + getrocknete Kräuter + Zitrone + Öl verrühren → fertig",
-    whyFast: "Joghurt 1.5kg (Arla Eimer) + getrocknete Kräuter + Zitronensaft = alles ready. Nur 40g Petersilie hacken.",
+    prepSteps: "Chop parsley, press garlic, mix with yoghurt + dried herbs + lemon + oil → done",
+    whyFast: "1.5kg yoghurt (Arla tub) + dried herbs + lemon juice = all ready. Only 40g parsley to chop.",
     ingredients: [
       {name:"Kløver Yoghurt 10%", amount:"1500g", supplier:"Arla", cost:3.975, ready:true},
-      {name:"Parsley", amount:"40g", supplier:"Metro", cost:0.264, ready:false},
+      {name:"Flat Parsley", amount:"40g", supplier:"Metro", cost:0.264, ready:false},
       {name:"Dried Mint", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
       {name:"Dried Dill", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
       {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
@@ -505,12 +503,12 @@ const BATCHES = [
   },
   {
     name: "Flying Greek Sauce", concept: "Greek", category: "sauce",
-    yield: "1000g", portions: 25, costPortion: 0.114, shelf: "4 Tage",
+    yield: "1000g", portions: 25, costPortion: 0.114, shelf: "4 days",
     prepMin: 4,
-    prepSteps: "Tomato Pepper Strips (DOSE!) + Joghurt + Tomatenmark + Saucen + Gewürze in Blender → pürieren → fertig",
-    whyFast: "Tomato Pepper Strips kommen in 4250ml Metro-Dose (ARO) — READY! Kein Paprika schneiden. Alles in Blender, pürieren, fertig.",
+    prepSteps: "Tomato Pepper Strips (CANNED!) + yoghurt + tomato paste + sauces + spices into blender → purée → done",
+    whyFast: "Tomato Pepper Strips come in 4250ml Metro can (ARO) — READY! No pepper cutting. All in blender, purée, done.",
     ingredients: [
-      {name:"Tomato Pepper Strips", amount:"300g", supplier:"Metro", cost:0.557, ready:true},
+      {name:"Tomato Pepper Strips (canned)", amount:"300g", supplier:"Metro", cost:0.557, ready:true},
       {name:"Kløver Yoghurt 10%", amount:"400g", supplier:"Arla", cost:1.06, ready:true},
       {name:"EVOO", amount:"100ml", supplier:"Metro", cost:0.63, ready:true},
       {name:"Tomato Paste", amount:"50g", supplier:"Metro", cost:0.1, ready:true},
@@ -520,19 +518,19 @@ const BATCHES = [
       {name:"Peeled Garlic", amount:"15g", supplier:"Metro", cost:0.09, ready:true},
       {name:"Oregano", amount:"5g", supplier:"Metro", cost:0.05, ready:true},
       {name:"Salt", amount:"5g", supplier:"Metro", cost:0.003, ready:true},
-      {name:"Pepper+Chili", amount:"6g", supplier:"Metro", cost:0.072, ready:true}
+      {name:"Pepper + Chili", amount:"6g", supplier:"Metro", cost:0.072, ready:true}
     ]
   },
   {
     name: "Tirokafteri (Spicy Feta Whip)", concept: "Greek", category: "dip",
-    yield: "1000g", portions: 17, costPortion: 0.288, shelf: "4 Tage",
+    yield: "1000g", portions: 17, costPortion: 0.288, shelf: "4 days",
     prepMin: 5,
-    prepSteps: "Feta zerbröseln, Roasted Red Peppers (DOSE!) + Joghurt + Öl + Gewürze in Blender → pürieren → fertig",
-    whyFast: "Roasted Red Peppers kommen aus Metro-Dose — READY, kein Rösten nötig! Feta (Arla Apetina) zerbröseln + alles blenden.",
+    prepSteps: "Crumble feta, add Roasted Red Peppers (CANNED!) + yoghurt + oil + spices → blend → done",
+    whyFast: "Roasted Red Peppers come from Metro can — READY, no roasting! Crumble feta (Arla Apetina) + blend everything.",
     ingredients: [
       {name:"Apetina Feta", amount:"500g", supplier:"Arla", cost:3.461, ready:true},
       {name:"Kløver Yoghurt 10%", amount:"200g", supplier:"Arla", cost:0.53, ready:true},
-      {name:"Roasted Red Peppers", amount:"150g", supplier:"Metro", cost:0.28, ready:true},
+      {name:"Roasted Red Peppers (canned)", amount:"150g", supplier:"Metro", cost:0.28, ready:true},
       {name:"EVOO", amount:"60ml", supplier:"Metro", cost:0.378, ready:true},
       {name:"Lemon Juice", amount:"20ml", supplier:"Metro", cost:0.055, ready:true},
       {name:"Peeled Garlic", amount:"10g", supplier:"Metro", cost:0.06, ready:true},
@@ -543,12 +541,12 @@ const BATCHES = [
   },
   {
     name: "Htipiti (Smoky Roasted Pepper Feta)", concept: "Greek", category: "dip",
-    yield: "1000g", portions: 17, costPortion: 0.21, shelf: "4 Tage",
+    yield: "1000g", portions: 17, costPortion: 0.21, shelf: "4 days",
     prepMin: 5,
-    prepSteps: "Roasted Red Peppers (DOSE!) + Feta zerbröseln + Öl + Gewürze in Blender → pürieren → fertig",
-    whyFast: "400g Roasted Red Peppers aus Metro-Dose — READY! Feta zerbröseln + blenden. Kein Paprika rösten.",
+    prepSteps: "Roasted Red Peppers (CANNED!) + crumble feta + oil + spices → blend → done",
+    whyFast: "400g Roasted Red Peppers from Metro can — READY! Crumble feta + blend. No pepper roasting.",
     ingredients: [
-      {name:"Roasted Red Peppers", amount:"400g", supplier:"Metro", cost:0.747, ready:true},
+      {name:"Roasted Red Peppers (canned)", amount:"400g", supplier:"Metro", cost:0.747, ready:true},
       {name:"Apetina Feta", amount:"300g", supplier:"Arla", cost:2.077, ready:true},
       {name:"EVOO", amount:"80ml", supplier:"Metro", cost:0.504, ready:true},
       {name:"Lemon Juice", amount:"20ml", supplier:"Metro", cost:0.055, ready:true},
@@ -562,12 +560,12 @@ const BATCHES = [
   },
   {
     name: "Skordalia (Greek Garlic Potato Dip)", concept: "Greek", category: "dip",
-    yield: "1200g", portions: 20, costPortion: 0.089, shelf: "3 Tage",
+    yield: "1200g", portions: 20, costPortion: 0.089, shelf: "3 days",
     prepMin: 5,
-    prepSteps: "Gebackene Kartoffeln (Spudz Nebenprodukt!) schälen + stampfen, Knoblauch pressen, mit Öl + Zitrone + Essig verrühren → fertig",
-    whyFast: "Kartoffeln sind SCHON GEBACKEN (Spudz-Tagesproduktion). Nur schälen + stampfen + verrühren. Kein Kochen nötig!",
+    prepSteps: "Peel + mash baked potatoes (Spudz side product!), press garlic, mix with oil + lemon + vinegar → done",
+    whyFast: "Potatoes are ALREADY BAKED (Spudz daily production). Just peel + mash + mix. No cooking needed!",
     ingredients: [
-      {name:"Baked Potatoes", amount:"800g", supplier:"Spudz Side", cost:0.48, ready:true},
+      {name:"Baked Potatoes (Spudz side product)", amount:"800g", supplier:"Spudz Side", cost:0.48, ready:true},
       {name:"EVOO", amount:"150ml", supplier:"Metro", cost:0.945, ready:true},
       {name:"Lemon Juice", amount:"60ml", supplier:"Metro", cost:0.166, ready:true},
       {name:"Peeled Garlic", amount:"20g", supplier:"Metro", cost:0.12, ready:true},
@@ -578,10 +576,10 @@ const BATCHES = [
   },
   {
     name: "Pantzarosalata (Beetroot Yogurt Dip)", concept: "Greek", category: "dip",
-    yield: "1100g", portions: 18, costPortion: 0.133, shelf: "3 Tage",
+    yield: "1100g", portions: 18, costPortion: 0.133, shelf: "3 days",
     prepMin: 5,
-    prepSteps: "Rote Bete (DOSE!) abtropfen, Walnüsse grob hacken, mit Joghurt + Öl + Zitrone + Essig in Blender → pürieren → fertig",
-    whyFast: "Rote Bete aus Metro-Dose (ARO Beetroot Slices) — READY! Walnüsse grob hacken = 1 min. Rest = abmessen + blenden.",
+    prepSteps: "Drain beetroot (CANNED!), roughly chop walnuts, blend with yoghurt + oil + lemon + vinegar → done",
+    whyFast: "Beetroot from Metro can (ARO Beetroot Slices) — READY! Chop walnuts = 1 min. Rest = measure + blend.",
     ingredients: [
       {name:"Beetroot (canned)", amount:"500g", supplier:"Metro", cost:0.62, ready:true},
       {name:"Kløver Yoghurt 10%", amount:"250g", supplier:"Arla", cost:0.663, ready:true},
@@ -597,10 +595,10 @@ const BATCHES = [
   },
   {
     name: "Bulgur (Base for Greek Bowls)", concept: "Greek", category: "mix",
-    yield: "2000g", portions: 13, costPortion: 0.217, shelf: "1 Tag (verwerfen!)",
+    yield: "2000g", portions: 13, costPortion: 0.217, shelf: "1 day (discard!)",
     prepMin: 15,
-    prepSteps: "Bulgur mit heißem Wasser + Salz + Öl aufgießen → 10-12 min quellen lassen (passiv!) → auflockern → fertig",
-    whyFast: "Bulgur braucht kein aktives Kochen — nur heißes Wasser drüber, Deckel drauf, warten. Aktive Arbeit = 2 min, Wartezeit = 12 min.",
+    prepSteps: "Pour hot water + salt + oil over bulgur → cover, let soak 10-12 min (passive!) → fluff → done",
+    whyFast: "Bulgur needs no active cooking — just hot water, lid on, wait. Active work = 2 min, wait time = 12 min.",
     ingredients: [
       {name:"Bulgur (dry)", amount:"750g", supplier:"Metro", cost:2.5, ready:false},
       {name:"Water", amount:"1500ml", supplier:"—", cost:0, ready:true},
@@ -673,14 +671,14 @@ function renderCard(b, id) {
     </div>
     <div class="batch-body" id="body-${id}">
       <div class="prep-info">
-        <div><b>⏱ ${b.prepMin} min — Was tun?</b></div>
+        <div><b>⏱ ${b.prepMin} min — What to do:</b></div>
         <div class="prep-step">${b.prepSteps}</div>
         <div style="margin-top:6px;color:#666;font-style:italic;">💡 ${b.whyFast}</div>
       </div>
       <table class="ing-table">
-        <thead><tr><th>Zutat</th><th>Menge</th><th>Lieferant</th><th style="text-align:right">Kosten</th></tr></thead>
+        <thead><tr><th>Ingredient</th><th>Amount</th><th>Supplier</th><th style="text-align:right">Cost</th></tr></thead>
         <tbody>${ingRows}
-          <tr class="cost-row"><td colspan="3">Batch-Gesamtkosten (${b.yield})</td><td style="text-align:right">${totalCost.toFixed(2)}€</td></tr>
+          <tr class="cost-row"><td colspan="3">Total Batch Cost (${b.yield})</td><td style="text-align:right">${totalCost.toFixed(2)}€</td></tr>
         </tbody>
       </table>
     </div>
@@ -715,10 +713,9 @@ function renderSummary(batches) {
       <td>${b.shelf}</td>
       <td style="font-size:11px">${readyPct}% ready</td>
     </tr>`;
-  }).join('') + `<tr class="cost-row"><td><b>GESAMT</b></td><td></td><td><b>${totalMin} min</b> (sequenziell)</td><td><b>${batches.reduce((s,b)=>s+b.portions,0)}</b></td><td></td><td></td><td></td></tr>`;
+  }).join('') + `<tr class="cost-row"><td><b>TOTAL</b></td><td></td><td><b>${totalMin} min</b> (sequential)</td><td><b>${batches.reduce((s,b)=>s+b.portions,0)}</b></td><td></td><td></td><td></td></tr>`;
 }
 
-// Initial render
 renderBatches('all');
 </script>
 </body>
