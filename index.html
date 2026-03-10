@@ -423,8 +423,13 @@ function updateStats(){
 }
 
 function save(){
-  try{localStorage.setItem('spudz_order',JSON.stringify(state));}catch(e){}
-  try{localStorage.setItem('spudz_ordered',JSON.stringify(orderedSuppliers));}catch(e){}
+  try{localStorage.setItem('spudz_order',JSON.stringify(state));}catch(e){
+    showToast('WARNING: Could not save! Storage full?');
+    console.error('localStorage save failed:', e);
+  }
+  try{localStorage.setItem('spudz_ordered',JSON.stringify(orderedSuppliers));}catch(e){
+    console.error('localStorage ordered save failed:', e);
+  }
 }
 
 function buildOrderText(supplier){
@@ -454,19 +459,39 @@ function placeOrder(supplier){
     navigator.share({title:'Order '+supplier, text:text}).then(()=>{
       finishOrder(supplier, today);
     }).catch(e=>{
+      // User cancelled share sheet — do NOT delete data!
+      if(e.name==='AbortError'){
+        showToast('Cancelled — order still saved.');
+        return;
+      }
+      // Real error — try clipboard fallback
       navigator.clipboard.writeText(text).then(()=>{
-        finishOrder(supplier, today);
-        showToast(`${supplier} — Order copied!`);
-      }).catch(()=>{ finishOrder(supplier, today); });
+        showToast(`${supplier} — Order copied! Send to Seval now.`);
+        if(confirm('Order copied to clipboard. Mark as sent and reset quantities?')){
+          finishOrder(supplier, today);
+        }
+      }).catch(()=>{
+        const w=window.open('','_blank');
+        w.document.write('<pre style="font-family:monospace;white-space:pre-wrap;padding:20px">'+text.replace(/\*/g,'')+'</pre>');
+        showToast('Order opened in new tab. Send to Seval!');
+        if(confirm('Mark order as sent and reset quantities?')){
+          finishOrder(supplier, today);
+        }
+      });
     });
   } else {
     navigator.clipboard.writeText(text).then(()=>{
-      finishOrder(supplier, today);
       showToast(`${supplier} — Order copied to clipboard! Send to Seval now.`);
+      if(confirm('Order copied. Mark as sent and reset quantities?')){
+        finishOrder(supplier, today);
+      }
     }).catch(()=>{
       const w=window.open('','_blank');
       w.document.write('<pre style="font-family:monospace;white-space:pre-wrap;padding:20px">'+text.replace(/\*/g,'')+'</pre>');
-      finishOrder(supplier, today);
+      showToast('Order opened in new tab.');
+      if(confirm('Mark order as sent and reset quantities?')){
+        finishOrder(supplier, today);
+      }
     });
   }
 }
