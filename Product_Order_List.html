@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Spudz — Bestellungen</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 :root{--blue:#1a3a7a;--blue-dark:#0d1b4a;--gold:#c9a84c;--green:#27ae60;--red:#c0392b;--bg:#f4f5f7;--card:#fff;--border:#e2e5ea;--text:#1a1a1a;--muted:#6b7280}
@@ -113,7 +115,7 @@ body{background:#fff;padding:0}table{box-shadow:none}
 <body>
 <div class="header">
 <h1>Spudz — Bestellungen</h1>
-<p>Lieferant auswaehlen, Mengen eingeben, bestellen. Nach Bestellung wird der Lieferant zurueckgesetzt.</p>
+<p>Lieferant auswaehlen, Mengen eingeben, PDF erstellen & an Seval senden.</p>
 </div>
 
 <div class="supplier-tabs" id="supplierTabs"></div>
@@ -139,7 +141,7 @@ body{background:#fff;padding:0}table{box-shadow:none}
 <div class="info"><span id="panelCount">0</span> Artikel ausgewaehlt</div>
 <div class="total" id="panelTotal">0,00 EUR</div>
 <div class="actions">
-<button class="btn btn-gold" onclick="exportAll()">Alle kopieren</button>
+<button class="btn btn-gold" onclick="exportAll()">Gesamt-PDF</button>
 <button class="btn btn-green" onclick="printOrder()">Drucken</button>
 </div>
 </div>
@@ -223,10 +225,10 @@ function render(){
 
     if(isDone){
       container.innerHTML = `<div class="done-overlay">
-        <h3>&#10003; ${activeSupplier} — Bestellt!</h3>
-        <p>Bestellung am ${isDone} aufgegeben. Alle Mengen zurueckgesetzt.</p>
+        <h3>&#10003; ${activeSupplier} — PDF erstellt!</h3>
+        <p>Bestellliste am ${isDone} heruntergeladen. Mengen zurueckgesetzt.</p>
         <button class="btn btn-outline" onclick="undoOrder('${activeSupplier}')">Rueckgaengig</button>
-        <button class="btn btn-gold" style="margin-left:.5rem" onclick="reopenSupplier('${activeSupplier}')">Neu bestellen</button>
+        <button class="btn btn-gold" style="margin-left:.5rem" onclick="reopenSupplier('${activeSupplier}')">Neue Bestellung</button>
       </div>`;
       updateStats(); buildSupplierTabs();
       return;
@@ -241,7 +243,7 @@ function render(){
       </div>
       <div class="supplier-actions">
         <button class="btn-order" onclick="placeOrder('${activeSupplier}')" ${selProducts.length===0?'disabled':''}>
-          Bestellen &#10148;
+          PDF erstellen &#10148;
         </button>
       </div>`;
     container.appendChild(hdr);
@@ -358,44 +360,107 @@ function save(){
   try{localStorage.setItem('spudz_ordered',JSON.stringify(orderedSuppliers));}catch(e){}
 }
 
-// Place order for a specific supplier: copy order text + reset quantities
+// Generate PDF for a specific supplier and download it
 function placeOrder(supplier){
   const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
   if(!supProducts.length){alert('Keine Produkte ausgewaehlt!');return;}
 
-  let totalNet=0, totalGross=0;
-  let text = `SPUDZ BESTELLUNG — ${supplier.toUpperCase()}\n`;
-  text += `Datum: ${new Date().toLocaleDateString('de-DE')}\n`;
-  text += '='.repeat(60)+'\n\n';
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  const today = new Date().toLocaleDateString('de-DE');
+  const pageW = doc.internal.pageSize.getWidth();
 
-  supProducts.forEach(p=>{
+  // Header background
+  doc.setFillColor(26,58,122);
+  doc.rect(0,0,pageW,38,    'F');
+
+  // Logo text
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(22);
+  doc.setFont('helvetica','bold');
+  doc.text('SPUDZ',14,18);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.text('Bestellliste',14,26);
+
+  // Supplier + Date
+  doc.setFontSize(14);
+  doc.setFont('helvetica','bold');
+  doc.text(supplier, pageW-14, 18, {align:'right'});
+  doc.setFontSize(9);
+  doc.setFont('helvetica','normal');
+  doc.text('Datum: '+today, pageW-14, 26, {align:'right'});
+
+  // Build table data
+  let totalNet=0, totalGross=0;
+  const rows = supProducts.map((p,i)=>{
     const qty = state[p.nr].qty;
     const net = (parseFloat(p.price_net)||0)*qty;
     const gross = (parseFloat(p.price_gross)||0)*qty;
     totalNet+=net; totalGross+=gross;
-    text += `${p.nr.padEnd(14)} ${p.name.padEnd(40)} ${String(qty).padStart(3)}x ${p.unit.padEnd(16)} ${net.toFixed(2)} EUR\n`;
+    return [i+1, p.nr, p.name, p.cat, qty, p.unit, (parseFloat(p.price_net)||0).toFixed(2)+' EUR', net.toFixed(2)+' EUR'];
   });
 
-  text += '\n'+'='.repeat(60)+'\n';
-  text += `Artikel: ${supProducts.length}\n`;
-  text += `NETTO:  ${totalNet.toFixed(2)} EUR\n`;
-  text += `BRUTTO: ${totalGross.toFixed(2)} EUR\n`;
-
-  navigator.clipboard.writeText(text).then(()=>{
-    // Reset this supplier's quantities
-    PRODUCTS.filter(p=>p.supplier===supplier).forEach(p=>delete state[p.nr]);
-    orderedSuppliers[supplier] = new Date().toLocaleDateString('de-DE') + ', ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-    save();
-    showToast(`${supplier} — Bestellung kopiert & zurueckgesetzt!`);
-    render();
-  }).catch(()=>{
-    // Fallback: open in new window
-    const w=window.open('','_blank');
-    w.document.write('<pre>'+text+'</pre>');
-    PRODUCTS.filter(p=>p.supplier===supplier).forEach(p=>delete state[p.nr]);
-    orderedSuppliers[supplier] = new Date().toLocaleDateString('de-DE');
-    save(); render();
+  // Table
+  doc.autoTable({
+    startY: 44,
+    head:[['#','Art.Nr','Produkt','Kategorie','Menge','Einheit','Einzelpreis','Gesamt']],
+    body: rows,
+    theme:'grid',
+    headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold',halign:'left'},
+    bodyStyles:{fontSize:7.5,cellPadding:2},
+    columnStyles:{
+      0:{halign:'center',cellWidth:8},
+      1:{cellWidth:20,fontSize:6.5,textColor:[100,100,100]},
+      2:{cellWidth:52,fontStyle:'bold'},
+      3:{cellWidth:28,fontSize:6.5,textColor:[100,100,100]},
+      4:{halign:'center',cellWidth:12},
+      5:{cellWidth:22,fontSize:6.5},
+      6:{halign:'right',cellWidth:22},
+      7:{halign:'right',cellWidth:22,fontStyle:'bold'}
+    },
+    alternateRowStyles:{fillColor:[245,246,250]},
+    margin:{left:10,right:10},
+    didDrawPage:function(data){
+      // Footer on each page
+      doc.setFontSize(7);
+      doc.setTextColor(150);
+      doc.text('Spudz GbR — Bestellung '+supplier+' — '+today, 14, doc.internal.pageSize.getHeight()-8);
+      doc.text('Seite '+doc.internal.getNumberOfPages(), pageW-14, doc.internal.pageSize.getHeight()-8,{align:'right'});
+    }
   });
+
+  // Summary box below table
+  const finalY = doc.lastAutoTable.finalY + 6;
+  doc.setFillColor(245,246,250);
+  doc.roundedRect(pageW-80, finalY, 70, 28, 2, 2, 'F');
+  doc.setDrawColor(26,58,122);
+  doc.roundedRect(pageW-80, finalY, 70, 28, 2, 2, 'S');
+
+  doc.setFontSize(9);
+  doc.setTextColor(100);
+  doc.setFont('helvetica','normal');
+  doc.text('Artikel:', pageW-76, finalY+8);
+  doc.text('Netto:', pageW-76, finalY+15);
+  doc.text('Brutto:', pageW-76, finalY+22);
+
+  doc.setTextColor(26,58,122);
+  doc.setFont('helvetica','bold');
+  doc.text(String(supProducts.length), pageW-16, finalY+8, {align:'right'});
+  doc.text(totalNet.toFixed(2)+' EUR', pageW-16, finalY+15, {align:'right'});
+  doc.setFontSize(11);
+  doc.text(totalGross.toFixed(2)+' EUR', pageW-16, finalY+22, {align:'right'});
+
+  // Save PDF
+  const safeName = supplier.replace(/[^a-zA-Z0-9]/g,'_');
+  doc.save(`Bestellung_${safeName}_${today.replace(/\./g,'-')}.pdf`);
+
+  // Reset quantities + mark as done
+  PRODUCTS.filter(p=>p.supplier===supplier).forEach(p=>delete state[p.nr]);
+  orderedSuppliers[supplier] = today + ', ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  save();
+  showToast(`${supplier} — PDF heruntergeladen & Mengen zurueckgesetzt!`);
+  render();
 }
 
 function undoOrder(supplier){
@@ -408,32 +473,72 @@ function reopenSupplier(supplier){
   save(); render();
 }
 
-// Export all suppliers at once
+// Export all suppliers as one combined PDF
 function exportAll(){
   const selected = PRODUCTS.filter(p=>state[p.nr]);
   if(!selected.length){alert('Keine Produkte ausgewaehlt!');return;}
+
   const bySupplier = {};
   selected.forEach(p=>{
     if(!bySupplier[p.supplier])bySupplier[p.supplier]=[];
     bySupplier[p.supplier].push(p);
   });
-  let text = `SPUDZ GESAMTBESTELLUNG — ${new Date().toLocaleDateString('de-DE')}\n${'='.repeat(60)}\n\n`;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  const today = new Date().toLocaleDateString('de-DE');
+  const pageW = doc.internal.pageSize.getWidth();
+  const suppliers = Object.keys(bySupplier).sort();
   let grandNet=0, grandGross=0;
-  Object.keys(bySupplier).sort().forEach(sup=>{
-    text += `--- ${sup} ---\n`;
-    bySupplier[sup].forEach(p=>{
+
+  suppliers.forEach((sup, si)=>{
+    if(si>0) doc.addPage();
+
+    // Header
+    doc.setFillColor(26,58,122);
+    doc.rect(0,0,pageW,38,'F');
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(22);
+    doc.setFont('helvetica','bold');
+    doc.text('SPUDZ',14,18);
+    doc.setFontSize(10);
+    doc.setFont('helvetica','normal');
+    doc.text('Gesamtbestellung — '+sup,14,26);
+    doc.setFontSize(9);
+    doc.text('Datum: '+today, pageW-14, 18, {align:'right'});
+    doc.text((si+1)+' / '+suppliers.length+' Lieferanten', pageW-14, 26, {align:'right'});
+
+    let supNet=0, supGross=0;
+    const rows = bySupplier[sup].map((p,i)=>{
       const qty = state[p.nr].qty;
       const net = (parseFloat(p.price_net)||0)*qty;
       const gross = (parseFloat(p.price_gross)||0)*qty;
+      supNet+=net; supGross+=gross;
       grandNet+=net; grandGross+=gross;
-      text += `  ${p.nr.padEnd(14)} ${p.name.padEnd(40)} ${String(qty).padStart(3)}x ${p.unit.padEnd(12)} ${net.toFixed(2)} EUR\n`;
+      return [i+1, p.nr, p.name, qty, p.unit, net.toFixed(2)+' EUR'];
     });
-    text += '\n';
+
+    doc.autoTable({
+      startY:44,
+      head:[['#','Art.Nr','Produkt','Menge','Einheit','Gesamt Netto']],
+      body:rows,
+      theme:'grid',
+      headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold'},
+      bodyStyles:{fontSize:7.5,cellPadding:2},
+      columnStyles:{0:{halign:'center',cellWidth:8},1:{cellWidth:22,fontSize:6.5},2:{cellWidth:60,fontStyle:'bold'},3:{halign:'center',cellWidth:14},4:{cellWidth:28,fontSize:6.5},5:{halign:'right',cellWidth:28,fontStyle:'bold'}},
+      alternateRowStyles:{fillColor:[245,246,250]},
+      margin:{left:10,right:10}
+    });
+
+    const fy = doc.lastAutoTable.finalY+5;
+    doc.setFontSize(9);
+    doc.setTextColor(26,58,122);
+    doc.setFont('helvetica','bold');
+    doc.text(`${sup}: ${bySupplier[sup].length} Artikel — Netto ${supNet.toFixed(2)} EUR / Brutto ${supGross.toFixed(2)} EUR`, 14, fy);
   });
-  text += `${'='.repeat(60)}\nGESAMT NETTO:  ${grandNet.toFixed(2)} EUR\nGESAMT BRUTTO: ${grandGross.toFixed(2)} EUR\n`;
-  navigator.clipboard.writeText(text).then(()=>showToast('Gesamtbestellung kopiert!')).catch(()=>{
-    const w=window.open('','_blank');w.document.write('<pre>'+text+'</pre>');
-  });
+
+  doc.save(`Bestellung_Gesamt_${today.replace(/\./g,'-')}.pdf`);
+  showToast('Gesamt-PDF heruntergeladen!');
 }
 
 function printOrder(){
