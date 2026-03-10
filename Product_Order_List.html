@@ -251,7 +251,8 @@ function render(){
   if(activeSupplier){
     const supProducts = PRODUCTS.filter(p=>p.supplier===activeSupplier);
     const selProducts = supProducts.filter(p=>state[p.nr]);
-    const totalNet = selProducts.reduce((s,p)=>s+(parseFloat(p.price_net)||0)*(state[p.nr]?.qty||0),0);
+    const totalNet = selProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_net)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+    const totalGross = selProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0)*100)/100,0);
     const isDone = orderedSuppliers[activeSupplier];
 
     if(isDone){
@@ -270,7 +271,7 @@ function render(){
     hdr.innerHTML = `
       <div>
         <h2><span class="supplier-tag tag-${supplierColors[activeSupplier]||'metro'}" style="font-size:.8rem;padding:.2rem .6rem">${activeSupplier}</span></h2>
-        <div class="sup-stats">${selProducts.length} von ${supProducts.length} ausgewaehlt &mdash; Netto: ${totalNet.toFixed(2)} EUR</div>
+        <div class="sup-stats">${selProducts.length} von ${supProducts.length} ausgewaehlt &mdash; Netto: ${totalNet.toFixed(2)} EUR / Brutto: ${totalGross.toFixed(2)} EUR</div>
       </div>
       <div class="supplier-actions">
         <button class="btn btn-outline" onclick="downloadPDF('${activeSupplier}')" ${selProducts.length===0?'disabled':''} style="font-size:.8rem;padding:.45rem .9rem">PDF</button>
@@ -313,7 +314,8 @@ function render(){
           const sel = state[p.nr];
           const qty = sel ? sel.qty : '';
           const net = parseFloat(p.price_net)||0;
-          const sub = qty ? (net * parseInt(qty)).toFixed(2) : '';
+          const gross = parseFloat(p.price_gross)||0;
+          const sub = qty ? (Math.round(gross * parseInt(qty)*100)/100).toFixed(2) : '';
           const tag = supplierColors[p.supplier]||'metro';
           return `<tr class="${sel?'selected':''}" data-nr="${p.nr}">
             <td class="check-cell"><input type="checkbox" ${sel?'checked':''} onchange="toggleProduct('${p.nr}',this.checked)"></td>
@@ -375,16 +377,20 @@ function clearSupplier(){
 }
 
 function updateStats(){
-  const selectedProducts = PRODUCTS.filter(p=>state[p.nr]);
-  const totalNet = selectedProducts.reduce((s,p)=>s+(parseFloat(p.price_net)||0)*(state[p.nr]?.qty||0),0);
-  const totalGross = selectedProducts.reduce((s,p)=>s+(parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0),0);
+  const allSelected = PRODUCTS.filter(p=>state[p.nr]);
+  // Filter by active supplier for display totals
+  const displayProducts = activeSupplier ? allSelected.filter(p=>p.supplier===activeSupplier) : allSelected;
+  const totalNet = displayProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_net)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+  const totalGross = displayProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0)*100)/100,0);
   document.getElementById('statTotal').textContent = activeSupplier ? PRODUCTS.filter(p=>p.supplier===activeSupplier).length : PRODUCTS.length;
-  document.getElementById('statSelected').textContent = activeSupplier ? PRODUCTS.filter(p=>p.supplier===activeSupplier&&state[p.nr]).length : selectedProducts.length;
+  document.getElementById('statSelected').textContent = displayProducts.length;
   document.getElementById('statNet').textContent = totalNet.toFixed(2)+' EUR';
   document.getElementById('statGross').textContent = totalGross.toFixed(2)+' EUR';
-  document.getElementById('panelCount').textContent = selectedProducts.length;
-  document.getElementById('panelTotal').textContent = totalGross.toFixed(2)+' EUR';
-  document.getElementById('orderPanel').classList.toggle('visible', selectedProducts.length>0);
+  // Bottom panel always shows grand total across all suppliers
+  const grandGross = allSelected.reduce((s,p)=>s+Math.round((parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+  document.getElementById('panelCount').textContent = allSelected.length;
+  document.getElementById('panelTotal').textContent = grandGross.toFixed(2)+' EUR';
+  document.getElementById('orderPanel').classList.toggle('visible', allSelected.length>0);
 }
 
 function save(){
@@ -478,15 +484,15 @@ function downloadPDF(supplier){
   let totalNet=0, totalGross=0;
   const rows = supProducts.map((p,i)=>{
     const qty = state[p.nr].qty;
-    const net = (parseFloat(p.price_net)||0)*qty;
-    const gross = (parseFloat(p.price_gross)||0)*qty;
+    const net = Math.round((parseFloat(p.price_net)||0)*qty*100)/100;
+    const gross = Math.round((parseFloat(p.price_gross)||0)*qty*100)/100;
     totalNet+=net; totalGross+=gross;
-    return [i+1, p.nr, p.name, qty, p.unit, net.toFixed(2)+' EUR'];
+    return [i+1, p.nr, p.name, qty, p.unit, gross.toFixed(2)+' EUR'];
   });
 
   doc.autoTable({
     startY:44,
-    head:[['#','Art.Nr','Produkt','Menge','Einheit','Gesamt']],
+    head:[['#','Art.Nr','Produkt','Menge','Einheit','Gesamt (brutto)']],
     body:rows,
     theme:'grid',
     headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold'},
@@ -556,11 +562,11 @@ function exportAll(){
     let supNet=0, supGross=0;
     const rows = bySupplier[sup].map((p,i)=>{
       const qty = state[p.nr].qty;
-      const net = (parseFloat(p.price_net)||0)*qty;
-      const gross = (parseFloat(p.price_gross)||0)*qty;
+      const net = Math.round((parseFloat(p.price_net)||0)*qty*100)/100;
+      const gross = Math.round((parseFloat(p.price_gross)||0)*qty*100)/100;
       supNet+=net; supGross+=gross;
       grandNet+=net; grandGross+=gross;
-      return [i+1, p.nr, p.name, qty, p.unit, net.toFixed(2)+' EUR'];
+      return [i+1, p.nr, p.name, qty, p.unit, gross.toFixed(2)+' EUR'];
     });
 
     doc.autoTable({
