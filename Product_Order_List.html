@@ -115,7 +115,16 @@ body{background:#fff;padding:0}table{box-shadow:none}
 <body>
 <div class="header">
 <h1>Spudz — Bestellungen</h1>
-<p>Lieferant auswaehlen, Mengen eingeben, PDF erstellen & an Seval senden.</p>
+<p>1. Lager waehlen &rarr; 2. Lieferant &rarr; 3. Mengen eingeben &rarr; 4. An Seval senden</p>
+<div style="margin-top:.5rem;display:flex;align-items:center;gap:.75rem">
+  <label style="font-size:.85rem;font-weight:600;opacity:.8">Lager:</label>
+  <select id="lagerSelect" onchange="saveLager()" style="padding:.35rem .6rem;border-radius:6px;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer">
+    <option value="" style="color:#333">— Bitte Lager waehlen —</option>
+    <option value="Homburg" style="color:#333">Homburg</option>
+    <option value="Saarbruecken" style="color:#333">Saarbruecken</option>
+  </select>
+  <span id="lagerWarning" style="color:#ffcc00;font-size:.8rem;font-weight:600;display:none">&#9888; Bitte zuerst Lager auswaehlen!</span>
+</div>
 </div>
 
 <div class="supplier-tabs" id="supplierTabs"></div>
@@ -155,6 +164,23 @@ const supplierColors = {'Metro':'metro','Arfiyato':'arfiyato','Arla Foods':'arla
 let state = {};
 let orderedSuppliers = {}; // tracks which suppliers have been ordered
 let activeSupplier = ''; // current supplier tab ('' = all)
+let selectedLager = ''; // mandatory store selection
+
+function saveLager(){
+  selectedLager = document.getElementById('lagerSelect').value;
+  try{localStorage.setItem('spudz_lager', selectedLager);}catch(e){}
+  document.getElementById('lagerWarning').style.display = selectedLager ? 'none' : 'inline';
+}
+
+function requireLager(){
+  if(!selectedLager){
+    document.getElementById('lagerWarning').style.display = 'inline';
+    document.getElementById('lagerSelect').focus();
+    showToast('Bitte zuerst ein Lager auswaehlen!');
+    return false;
+  }
+  return true;
+}
 
 function init(){
   const cats = [...new Set(PRODUCTS.map(p=>p.cat))].sort();
@@ -163,6 +189,8 @@ function init(){
 
   try{state=JSON.parse(localStorage.getItem('spudz_order')||'{}');}catch(e){state={};}
   try{orderedSuppliers=JSON.parse(localStorage.getItem('spudz_ordered')||'{}');}catch(e){orderedSuppliers={};}
+  try{selectedLager=localStorage.getItem('spudz_lager')||'';}catch(e){selectedLager='';}
+  if(selectedLager) document.getElementById('lagerSelect').value = selectedLager;
 
   buildSupplierTabs();
   render();
@@ -225,8 +253,8 @@ function render(){
 
     if(isDone){
       container.innerHTML = `<div class="done-overlay">
-        <h3>&#10003; ${activeSupplier} — PDF erstellt!</h3>
-        <p>Bestellliste am ${isDone} heruntergeladen. Mengen zurueckgesetzt.</p>
+        <h3>&#10003; ${activeSupplier} — Gesendet!</h3>
+        <p>Bestellung am ${isDone} geteilt. Mengen zurueckgesetzt.</p>
         <button class="btn btn-outline" onclick="undoOrder('${activeSupplier}')">Rueckgaengig</button>
         <button class="btn btn-gold" style="margin-left:.5rem" onclick="reopenSupplier('${activeSupplier}')">Neue Bestellung</button>
       </div>`;
@@ -242,8 +270,9 @@ function render(){
         <div class="sup-stats">${selProducts.length} von ${supProducts.length} ausgewaehlt &mdash; Netto: ${totalNet.toFixed(2)} EUR</div>
       </div>
       <div class="supplier-actions">
+        <button class="btn btn-outline" onclick="downloadPDF('${activeSupplier}')" ${selProducts.length===0?'disabled':''} style="font-size:.8rem;padding:.45rem .9rem">PDF</button>
         <button class="btn-order" onclick="placeOrder('${activeSupplier}')" ${selProducts.length===0?'disabled':''}>
-          PDF erstellen &#10148;
+          Senden &#10148;
         </button>
       </div>`;
     container.appendChild(hdr);
@@ -360,8 +389,65 @@ function save(){
   try{localStorage.setItem('spudz_ordered',JSON.stringify(orderedSuppliers));}catch(e){}
 }
 
-// Generate PDF for a specific supplier and download it
+// Build WhatsApp-friendly order text for a supplier
+function buildOrderText(supplier){
+  const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
+  if(!supProducts.length) return '';
+  const today = new Date().toLocaleDateString('de-DE');
+  let text = `*SPUDZ Bestellung — ${supplier}*\n`;
+  text += `Lager: ${selectedLager}\n`;
+  text += `Datum: ${today}\n\n`;
+  supProducts.forEach(p=>{
+    const qty = state[p.nr].qty;
+    text += `${qty}x  ${p.nr}  ${p.name} (${p.unit})\n`;
+  });
+  text += `\n${supProducts.length} Artikel`;
+  return text;
+}
+
+// Place order: share text via Web Share API (mobile) or copy to clipboard (desktop)
 function placeOrder(supplier){
+  if(!requireLager()) return;
+  const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
+  if(!supProducts.length){alert('Keine Produkte ausgewaehlt!');return;}
+
+  const text = buildOrderText(supplier);
+  const today = new Date().toLocaleDateString('de-DE');
+
+  // Try Web Share API first (works great on mobile)
+  if(navigator.share){
+    navigator.share({title:'Bestellung '+supplier, text:text}).then(()=>{
+      finishOrder(supplier, today);
+    }).catch(e=>{
+      // User cancelled share — still copy to clipboard as fallback
+      navigator.clipboard.writeText(text).then(()=>{
+        finishOrder(supplier, today);
+        showToast(`${supplier} — Bestellung kopiert!`);
+      }).catch(()=>{ finishOrder(supplier, today); });
+    });
+  } else {
+    // Desktop: copy to clipboard
+    navigator.clipboard.writeText(text).then(()=>{
+      finishOrder(supplier, today);
+      showToast(`${supplier} — Bestellung in Zwischenablage kopiert! Jetzt an Seval senden.`);
+    }).catch(()=>{
+      const w=window.open('','_blank');
+      w.document.write('<pre style="font-family:monospace;white-space:pre-wrap;padding:20px">'+text.replace(/\*/g,'')+'</pre>');
+      finishOrder(supplier, today);
+    });
+  }
+}
+
+function finishOrder(supplier, today){
+  PRODUCTS.filter(p=>p.supplier===supplier).forEach(p=>delete state[p.nr]);
+  orderedSuppliers[supplier] = today + ', ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  save();
+  render();
+}
+
+// Generate PDF for a specific supplier (optional — via PDF button)
+function downloadPDF(supplier){
+  if(!requireLager()) return;
   const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
   if(!supProducts.length){alert('Keine Produkte ausgewaehlt!');return;}
 
@@ -370,20 +456,15 @@ function placeOrder(supplier){
   const today = new Date().toLocaleDateString('de-DE');
   const pageW = doc.internal.pageSize.getWidth();
 
-  // Header background
   doc.setFillColor(26,58,122);
-  doc.rect(0,0,pageW,38,    'F');
-
-  // Logo text
+  doc.rect(0,0,pageW,38,'F');
   doc.setTextColor(255,255,255);
   doc.setFontSize(22);
   doc.setFont('helvetica','bold');
   doc.text('SPUDZ',14,18);
   doc.setFontSize(10);
   doc.setFont('helvetica','normal');
-  doc.text('Bestellliste',14,26);
-
-  // Supplier + Date
+  doc.text('Bestellliste — Lager: '+selectedLager,14,26);
   doc.setFontSize(14);
   doc.setFont('helvetica','bold');
   doc.text(supplier, pageW-14, 18, {align:'right'});
@@ -391,76 +472,36 @@ function placeOrder(supplier){
   doc.setFont('helvetica','normal');
   doc.text('Datum: '+today, pageW-14, 26, {align:'right'});
 
-  // Build table data
   let totalNet=0, totalGross=0;
   const rows = supProducts.map((p,i)=>{
     const qty = state[p.nr].qty;
     const net = (parseFloat(p.price_net)||0)*qty;
     const gross = (parseFloat(p.price_gross)||0)*qty;
     totalNet+=net; totalGross+=gross;
-    return [i+1, p.nr, p.name, p.cat, qty, p.unit, (parseFloat(p.price_net)||0).toFixed(2)+' EUR', net.toFixed(2)+' EUR'];
+    return [i+1, p.nr, p.name, qty, p.unit, net.toFixed(2)+' EUR'];
   });
 
-  // Table
   doc.autoTable({
-    startY: 44,
-    head:[['#','Art.Nr','Produkt','Kategorie','Menge','Einheit','Einzelpreis','Gesamt']],
-    body: rows,
+    startY:44,
+    head:[['#','Art.Nr','Produkt','Menge','Einheit','Gesamt']],
+    body:rows,
     theme:'grid',
-    headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold',halign:'left'},
-    bodyStyles:{fontSize:7.5,cellPadding:2},
-    columnStyles:{
-      0:{halign:'center',cellWidth:8},
-      1:{cellWidth:20,fontSize:6.5,textColor:[100,100,100]},
-      2:{cellWidth:52,fontStyle:'bold'},
-      3:{cellWidth:28,fontSize:6.5,textColor:[100,100,100]},
-      4:{halign:'center',cellWidth:12},
-      5:{cellWidth:22,fontSize:6.5},
-      6:{halign:'right',cellWidth:22},
-      7:{halign:'right',cellWidth:22,fontStyle:'bold'}
-    },
+    headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold'},
+    bodyStyles:{fontSize:8,cellPadding:2.5},
+    columnStyles:{0:{halign:'center',cellWidth:8},1:{cellWidth:24,fontStyle:'bold'},2:{cellWidth:70},3:{halign:'center',cellWidth:14},4:{cellWidth:30},5:{halign:'right',cellWidth:28,fontStyle:'bold'}},
     alternateRowStyles:{fillColor:[245,246,250]},
-    margin:{left:10,right:10},
-    didDrawPage:function(data){
-      // Footer on each page
-      doc.setFontSize(7);
-      doc.setTextColor(150);
-      doc.text('Spudz GbR — Bestellung '+supplier+' — '+today, 14, doc.internal.pageSize.getHeight()-8);
-      doc.text('Seite '+doc.internal.getNumberOfPages(), pageW-14, doc.internal.pageSize.getHeight()-8,{align:'right'});
-    }
+    margin:{left:10,right:10}
   });
 
-  // Summary box below table
-  const finalY = doc.lastAutoTable.finalY + 6;
-  doc.setFillColor(245,246,250);
-  doc.roundedRect(pageW-80, finalY, 70, 28, 2, 2, 'F');
-  doc.setDrawColor(26,58,122);
-  doc.roundedRect(pageW-80, finalY, 70, 28, 2, 2, 'S');
-
-  doc.setFontSize(9);
-  doc.setTextColor(100);
-  doc.setFont('helvetica','normal');
-  doc.text('Artikel:', pageW-76, finalY+8);
-  doc.text('Netto:', pageW-76, finalY+15);
-  doc.text('Brutto:', pageW-76, finalY+22);
-
+  const finalY = doc.lastAutoTable.finalY+6;
+  doc.setFontSize(10);
   doc.setTextColor(26,58,122);
   doc.setFont('helvetica','bold');
-  doc.text(String(supProducts.length), pageW-16, finalY+8, {align:'right'});
-  doc.text(totalNet.toFixed(2)+' EUR', pageW-16, finalY+15, {align:'right'});
-  doc.setFontSize(11);
-  doc.text(totalGross.toFixed(2)+' EUR', pageW-16, finalY+22, {align:'right'});
+  doc.text(`${supProducts.length} Artikel — Netto: ${totalNet.toFixed(2)} EUR / Brutto: ${totalGross.toFixed(2)} EUR`, 14, finalY);
 
-  // Save PDF
   const safeName = supplier.replace(/[^a-zA-Z0-9]/g,'_');
   doc.save(`Bestellung_${safeName}_${today.replace(/\./g,'-')}.pdf`);
-
-  // Reset quantities + mark as done
-  PRODUCTS.filter(p=>p.supplier===supplier).forEach(p=>delete state[p.nr]);
-  orderedSuppliers[supplier] = today + ', ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-  save();
-  showToast(`${supplier} — PDF heruntergeladen & Mengen zurueckgesetzt!`);
-  render();
+  showToast(`${supplier} — PDF heruntergeladen!`);
 }
 
 function undoOrder(supplier){
@@ -475,6 +516,7 @@ function reopenSupplier(supplier){
 
 // Export all suppliers as one combined PDF
 function exportAll(){
+  if(!requireLager()) return;
   const selected = PRODUCTS.filter(p=>state[p.nr]);
   if(!selected.length){alert('Keine Produkte ausgewaehlt!');return;}
 
@@ -503,7 +545,7 @@ function exportAll(){
     doc.text('SPUDZ',14,18);
     doc.setFontSize(10);
     doc.setFont('helvetica','normal');
-    doc.text('Gesamtbestellung — '+sup,14,26);
+    doc.text('Gesamtbestellung — '+sup+' — Lager: '+selectedLager,14,26);
     doc.setFontSize(9);
     doc.text('Datum: '+today, pageW-14, 18, {align:'right'});
     doc.text((si+1)+' / '+suppliers.length+' Lieferanten', pageW-14, 26, {align:'right'});
