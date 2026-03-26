@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spudz — Polen Bestellungen</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+:root{--red:#b71c1c;--red-light:#e53935;--red-bg:#fff5f5;--green:#27ae60;--gold:#c9a84c;--bg:#f4f5f7;--card:#fff;--border:#e2e5ea;--text:#1a1a1a;--muted:#6b7280}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:90px}
+
+.header{background:linear-gradient(135deg,#7f1d1d,var(--red));color:#fff;padding:1.25rem 1rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.header h1{font-size:1.3rem;font-weight:800;display:flex;align-items:center;gap:.5rem}
+.header h1::before{content:'\1F1F5\1F1F1';font-size:1.2rem}
+.header p{opacity:.7;font-size:.8rem;margin-top:.15rem}
+.header .back-link{color:rgba(255,255,255,.7);font-size:.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:.3rem;margin-top:.4rem}
+.header .back-link:hover{color:#fff}
+
+.add-section{background:#fff;padding:1rem;border-bottom:2px solid var(--border)}
+.add-section h3{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.75rem}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.field-full{grid-column:1/-1}
+.field label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;color:var(--muted);letter-spacing:.3px;margin-bottom:.2rem}
+.field input,.field select{width:100%;padding:.5rem .65rem;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.9rem}
+.field input:focus,.field select:focus{border-color:var(--red);outline:none;box-shadow:0 0 0 2px rgba(183,28,28,.15)}
+.btn-add{width:100%;margin-top:.65rem;padding:.65rem;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:inherit;font-weight:700;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.btn-add:hover{background:#9b1515}
+.btn-add:active{transform:scale(.98)}
+
+.list-section{padding:.75rem 1rem}
+.list-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem}
+.list-header h3{font-size:.9rem;font-weight:700}
+.list-header .count{background:var(--red);color:#fff;padding:.15rem .5rem;border-radius:12px;font-size:.75rem;font-weight:700}
+
+.item-card{background:#fff;border-radius:10px;padding:.75rem;margin-bottom:.5rem;box-shadow:0 1px 4px rgba(0,0,0,.06);border-left:4px solid var(--red);display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.item-info{flex:1;min-width:0}
+.item-name{font-weight:700;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-meta{font-size:.75rem;color:var(--muted);margin-top:.15rem}
+.item-meta span{margin-right:.75rem}
+.item-price{text-align:right;white-space:nowrap}
+.item-price .amount{font-weight:800;font-size:1rem;color:var(--red)}
+.item-price .unit-price{font-size:.7rem;color:var(--muted)}
+.item-remove{background:none;border:none;color:#ccc;font-size:1.3rem;cursor:pointer;padding:.3rem;line-height:1}
+.item-remove:hover{color:var(--red)}
+
+.empty-state{text-align:center;padding:3rem 1.5rem;color:var(--muted)}
+.empty-state .icon{font-size:2.5rem;margin-bottom:.5rem}
+.empty-state p{font-size:.9rem}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid var(--border);padding:.6rem 1rem;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 -4px 15px rgba(0,0,0,.1)}
+.bottom-total{font-size:.8rem;color:var(--muted)}
+.bottom-total .amount{display:block;font-size:1.2rem;font-weight:800;color:var(--red)}
+.bottom-actions{display:flex;gap:.4rem}
+.btn{padding:.55rem .9rem;border:none;border-radius:8px;font-family:inherit;font-weight:700;font-size:.85rem;cursor:pointer}
+.btn-outline{background:transparent;border:2px solid var(--red);color:var(--red)}
+.btn-outline:hover{background:var(--red-bg)}
+.btn-send{background:var(--red);color:#fff;display:flex;align-items:center;gap:.3rem}
+.btn-send:hover{background:#9b1515}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-clear{background:transparent;border:2px solid var(--border);color:var(--muted);font-size:.75rem;padding:.4rem .7rem}
+
+.toast{position:fixed;top:70px;right:1rem;left:1rem;background:var(--green);color:#fff;padding:.7rem 1rem;border-radius:10px;font-weight:600;font-size:.85rem;z-index:999;box-shadow:0 4px 15px rgba(0,0,0,.2);transform:translateY(-120%);transition:transform .3s;text-align:center}
+.toast.show{transform:translateY(0)}
+
+.supplier-filter{display:flex;gap:.3rem;padding:.5rem 1rem;background:#fff;border-bottom:1px solid var(--border);overflow-x:auto}
+.sup-btn{padding:.4rem .75rem;border:2px solid var(--border);border-radius:20px;background:#fff;font-family:inherit;font-weight:600;font-size:.78rem;cursor:pointer;white-space:nowrap;color:var(--muted)}
+.sup-btn.active{border-color:var(--red);background:var(--red-bg);color:var(--red)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Polen Bestellungen</h1>
+  <p>Produkte eintragen, Mengen eingeben, an Seval senden</p>
+  <a href="Product_Order_List.html" class="back-link">&larr; Zur Hauptbestellung</a>
+</div>
+
+<div class="supplier-filter" id="supplierFilter">
+  <button class="sup-btn active" onclick="filterSupplier('')">Alle</button>
+  <button class="sup-btn" onclick="filterSupplier('Makro')">Makro</button>
+  <button class="sup-btn" onclick="filterSupplier('HAWA')">HAWA</button>
+  <button class="sup-btn" onclick="filterSupplier('Sonstiges')">Sonstiges</button>
+</div>
+
+<div class="add-section">
+  <h3>+ Produkt hinzufuegen</h3>
+  <div class="field-grid">
+    <div class="field field-full">
+      <label>Produkt</label>
+      <input type="text" id="inpName" placeholder="z.B. Kartoffeln 10kg" enterkeyhint="next">
+    </div>
+    <div class="field">
+      <label>Lieferant</label>
+      <select id="inpSupplier">
+        <option value="Makro">Makro</option>
+        <option value="HAWA">HAWA</option>
+        <option value="Sonstiges">Sonstiges</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Einheit</label>
+      <input type="text" id="inpUnit" placeholder="kg / Stk / Karton">
+    </div>
+    <div class="field">
+      <label>Menge</label>
+      <input type="number" id="inpQty" min="1" value="1" inputmode="numeric">
+    </div>
+    <div class="field">
+      <label>Preis (PLN)</label>
+      <input type="number" id="inpPrice" step="0.01" min="0" placeholder="0.00" inputmode="decimal">
+    </div>
+  </div>
+  <button class="btn-add" onclick="addItem()">+ Hinzufuegen</button>
+</div>
+
+<div class="list-section" id="listSection"></div>
+
+<div class="bottom-bar" id="bottomBar">
+  <div class="bottom-total">
+    <span id="bottomCount">0 Artikel</span>
+    <span class="amount" id="bottomTotal">0.00 PLN</span>
+  </div>
+  <div class="bottom-actions">
+    <button class="btn btn-clear" onclick="clearAll()" id="btnClear" disabled>Leeren</button>
+    <button class="btn btn-outline" onclick="downloadPDF()" id="btnPdf" disabled>PDF</button>
+    <button class="btn btn-send" onclick="sendOrder()" id="btnSend" disabled>Senden &#10148;</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let items = [];
+let activeFilter = '';
+
+try { items = JSON.parse(localStorage.getItem('spudz_polen') || '[]'); } catch(e) { items = []; }
+
+function save() {
+  try { localStorage.setItem('spudz_polen', JSON.stringify(items)); } catch(e) {}
+}
+
+function addItem() {
+  const name = document.getElementById('inpName').value.trim();
+  const supplier = document.getElementById('inpSupplier').value;
+  const unit = document.getElementById('inpUnit').value.trim() || 'Stk';
+  const qty = parseInt(document.getElementById('inpQty').value) || 1;
+  const price = parseFloat(document.getElementById('inpPrice').value) || 0;
+
+  if (!name) { showToast('Bitte Produktname eingeben!'); document.getElementById('inpName').focus(); return; }
+  if (price <= 0) { showToast('Bitte Preis eingeben!'); document.getElementById('inpPrice').focus(); return; }
+
+  items.push({ name, supplier, unit, qty, price, id: Date.now() });
+  save();
+  render();
+
+  // Clear inputs
+  document.getElementById('inpName').value = '';
+  document.getElementById('inpQty').value = '1';
+  document.getElementById('inpUnit').value = '';
+  document.getElementById('inpPrice').value = '';
+  document.getElementById('inpName').focus();
+  showToast(name + ' hinzugefuegt!');
+}
+
+function removeItem(id) {
+  const item = items.find(i => i.id === id);
+  items = items.filter(i => i.id !== id);
+  save();
+  render();
+  if (item) showToast(item.name + ' entfernt');
+}
+
+function filterSupplier(sup) {
+  activeFilter = sup;
+  document.querySelectorAll('.sup-btn').forEach(b => {
+    b.classList.toggle('active', (sup === '' && b.textContent === 'Alle') || b.textContent === sup);
+  });
+  render();
+}
+
+function getFiltered() {
+  if (!activeFilter) return items;
+  return items.filter(i => i.supplier === activeFilter);
+}
+
+function render() {
+  const filtered = getFiltered();
+  const section = document.getElementById('listSection');
+
+  if (items.length === 0) {
+    section.innerHTML = '<div class="empty-state"><div class="icon">📦</div><p>Noch keine Produkte. Oben Produkt eintragen und hinzufuegen.</p></div>';
+  } else if (filtered.length === 0) {
+    section.innerHTML = '<div class="empty-state"><p>Keine Produkte fuer diesen Lieferanten.</p></div>';
+  } else {
+    let html = '<div class="list-header"><h3>Bestellung</h3><span class="count">' + filtered.length + '</span></div>';
+    filtered.forEach(item => {
+      const sub = Math.round((item.price || 0) * (item.qty || 0) * 100) / 100;
+      html += '<div class="item-card">' +
+        '<div class="item-info">' +
+          '<div class="item-name">' + item.name + '</div>' +
+          '<div class="item-meta"><span>' + item.supplier + '</span><span>' + item.qty + 'x ' + item.unit + '</span></div>' +
+        '</div>' +
+        '<div class="item-price">' +
+          '<div class="amount">' + sub.toFixed(2) + ' PLN</div>' +
+          '<div class="unit-price">' + (item.price || 0).toFixed(2) + ' / ' + item.unit + '</div>' +
+        '</div>' +
+        '<button class="item-remove" onclick="removeItem(' + item.id + ')">&times;</button>' +
+      '</div>';
+    });
+    section.innerHTML = html;
+  }
+
+  // Bottom bar
+  const total = items.reduce((s, i) => s + Math.round((i.price || 0) * (i.qty || 0) * 100) / 100, 0);
+  document.getElementById('bottomCount').textContent = items.length + ' Artikel';
+  document.getElementById('bottomTotal').textContent = total.toFixed(2) + ' PLN';
+  document.getElementById('btnPdf').disabled = items.length === 0;
+  document.getElementById('btnSend').disabled = items.length === 0;
+  document.getElementById('btnClear').disabled = items.length === 0;
+}
+
+function buildOrderText() {
+  const today = new Date().toLocaleDateString('de-DE');
+  let text = '*SPUDZ Bestellung \u2014 Polen*\nDatum: ' + today + '\n\n';
+
+  const bySupplier = {};
+  items.forEach(item => {
+    if (!bySupplier[item.supplier]) bySupplier[item.supplier] = [];
+    bySupplier[item.supplier].push(item);
+  });
+
+  Object.keys(bySupplier).sort().forEach(sup => {
+    text += '*' + sup + ':*\n';
+    bySupplier[sup].forEach(item => {
+      text += item.qty + 'x  ' + item.name + ' (' + item.unit + ') \u2014 ' + (item.price || 0).toFixed(2) + ' PLN\n';
+    });
+    const supTotal = bySupplier[sup].reduce((s, i) => s + Math.round((i.price || 0) * (i.qty || 0) * 100) / 100, 0);
+    text += 'Summe: ' + supTotal.toFixed(2) + ' PLN\n\n';
+  });
+
+  const total = items.reduce((s, i) => s + Math.round((i.price || 0) * (i.qty || 0) * 100) / 100, 0);
+  text += items.length + ' Artikel \u2014 Gesamt: ' + total.toFixed(2) + ' PLN';
+  return text;
+}
+
+function sendOrder() {
+  if (!items.length) return;
+  const text = buildOrderText();
+  if (navigator.share) {
+    navigator.share({ title: 'Bestellung Polen', text: text }).catch(() => {
+      navigator.clipboard.writeText(text).then(() => showToast('In Zwischenablage kopiert!')).catch(() => {});
+    });
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Bestellung in Zwischenablage kopiert!');
+    }).catch(() => {
+      const w = window.open('', '_blank');
+      w.document.write('<pre style="font-family:monospace;white-space:pre-wrap;padding:20px">' + text.replace(/\*/g, '') + '</pre>');
+    });
+  }
+}
+
+function downloadPDF() {
+  if (!items.length) return;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const today = new Date().toLocaleDateString('de-DE');
+  const pageW = doc.internal.pageSize.getWidth();
+
+  doc.setFillColor(183, 28, 28);
+  doc.rect(0, 0, pageW, 38, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(22);
+  doc.setFont('helvetica', 'bold');
+  doc.text('SPUDZ', 14, 18);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Polen-Bestellung', 14, 26);
+  doc.setFontSize(9);
+  doc.text('Datum: ' + today, pageW - 14, 18, { align: 'right' });
+
+  let total = 0;
+  const rows = items.map((item, i) => {
+    const sub = Math.round((item.price || 0) * (item.qty || 0) * 100) / 100;
+    total += sub;
+    return [i + 1, item.name, item.supplier, item.qty, item.unit, (item.price || 0).toFixed(2), sub.toFixed(2) + ' PLN'];
+  });
+
+  doc.autoTable({
+    startY: 44,
+    head: [['#', 'Produkt', 'Lieferant', 'Menge', 'Einheit', 'Preis/Stk', 'Gesamt (PLN)']],
+    body: rows,
+    theme: 'grid',
+    headStyles: { fillColor: [183, 28, 28], textColor: 255, fontSize: 8, fontStyle: 'bold' },
+    bodyStyles: { fontSize: 8, cellPadding: 2.5 },
+    columnStyles: { 0: { halign: 'center', cellWidth: 8 }, 3: { halign: 'center', cellWidth: 14 }, 5: { halign: 'right', cellWidth: 22 }, 6: { halign: 'right', cellWidth: 28, fontStyle: 'bold' } },
+    alternateRowStyles: { fillColor: [255, 245, 245] },
+    margin: { left: 10, right: 10 }
+  });
+
+  const finalY = doc.lastAutoTable.finalY + 6;
+  doc.setFontSize(10);
+  doc.setTextColor(183, 28, 28);
+  doc.setFont('helvetica', 'bold');
+  doc.text(items.length + ' Artikel \u2014 Gesamt: ' + total.toFixed(2) + ' PLN', 14, finalY);
+
+  doc.save('Bestellung_Polen_' + today.replace(/\./g, '-') + '.pdf');
+  showToast('PDF heruntergeladen!');
+}
+
+function clearAll() {
+  if (!confirm('Alle Produkte entfernen?')) return;
+  items = [];
+  save();
+  render();
+  showToast('Liste geleert');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Enter key navigation in form
+document.getElementById('inpName').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('inpUnit').focus(); });
+document.getElementById('inpUnit').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('inpQty').focus(); });
+document.getElementById('inpQty').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('inpPrice').focus(); });
+document.getElementById('inpPrice').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+
+render();
+</script>
+</body>
+</html>
