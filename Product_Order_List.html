@@ -11,14 +11,9 @@
 :root{--blue:#1a3a7a;--blue-dark:#0d1b4a;--gold:#c9a84c;--green:#27ae60;--red:#c0392b;--bg:#f4f5f7;--card:#fff;--border:#e2e5ea;--text:#1a1a1a;--muted:#6b7280}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px}
-.header{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:1.25rem 2rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.3);display:flex;justify-content:space-between;align-items:center}
-.header-left h1{font-size:1.4rem;font-weight:800;margin-bottom:.15rem}
-.header-left p{opacity:.7;font-size:.82rem}
-.header-right{display:flex;gap:1rem;align-items:center}
-.lang-toggle{display:flex;gap:.5rem;background:rgba(255,255,255,.15);padding:.35rem .5rem;border-radius:8px}
-.lang-btn{background:transparent;border:none;color:#fff;cursor:pointer;font-weight:600;font-size:.85rem;padding:.25rem .45rem;border-radius:4px;transition:all .15s;font-family:inherit}
-.lang-btn.active{background:rgba(255,255,255,.3)}
-.user-badge{background:rgba(255,255,255,.2);padding:.5rem 1rem;border-radius:8px;font-size:.85rem;font-weight:600}
+.header{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:1.25rem 2rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.header h1{font-size:1.4rem;font-weight:800;margin-bottom:.15rem}
+.header p{opacity:.7;font-size:.82rem}
 
 /* Supplier Tabs */
 .supplier-tabs{display:flex;gap:0;overflow-x:auto;background:#fff;border-bottom:2px solid var(--border);position:sticky;top:64px;z-index:95;box-shadow:0 2px 8px rgba(0,0,0,.05)}
@@ -53,844 +48,726 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .supplier-actions{display:flex;gap:.5rem;align-items:center}
 .btn-order{background:#fff;color:#1e40af;padding:.5rem 1.25rem;border-radius:8px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:.4rem;transition:all .15s}
 .btn-order:hover{background:#dbeafe;transform:scale(1.02)}
+.btn-order:disabled{opacity:.4;cursor:not-allowed;transform:none}
 
-/* Product Table */
-.products-table{border-spacing:0;width:100%;margin:0 1rem 1rem;background:#fff;border-radius:0 0 12px 12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.products-table thead{background:#f3f4f6;font-weight:700;font-size:.8rem;color:var(--muted)}
-.products-table th{padding:.65rem;text-align:left;border-bottom:1px solid var(--border)}
-.products-table td{padding:.65rem;border-bottom:1px solid #f3f4f6;vertical-align:middle}
-.products-table tbody tr:hover{background:#fafbfc}
-.products-table input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--blue)}
-.products-table input[type=number]{width:60px;padding:.35rem;border:1px solid var(--border);border-radius:6px;font-size:.8rem;font-family:inherit;text-align:center}
-.product-name{font-weight:600;color:var(--text);font-size:.9rem}
-.supplier-badge{background:#eef2ff;color:var(--blue);padding:.25rem .6rem;border-radius:6px;font-size:.75rem;font-weight:600;white-space:nowrap}
-.price{font-weight:600;color:var(--blue);font-size:.87rem}
+/* Container */
+.container{max-width:1400px;margin:0 auto;padding:0 1rem 1rem}
+.category-group{margin-bottom:1rem}
+.category-header{background:var(--blue-dark);color:#fff;padding:.55rem 1.25rem;border-radius:10px 10px 0 0;font-weight:700;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
+.category-header:hover{background:var(--blue)}
+.category-header .count{background:rgba(255,255,255,.2);padding:.1rem .45rem;border-radius:12px;font-size:.72rem}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:0 0 10px 10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+th{background:#f8f9fb;padding:.5rem .65rem;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap}
+td{padding:.45rem .65rem;border-bottom:1px solid #f0f1f4;font-size:.83rem;vertical-align:middle}
+tr:hover td{background:#f8faff}
+tr.selected td{background:#eef7ee}
+.supplier-tag{display:inline-block;padding:.12rem .45rem;border-radius:4px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.tag-metro{background:#e3f2fd;color:#1565c0}
+.tag-arfiyato{background:#fce4ec;color:#c62828}
+.tag-arla{background:#e8f5e9;color:#2e7d32}
+.tag-lions{background:#fff3e0;color:#e65100}
+.tag-vanbeekum{background:#f3e5f5;color:#6a1b9a}
+.tag-foodkings{background:#fff8e1;color:#f57f17}
+.tag-ecolife{background:#e0f2f1;color:#00695c}
+.tag-bade{background:#fafafa;color:#424242}
+.tag-transgourmet{background:#efebe9;color:#4e342e}
+.tag-amazon{background:#FF9900;color:#111}
+.tag-selim{background:#ffebee;color:#b71c1c}
+.tag-gambert{background:#e8eaf6;color:#283593}
+.tag-asiamoin{background:#e0f7fa;color:#006064}
+.tag-plastikbecher{background:#fbe9e7;color:#bf360c}
 
-/* Order Panel */
-.order-panel{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -4px 20px rgba(0,0,0,.3);z-index:80}
-.order-panel .stats-info{display:flex;gap:2rem;font-weight:600}
-.order-panel .stats-info span{opacity:.85;font-size:.9rem}
-.order-panel .stats-info strong{font-size:1.1rem}
-.order-panel .actions{display:flex;gap:.8rem}
 
-/* Login Modal */
-.login-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(2px)}
-.login-modal{background:#fff;padding:2.5rem;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:400px;width:90%}
-.login-modal h2{font-size:1.3rem;font-weight:800;margin-bottom:.2rem;color:var(--blue-dark)}
-.login-modal p{color:var(--muted);font-size:.87rem;margin-bottom:1.5rem}
-.login-modal input{width:100%;padding:.65rem .8rem;margin-bottom:1rem;border:1px solid var(--border);border-radius:8px;font-size:.87rem;font-family:inherit}
-.login-modal .btn{width:100%;margin-top:.5rem;font-weight:700}
+.qty-input{width:58px;padding:.25rem .35rem;border:1px solid var(--border);border-radius:6px;text-align:center;font-family:inherit;font-size:.83rem}
+.qty-input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 2px rgba(26,58,122,.15)}
+.check-cell{width:34px;text-align:center}
+.check-cell input{width:17px;height:17px;cursor:pointer;accent-color:var(--green)}
+.price{font-weight:600;white-space:nowrap}
+
+/* Order panel (bottom bar) */
+.order-panel{position:fixed;bottom:0;left:0;right:0;background:var(--blue-dark);color:#fff;padding:.75rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;transform:translateY(100%);transition:transform .3s;box-shadow:0 -4px 20px rgba(0,0,0,.3)}
+.order-panel.visible{transform:translateY(0)}
+.order-panel .info{font-size:.85rem}.order-panel .total{font-size:1.2rem;font-weight:800;color:var(--gold)}
+.order-panel .actions{display:flex;gap:.5rem}
+
+/* Done overlay */
+.done-overlay{background:#f0fdf4;border:2px solid var(--green);border-radius:12px;padding:1.5rem;margin:1rem;text-align:center}
+.done-overlay h3{color:var(--green);font-size:1.1rem;margin-bottom:.25rem}
+.done-overlay p{color:var(--muted);font-size:.85rem}
+.done-overlay button{margin-top:.75rem}
 
 /* Toast */
-.toast{position:fixed;top:2rem;right:2rem;background:var(--green);color:#fff;padding:1rem 1.5rem;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:1001;font-size:.9rem;font-weight:600}
-.toast.error{background:var(--red)}
-.toast.info{background:var(--blue)}
+.toast{position:fixed;top:80px;right:1.5rem;background:var(--green);color:#fff;padding:.75rem 1.25rem;border-radius:10px;font-weight:600;font-size:.9rem;z-index:999;box-shadow:0 4px 15px rgba(0,0,0,.2);transform:translateX(120%);transition:transform .3s}
+.toast.show{transform:translateX(0)}
 
-/* Utilities */
-.no-scroll{overflow:hidden}
-.hidden{display:none!important}
-.text-center{text-align:center}
-.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
+.hidden{display:none}
 @media(max-width:768px){
-  .header{flex-direction:column;gap:1rem;align-items:flex-start}
-  .header-left{width:100%}
-  .header-right{width:100%;justify-content:space-between}
-  .order-panel{flex-direction:column;gap:1rem;align-items:stretch}
-  .order-panel .actions{justify-content:stretch}
-  .order-panel .actions .btn{flex:1}
-  .toolbar{padding:.5rem 1rem}
-  .toolbar input[type=text]{min-width:140px}
-  .products-table{font-size:.75rem}
-  .products-table td,.products-table th{padding:.4rem}
-  .products-table input[type=number]{width:50px}
+.toolbar{flex-direction:column}.toolbar input[type=text]{width:100%}
+.stats{flex-wrap:wrap;gap:.5rem}
+td,th{padding:.35rem .4rem;font-size:.78rem}
+.qty-input{width:48px}
+.supplier-tabs{gap:0}
+.sup-tab{padding:.6rem .8rem;font-size:.75rem}
+.supplier-header{flex-direction:column;gap:.5rem;text-align:center}
 }
+@media print{
+.toolbar,.header,.order-panel,.no-print,.supplier-tabs{display:none!important}
+body{background:#fff;padding:0}table{box-shadow:none}
+.category-header{background:#333!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.supplier-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* Login Screen */
+.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--blue-dark),var(--blue));display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-card{background:#fff;border-radius:16px;padding:2.5rem;width:90%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.login-card h2{text-align:center;color:var(--blue-dark);font-size:1.5rem;margin-bottom:.25rem}
+.login-card .subtitle{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:1.5rem}
+.login-card label{display:block;font-weight:600;font-size:.85rem;margin-bottom:.3rem;color:var(--text)}
+.login-card input{width:100%;padding:.65rem .85rem;border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:.95rem;margin-bottom:1rem;transition:border-color .2s}
+.login-card input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(26,58,122,.12)}
+.login-btn{width:100%;padding:.75rem;background:var(--gold);color:#fff;border:none;border-radius:10px;font-family:inherit;font-weight:800;font-size:1rem;cursor:pointer;transition:all .15s}
+.login-btn:hover{background:#b8943f;transform:scale(1.02)}
+.login-error{color:var(--red);font-size:.83rem;text-align:center;margin-bottom:.75rem;min-height:1.2rem;font-weight:600}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.user-badge{display:flex;align-items:center;gap:.5rem;font-size:.82rem;margin-top:.4rem}
+.user-badge .name{font-weight:700;color:#fff}
+.user-badge .role-tag{background:rgba(255,255,255,.2);padding:.1rem .5rem;border-radius:6px;font-size:.72rem;font-weight:600}
+.logout-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:.25rem .6rem;border-radius:6px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.logout-btn:hover{background:rgba(255,255,255,.3)}
+.app-content.hidden-app{display:none}
 </style>
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
 <div class="login-overlay" id="loginOverlay">
-  <div class="login-modal">
-    <h2>Spudz Bestellungen</h2>
-    <p id="loginDesc">Melden Sie sich an</p>
-    <input type="email" id="emailInput" placeholder="E-Mail">
-    <input type="password" id="passwordInput" placeholder="Passwort">
-    <button class="btn btn-blue" onclick="handleLogin()" style="background:var(--blue);color:#fff;width:100%;">Anmelden</button>
+  <div class="login-card">
+    <h2>🥔 Spudz</h2>
+    <div class="subtitle">Bestellsystem — Bitte anmelden</div>
+    <div class="login-error" id="loginError"></div>
+    <label>Benutzername</label>
+    <input type="text" id="loginUser" placeholder="z.B. emre" autocomplete="username" autofocus>
+    <label>Passwort</label>
+    <input type="password" id="loginPass" placeholder="Passwort" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Anmelden</button>
   </div>
 </div>
 
-<div id="mainContent" class="hidden">
-  <div class="header">
-    <div class="header-left">
-      <h1>🥙 Spudz Bestellungen</h1>
-      <p id="headerDesc">Lieferanten und Produkte</p>
-    </div>
-    <div class="header-right">
-      <div class="lang-toggle">
-        <button class="lang-btn active" id="langDE" onclick="setLang('de')">🇩🇪 DE</button>
-        <button class="lang-btn" id="langEN" onclick="setLang('en')">🇬🇧 EN</button>
-      </div>
-      <div class="user-badge" id="userBadge">Jona</div>
-    </div>
+<!-- MAIN APP (hidden until login) -->
+<div class="app-content hidden-app" id="appContent">
+<div class="header">
+<div style="display:flex;justify-content:space-between;align-items:flex-start">
+  <div>
+    <h1>Spudz — Bestellungen</h1>
+    <p>1. Lager waehlen &rarr; 2. Lieferant &rarr; 3. Mengen eingeben &rarr; 4. An Seval senden</p>
   </div>
-
-  <div class="supplier-tabs" id="supplierTabs"></div>
-  <div class="toolbar">
-    <input type="text" id="searchInput" placeholder="Produkt suchen..." onkeyup="handleSearch()">
-    <select id="categoryFilter" onchange="handleCategoryFilter()">
-      <option value="">Alle Kategorien</option>
-    </select>
-    <button class="btn btn-outline" onclick="clearSelection()" id="clearBtn">Alle löschen</button>
-  </div>
-
-  <div class="stats" id="statsBar"></div>
-  <div id="productsContainer"></div>
-</div>
-
-<div class="order-panel hidden" id="orderPanel">
-  <div class="stats-info">
-    <div><span id="selectedLabel">Artikel:</span> <strong id="selectedCount">0</strong></div>
-    <div><span id="totalNetLabel">Netto:</span> <strong id="totalNet">€0.00</strong></div>
-    <div><span id="totalGrossLabel">Brutto:</span> <strong id="totalGross">€0.00</strong></div>
-  </div>
-  <div class="actions">
-    <button class="btn btn-gold" onclick="exportPDF()" id="pdfBtn">📄 PDF exportieren</button>
-    <button class="btn btn-green" onclick="shareWhatsApp()" id="whatsappBtn">💬 WhatsApp</button>
-    <button class="btn btn-green" onclick="shareWeb()" id="shareBtn">📤 Teilen</button>
+  <div class="user-badge" id="userBadge">
+    <span class="name" id="userDisplay"></span>
+    <span class="role-tag" id="userRole"></span>
+    <button class="logout-btn" onclick="doLogout()">Abmelden</button>
   </div>
 </div>
+<div style="margin-top:.5rem;display:flex;align-items:center;gap:.75rem">
+  <label style="font-size:.85rem;font-weight:600;opacity:.8">Lager:</label>
+  <select id="lagerSelect" onchange="saveLager()" style="padding:.35rem .6rem;border-radius:6px;border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);color:#fff;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer">
+    <option value="" style="color:#333">— Bitte Lager waehlen —</option>
+    <option value="Baumholder" style="color:#333">Baumholder</option>
+    <option value="KMCC" style="color:#333">KMCC</option>
+    <option value="Kleber" style="color:#333">Kleber</option>
+    <option value="Spangdahlem" style="color:#333">Spangdahlem</option>
+    <option value="Patch" style="color:#333">Patch</option>
+    <option value="Stuttgart FT" style="color:#333">Stuttgart FT</option>
+    <option value="Ansbach" style="color:#333">Ansbach</option>
+    <option value="Grafenwoehr" style="color:#333">Grafenwoehr</option>
+    <option value="Landstuhl" style="color:#333">Landstuhl</option>
+  </select>
+  <span id="lagerWarning" style="color:#ffcc00;font-size:.8rem;font-weight:600;display:none">&#9888; Bitte zuerst Lager auswaehlen!</span>
+</div>
+</div>
+
+<div class="supplier-tabs" id="supplierTabs"></div>
+
+<div class="toolbar">
+<input type="text" id="search" placeholder="Produkt suchen...">
+<select id="filterCat"><option value="">Alle Kategorien</option></select>
+<select id="showMode"><option value="all">Alle anzeigen</option><option value="selected">Nur Ausgewaehlte</option></select>
+<button class="btn btn-outline" onclick="selectAllVisible()">Sichtbare auswaehlen</button>
+<button class="btn btn-red" onclick="clearSupplier()">Zuruecksetzen</button>
+</div>
+
+<div class="stats" id="statsBar">
+<span>Produkte: <strong id="statTotal">0</strong></span>
+<span>Ausgewaehlt: <strong id="statSelected">0</strong></span>
+<span>Netto: <strong id="statNet">0,00 EUR</strong></span>
+<span>Brutto: <strong id="statGross">0,00 EUR</strong></span>
+</div>
+
+<div class="container" id="productContainer"></div>
+
+<div class="order-panel" id="orderPanel">
+<div class="info"><span id="panelCount">0</span> Artikel ausgewaehlt</div>
+<div class="total" id="panelTotal">0,00 EUR</div>
+<div class="actions">
+<button class="btn btn-gold" onclick="exportAll()">Gesamt-PDF</button>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+</div><!-- end app-content -->
 
 <script>
-// ============= I18n Translation System =============
-const T = {
-  de: {
-    headerDesc: 'Lieferanten und Produkte',
-    loginDesc: 'Melden Sie sich an',
-    selectLabel: 'Artikel:',
-    totalNetLabel: 'Netto:',
-    totalGrossLabel: 'Brutto:',
-    searchPlaceholder: 'Produkt suchen...',
-    categoryPlaceholder: 'Alle Kategorien',
-    clearBtn: 'Alle löschen',
-    pdfBtn: '📄 PDF exportieren',
-    whatsappBtn: '💬 WhatsApp',
-    shareBtn: '📤 Teilen',
-    nothingSelected: 'Keine Produkte ausgewählt',
-    pdfTitle: 'Spudz Bestellung',
-    pdfDate: 'Datum:',
-    pdfUser: 'Benutzer:',
-    pdfSupplier: 'Lieferant:',
-    pdfProductNr: 'Art.Nr',
-    pdfProductName: 'Produkt',
-    pdfCategory: 'Kategorie',
-    pdfUnit: 'Einheit',
-    pdfNetPrice: 'Nettopreis',
-    pdfQuantity: 'Menge',
-    pdfTotal: 'Gesamt',
-    pdfGrossTotal: 'Bruttosumme:',
-    pdfNetTotal: 'Nettosumme:',
-    toastPdfGenerated: 'PDF erfolgreich generiert',
-    toastShareError: 'Sharing nicht unterstützt',
-    allSuppliers: 'Alle'
-  },
-  en: {
-    headerDesc: 'Suppliers and Products',
-    loginDesc: 'Sign in',
-    selectLabel: 'Items:',
-    totalNetLabel: 'Net:',
-    totalGrossLabel: 'Gross:',
-    searchPlaceholder: 'Search products...',
-    categoryPlaceholder: 'All Categories',
-    clearBtn: 'Clear All',
-    pdfBtn: '📄 Export PDF',
-    whatsappBtn: '💬 WhatsApp',
-    shareBtn: '📤 Share',
-    nothingSelected: 'No products selected',
-    pdfTitle: 'Spudz Order',
-    pdfDate: 'Date:',
-    pdfUser: 'User:',
-    pdfSupplier: 'Supplier:',
-    pdfProductNr: 'Art.No',
-    pdfProductName: 'Product',
-    pdfCategory: 'Category',
-    pdfUnit: 'Unit',
-    pdfNetPrice: 'Net Price',
-    pdfQuantity: 'Qty',
-    pdfTotal: 'Total',
-    pdfGrossTotal: 'Gross Total:',
-    pdfNetTotal: 'Net Total:',
-    toastPdfGenerated: 'PDF successfully generated',
-    toastShareError: 'Sharing not supported',
-    allSuppliers: 'All'
-  }
+// ===== USER ACCOUNTS =====
+const USERS = {
+  'can':    {pass:'Spudz!BX2026',   name:'Can',                lager:'Baumholder',   role:'store'},
+  'omer':   {pass:'Spudz!OM2026',   name:'Ömer',              lager:'Baumholder',   role:'store'},
+  'sertan': {pass:'Spudz!KMCC2026', name:'Sertan Mert Övelek', lager:'KMCC',         role:'store'},
+  'zeki':   {pass:'Spudz!KL2026',   name:'Zeki',               lager:'Kleber',       role:'store'},
+  'gyokan': {pass:'Spudz!SP2026',   name:'Gyokan Hayrulov',    lager:'Spangdahlem',  role:'store'},
+  'emre':   {pass:'Spudz!PA2026',   name:'Emre Can',           lager:'Patch',        role:'store'},
+  'serhat': {pass:'Spudz!PA2026b',  name:'Serhat Güler',       lager:'Patch',        role:'store'},
+  'enver':  {pass:'Spudz!FT2026',   name:'Enver Yusein',       lager:'Stuttgart FT', role:'store'},
+  'emrah':  {pass:'Spudz!AN2026',   name:'Emrah Güler',        lager:'Ansbach',      role:'store'},
+  'ugur':   {pass:'Spudz!GR2026',   name:'Ugur Haşhaş',       lager:'Grafenwoehr',  role:'store'},
+  'jona':   {pass:'ChefSpudz!2026', name:'Jona',               lager:null,           role:'admin'},
+  'seval':  {pass:'SevalSpudz!2026',name:'Seval',              lager:null,           role:'admin'},
+  'serkan': {pass:'SerkanSpudz!26', name:'Serkan',             lager:null,           role:'admin'},
+  'alisan': {pass:'AlisanSpudz!26', name:'Alişan',            lager:null,           role:'admin'},
+  'onder':  {pass:'OnderSpudz!26',  name:'Önder',             lager:null,           role:'admin'}
 };
 
-let currentLang = localStorage.getItem('spudz_lang') || 'de';
+let currentUser = null; // {username, name, lager, role}
 
-function t(key) {
-  return T[currentLang]?.[key] || T['de'][key] || key;
-}
-
-// ============= User Accounts =============
-const USERS = [
-  {email:'can@spudz.de',password:'Can1234',name:'Can',lager:'LG1'},
-  {email:'omer@spudz.de',password:'Omer1234',name:'Omer',lager:'LG1'},
-  {email:'sertan@spudz.de',password:'Sertan1234',name:'Sertan',lager:'LG2'},
-  {email:'zeki@spudz.de',password:'Zeki1234',name:'Zeki',lager:'LG2'},
-  {email:'gyokan@spudz.de',password:'Gyokan1234',name:'Gyokan',lager:'LG1'},
-  {email:'emre@spudz.de',password:'Emre1234',name:'Emre',lager:'LG3'},
-  {email:'serhat@spudz.de',password:'Serhat1234',name:'Serhat',lager:'LG2'},
-  {email:'enver@spudz.de',password:'Enver1234',name:'Enver',lager:'LG1'},
-  {email:'emrah@spudz.de',password:'Emrah1234',name:'Emrah',lager:'LG3'},
-  {email:'ugur@spudz.de',password:'Ugur1234',name:'Ugur',lager:'LG1'},
-  {email:'jona@spudz.de',password:'Jona1234',name:'Jona',lager:'Admin'},
-  {email:'seval@spudz.de',password:'Seval1234',name:'Seval',lager:'Admin'},
-  {email:'serkan@spudz.de',password:'Serkan1234',name:'Serkan',lager:'Admin'},
-  {email:'alisan@spudz.de',password:'Alisan1234',name:'Alişan',lager:'Admin'},
-  {email:'onder@spudz.de',password:'Onder1234',name:'Önder',lager:'Admin'}
-];
-
-// ============= Products Data (308 products) =============
-const PRODUCTS = [
-  {nr:'007508.5',name:'MC Wraps 30cm (18 pcs)',name_de:'METRO Chef Weizen Wraps Mexican Style Ø 30 cm 18 Stück - 1,62 kg Packung',cat:'Bakery',cat_de:'Backwaren',unit:'18 pcs',price_net:'4.59',price_gross:'4.91',supplier:'Metro'},
-  {nr:'534403.1',name:'ARO Instant Coffee Classic',name_de:'aro Instant Kaffee Classic - 200 g Glas',cat:'Beverages - Coffee',cat_de:'Getränke - Kaffee',unit:'200 g jar',price_net:'5.39',price_gross:'5.77',supplier:'Metro'},
-  {nr:'885844.1',name:'Jacobs Capsules Lungo (20 pcs)',name_de:'Jacobs Espresso 8 Nespresso Kaffeekapseln Lungo Intenso 20 Stück - 104 g Schachtel',cat:'Beverages - Coffee',cat_de:'Getränke - Kaffee',unit:'20 pcs box',price_net:'5.98',price_gross:'6.4',supplier:'Metro'},
-  {nr:'921120.0',name:'Nescafe Gold Instant Coffee',name_de:'Nescafe Gold Instant Kaffee',cat:'Beverages - Coffee',cat_de:'Getränke - Kaffee',unit:'200 g jar',price_net:'11.19',price_gross:'11.97',supplier:'Metro'},
-  {nr:'598702.9',name:'Monster Energy',name_de:'Monster Assault Energy- 12 x 500 ml Dosen',cat:'Beverages - Energy Drinks',cat_de:'Getränke - Energy Drinks',unit:'Tray 24x0.5L',price_net:'26.04',price_gross:'30.99',supplier:'Metro'},
-  {nr:'337790.0',name:'Powerade Mountain Blast',name_de:'Powerade Sports Mountain Blast Isotonisches Elektrolytegetränk',cat:'Beverages - Energy Drinks',cat_de:'Getränke - Energy Drinks',unit:'Tray 24x0.5L',price_net:'22.8',price_gross:'27.13',supplier:'Metro'},
-  {nr:'065013.5',name:'ARO Apple Juice',name_de:'aro Apfelsaft - 8 x 1,5 l Packung',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1.5 L carton',price_net:'1.56',price_gross:'1.86',supplier:'Metro'},
-  {nr:'065000.2',name:'ARO Orange Juice',name_de:'Wesergold Orangensaft 100 % Fruchtgehalt Tetra Pack - 8 x 1 l Packungen',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1.5 L carton',price_net:'2.84',price_gross:'3.37',supplier:'Metro'},
-  {nr:'014376.8',name:'Capri Sun Cherry',name_de:'Capri-Sun Fruchtsaftgetränk Kirsche - 10 x 0,20 l Packungen',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'Pack 10x0.2L',price_net:'3.5',price_gross:'3.75',supplier:'Metro'},
-  {nr:'302267.0',name:'Capri Sun Fairy Drink',name_de:'Capri-Sun Elfentrank mit Apfel-, Zitrone-, Banane- und Erdbeergeschmack - 10 x 200 ml Packungen',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'Pack 10x0.2L',price_net:'3.5',price_gross:'3.75',supplier:'Metro'},
-  {nr:'680939.6',name:'Capri Sun Monster Alarm',name_de:'Capri-Sun Monster Alarm',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'Pack 10x0.2L',price_net:'4.0',price_gross:'4.28',supplier:'Metro'},
-  {nr:'045921.4',name:'Capri Sun Multivitamin',name_de:'Capri-Sun Multivitamin Mehrfruchtsaftgetränk - 10 x 200 ml Beutel',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'Pack 10x0.2L',price_net:'3.5',price_gross:'3.75',supplier:'Metro'},
-  {nr:'018354.1',name:'Capri Sun Orange',name_de:'Capri-Sun Orange Mehrfrucht-Erfrischungsgetränk mit 10% Fruchtgehalt - 10 x 200 ml Packungen',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'Pack 10x0.2L',price_net:'3.5',price_gross:'3.75',supplier:'Metro'},
-  {nr:'549304.4',name:'Happy Day Pineapple Juice',name_de:'Happy Day Fruchtsaft Ananas 100 % Fruchtgehalt Tetra Pack',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1 L carton',price_net:'2.28',price_gross:'2.71',supplier:'Metro'},
-  {nr:'023366.0',name:'Rauch Culinary Lemon Juice',name_de:'Rauch Culinary Limettensaft 100% Einweg - 6 x 1 l Schrumpfpackung',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1 L bottle',price_net:'2.76',price_gross:'3.28',supplier:'Metro'},
-  {nr:'141926.6',name:'Rauch Culinary Lime Juice',name_de:'Rauch Culinary Limettensaft 100% Einweg - 6 x 1 l Schrumpfpackung',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1 L bottle',price_net:'2.56',price_gross:'3.05',supplier:'Metro'},
-  {nr:'701978.9',name:'Wesergold Pineapple Juice',name_de:'Wesergold Ananassaft 100 % Fruchtgehalt Tetra Pack - 8 x 1 l Packungen',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1 L carton',price_net:'2.29',price_gross:'2.73',supplier:'Metro'},
-  {nr:'806566.6',name:'Coca-Cola',name_de:'Coca-Cola ORIGINAL TASTE Classic PET - 12 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'806563.3',name:'Coca-Cola Zero',name_de:'Coca-Cola ZERO SUGAR PET - 12 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'806568.2',name:'Fanta Orange',name_de:'Fanta Orange - 12 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'815238.1',name:'Fanta Zero',name_de:'Fanta Zero PET - 12 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'806571.6',name:'Lift Apfelschorle',name_de:'Lift Apfelschorle 12 x 0,5 l Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'806573.2',name:'Mezzo Mix',name_de:'Mezzo Mix Cola & Orangenlimonade, mit Koffein 12 x 0,5 l Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'131401.0',name:'San Pellegrino Aranciata',name_de:'San Pellegrino Aranciata Dose Einweg - 24 x 330 ml Tray',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.33L',price_net:'26.23',price_gross:'31.21',supplier:'Metro'},
-  {nr:'131391.0',name:'San Pellegrino Aranciata Rossa',name_de:'San Pellegrino Aranciata Rossa Dose Einweg - 24 x 330 ml Tray',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.33L',price_net:'21.77',price_gross:'25.91',supplier:'Metro'},
-  {nr:'262349.0',name:'San Pellegrino Limonata',name_de:'San Pellegrino Limonata Dose Einweg - 24 x 330 ml Tray',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.33L',price_net:'26.23',price_gross:'31.21',supplier:'Metro'},
-  {nr:'806576.5',name:'Sprite',name_de:'Sprite 12 x 0,5 l Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'786229.5',name:'Vio Bio Lemonade Lemon',name_de:'ViO Bio Limo Zitrone-Limette PET - 18 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'24.48',price_gross:'29.13',supplier:'Metro'},
-  {nr:'786226.1',name:'Vio Bio Lemonade Orange',name_de:'ViO Bio Limo Orange PET - 18 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24x0.5L',price_net:'23.76',price_gross:'28.27',supplier:'Metro'},
-  {nr:'914766.1',name:'Fuze Tea Green Tea-Mango',name_de:'Fuze Tea Grüner Tee Mango-Kamille PET - 12 x 0,40 l Flaschen',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'Tray 24x0.4L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'518067.4',name:'Fuze Tea Lemongrass',name_de:'Fuze Tea Zitronengras Einweg - 12 x 400 ml Schrumpfpackung',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'Tray 24x0.4L',price_net:'19.39',price_gross:'23.07',supplier:'Metro'},
-  {nr:'994743.3',name:'Fuze Tea Lime-Mint',name_de:'Minze 500g',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'Tray 24x0.4L',price_net:'26.16',price_gross:'31.13',supplier:'Metro'},
-  {nr:'914770.3',name:'Fuze Tea Peach',name_de:'Fuze Tea Schwarzer Tee Pfirsich PET - 12 x 0,40 l Flaschen',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'Tray 24x0.4L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'499757.3',name:'Fuze Tea Peach 1.25L',name_de:'Fuze Tea Schwarzer Tee Pfirsich PET - 12 x 0,40 l Flaschen',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'1.25 L bottle',price_net:'1.6',price_gross:'1.9',supplier:'Metro'},
-  {nr:'914768.7',name:'Fuze Tea Peach-Hibiscus',name_de:'Fuze Tea Schwarzer Tee Pfirsich-Hibiskus PET - 12 x 0,40 l Flaschen',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'Tray 24x0.4L',price_net:'19.68',price_gross:'23.42',supplier:'Metro'},
-  {nr:'000083.0',name:'Mein T Peach Tea',name_de:'Fuze Tea Grüner Tee Mango-Kamille PET - 12 x 0,40 l Flaschen',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'Tray 24x0.5L',price_net:'11.52',price_gross:'13.71',supplier:'Metro'},
-  {nr:'179616.0',name:'Messmer Classic Tea Bags',name_de:'Meßmer Klassik Teebeutel',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'50 bags box',price_net:'3.79',price_gross:'4.06',supplier:'Metro'},
-  {nr:'001554.0',name:'ARO Still Mineral Water',name_de:'aro Mineralwasser Still Einweg PET - 6 x 500 ml Flasche',cat:'Beverages - Water',cat_de:'Getränke - Wasser',unit:'Tray 24x0.5L',price_net:'9.91',price_gross:'11.79',supplier:'Metro'},
-  {nr:'362915.1',name:'Vio Medium Mineral Water',name_de:'ViO Mineralwasser Medium 18 x 0,5 l Flaschen',cat:'Beverages - Water',cat_de:'Getränke - Wasser',unit:'Tray 24x0.5L',price_net:'15.98',price_gross:'19.02',supplier:'Metro'},
-  {nr:'057944.1',name:'Volvic Natural Water',name_de:'Volvic Natürliches Mineralwasser Naturell 24 x 0,5 l Flaschen',cat:'Beverages - Water',cat_de:'Getränke - Wasser',unit:'Tray 24x0.5L',price_net:'13.92',price_gross:'16.56',supplier:'Metro'},
-  {nr:'999',name:'Water 0.5L',name_de:'Water 0.5L',cat:'Beverages - Water',cat_de:'Getränke - Wasser',unit:'Pack 18x0.5L',price_net:'6.75',price_gross:'8.03',supplier:'BaDe Handels'},
-  {nr:'AF-51',name:'Amalthia Kalamata Giants Pitted',name_de:'Amalthia Kalamata Giants Pitted',cat:'Canned Goods - Olives',cat_de:'Canned Goods - Olives',unit:'1 tin',price_net:'66.99',price_gross:'71.68',supplier:'Arfiyato'},
-  {nr:'AF-276',name:'Grilled Olives Egemar',name_de:'Grilled Olives Egemar',cat:'Canned Goods - Olives',cat_de:'Canned Goods - Olives',unit:'1 canister',price_net:'69.99',price_gross:'74.89',supplier:'Arfiyato'},
-  {nr:'AF-6',name:'Kallina Olives with Garlic',name_de:'Kallina Olives with Garlic',cat:'Canned Goods - Olives',cat_de:'Canned Goods - Olives',unit:'10 kg bucket',price_net:'64.99',price_gross:'69.54',supplier:'Arfiyato'},
-  {nr:'AF-5',name:'Kallina Olives with Paprika',name_de:'Kallina Olives with Paprika',cat:'Canned Goods - Olives',cat_de:'Canned Goods - Olives',unit:'10 kg bucket',price_net:'64.99',price_gross:'69.54',supplier:'Arfiyato'},
-  {nr:'AF-188',name:'Freshland Florini Peppers',name_de:'Freshland Florini Peppers',cat:'Canned Goods - Peppers',cat_de:'Canned Goods - Peppers',unit:'1 can',price_net:'12.99',price_gross:'13.9',supplier:'Arfiyato'},
-  {nr:'AF-169',name:'Pepper Drops Red',name_de:'Pepper Drops Red',cat:'Canned Goods - Peppers',cat_de:'Canned Goods - Peppers',unit:'1.2 kg jar',price_net:'14.99',price_gross:'16.04',supplier:'Arfiyato'},
-  {nr:'AF-75',name:'Pepper Drops Yellow',name_de:'Pepper Drops Yellow',cat:'Canned Goods - Peppers',cat_de:'Canned Goods - Peppers',unit:'1.2 kg jar',price_net:'15.99',price_gross:'17.11',supplier:'Arfiyato'},
-  {nr:'AF-355',name:'Whole Chili 1kg',name_de:'Whole Chili 1kg',cat:'Canned Goods - Peppers',cat_de:'Canned Goods - Peppers',unit:'1 kg jar',price_net:'19.99',price_gross:'21.39',supplier:'Arfiyato'},
-  {nr:'978618.7',name:'ARO Black Olives Pitted',name_de:'aro Oliven geschwärzt, ohne Stein - 3 x 4,25 l Karton',cat:'Canned Goods - Pickles & Olives',cat_de:'Konserven - Eingelegtes & Oliven',unit:'4.25 L can',price_net:'9.98',price_gross:'10.68',supplier:'Metro'},
-  {nr:'894326.8',name:'ARO Black Olives Sliced (DS)',name_de:'aro Schwarze Oliven geschnitten (Dose)',cat:'Canned Goods - Pickles & Olives',cat_de:'Konserven - Eingelegtes & Oliven',unit:'4.25 L can',price_net:'11.99',price_gross:'12.83',supplier:'Metro'},
-  {nr:'071519.3',name:'ARO Black Olives Sliced (KT)',name_de:'aro Schwarze Oliven geschnitten (Karton)',cat:'Canned Goods - Pickles & Olives',cat_de:'Konserven - Eingelegtes & Oliven',unit:'4.25 L can',price_net:'11.99',price_gross:'12.83',supplier:'Metro'},
-  {nr:'071629.0',name:'Alimpex Jalapeno Slices',name_de:'Alimpex Jalapenos in Scheiben - 2,9 kg Dose',cat:'Canned Goods - Pickles & Olives',cat_de:'Konserven - Eingelegtes & Oliven',unit:'2900 g can',price_net:'6.9',price_gross:'7.39',supplier:'Metro'},
-  {nr:'901271.7',name:'MC Pickled Gherkins 55/60',name_de:'METRO Chef Gewürzgurken 55/60',cat:'Canned Goods - Pickles & Olives',cat_de:'Konserven - Eingelegtes & Oliven',unit:'10.2 L can',price_net:'9.77',price_gross:'10.45',supplier:'Metro'},
-  {nr:'785515.8',name:'Menzi Chili Con Carne',name_de:'Menzi Chili con Carne - 4,2 kg Dose',cat:'Canned Goods - Ready Meals',cat_de:'Konserven - Fertiggerichte',unit:'4200 ml can',price_net:'28.77',price_gross:'30.78',supplier:'Metro'},
-  {nr:'204568.0',name:'Flying Goose Chili Sauce (Bottle)',name_de:'Flying Goose Siriacha Chilisauce scharf 61 % - 1 x 455 ml Flasche',cat:'Canned Goods - Sauces',cat_de:'Konserven - Soßen',unit:'435 ml bottle',price_net:'3.91',price_gross:'4.18',supplier:'Metro'},
-  {nr:'983500.0',name:'Flying Goose Chili Sauce (Case)',name_de:'Flying Goose Siriacha Chilisauce scharf 61 % - 1 x 455 ml Flasche',cat:'Canned Goods - Sauces',cat_de:'Konserven - Soßen',unit:'435 ml bottle',price_net:'3.91',price_gross:'4.18',supplier:'Metro'},
-  {nr:'346296.7',name:'La Costena Mexican Salsa',name_de:'La Costena Salsa Mexicana Casera - 2,95 kg Dose',cat:'Canned Goods - Sauces',cat_de:'Konserven - Soßen',unit:'2.95 L can',price_net:'12.78',price_gross:'13.67',supplier:'Metro'},
-  {nr:'901275.8',name:'ARO Beetroot Slices',name_de:'Rote Beete 1kg',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'4250 ml can',price_net:'5.27',price_gross:'5.64',supplier:'Metro'},
-  {nr:'457258.2',name:'ARO Chickpeas',name_de:'aro Kichererbsen in Lake - 2,5 kg Dose',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'2650 ml can',price_net:'2.99',price_gross:'3.2',supplier:'Metro'},
-  {nr:'021025.2',name:'ARO Mushrooms Sliced (DS)',name_de:'aro Champignons 3. Wahl, geschnitten - 2,65 l Dose',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'2.65 L can',price_net:'6.29',price_gross:'6.73',supplier:'Metro'},
-  {nr:'660172.8',name:'ARO Mushrooms Sliced (TY)',name_de:'aro Champignons 3. Wahl, geschnitten - 2,65 l Dose',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'2.65 L can',price_net:'6.29',price_gross:'6.73',supplier:'Metro'},
-  {nr:'847204.5',name:'ARO Red Cabbage',name_de:'Rotkohl 10kg',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'4.25 L can',price_net:'5.25',price_gross:'5.62',supplier:'Metro'},
-  {nr:'457223.6',name:'ARO Red Kidney Beans',name_de:'aro Kidneybohnen Rot - 3 x 2,5 kg Dosen',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'2650 ml can',price_net:'4.0',price_gross:'4.28',supplier:'Metro'},
-  {nr:'445979.8',name:'ARO Tomato Pepper Strips',name_de:'aro Tomaten-Paprika-Streifen',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'4250 ml can',price_net:'7.9',price_gross:'8.45',supplier:'Metro'},
-  {nr:'AF-157',name:'Artichoke Quarters',name_de:'Artichoke Quarters',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'1 can',price_net:'9.99',price_gross:'10.69',supplier:'Arfiyato'},
-  {nr:'AF-605',name:'Giant Beans in Tomato Oil Palirria',name_de:'Giant Beans in Tomato Oil Palirria',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'2 kg tin',price_net:'49.99',price_gross:'53.49',supplier:'Arfiyato'},
-  {nr:'927841.7',name:'MC Grilled Aubergine',name_de:'METRO Chef Gegrillte Aubergine',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'1.7 L jar',price_net:'7.69',price_gross:'8.23',supplier:'Metro'},
-  {nr:'062042.0',name:'MC Grilled Zucchini',name_de:'METRO Chef Gegrillte Zucchini',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'1.7 L jar',price_net:'7.99',price_gross:'8.55',supplier:'Metro'},
-  {nr:'022812.2',name:'MC Sweet Corn',name_de:'METRO Chef Gemüsemais - 2,65 l Stück',cat:'Canned Goods - Vegetables',cat_de:'Konserven - Gemüse',unit:'2650 ml can',price_net:'4.28',price_gross:'4.57',supplier:'Metro'},
-  {nr:'519830.4',name:'ARO Dish Soap',name_de:'aro Spülmittel flüssig - 10 l Kanister',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'10 L canister',price_net:'7.21',price_gross:'8.58',supplier:'Metro'},
-  {nr:'519244.8',name:'ARO Glass Cleaner Spray',name_de:'aro Glasreiniger Spray flüssig - 1 l Flasche',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 L spray',price_net:'0.99',price_gross:'1.18',supplier:'Metro'},
-  {nr:'083385.0',name:'ARO Non-Woven Cloths',name_de:'aro Mikrofasertücher 12 Stück',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'5 pcs pack',price_net:'4.69',price_gross:'5.58',supplier:'Metro'},
-  {nr:'147228.0',name:'ARO Stainless Steel Scourers',name_de:'aro Edelstahl-Scheuerschwämme',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'6 pcs pack',price_net:'0.99',price_gross:'1.18',supplier:'Metro'},
-  {nr:'807138.0',name:'ARO Toilet Paper 2-ply',name_de:'aro Toilettenpapier 4-lagig 24 Rollen à 160 Blatt',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'24 rolls pack',price_net:'6.49',price_gross:'7.72',supplier:'Metro'},
-  {nr:'846250.0',name:'Bref Degreaser Spray',name_de:'Bref Fettlöser Spray',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'750 ml spray',price_net:'2.49',price_gross:'2.96',supplier:'Metro'},
-  {nr:'456619.6',name:'Dan Klorix Bleach Regular',name_de:'Dan Klorix Chlorreiniger Regulär flüssig - 5 l Kanister',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'5 L bottle',price_net:'11.94',price_gross:'14.21',supplier:'Metro'},
-  {nr:'158516.5',name:'Degreaser Spray',name_de:'METRO PROFESSIONAL Fettlöser - 5 l Kanister',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 L spray',price_net:'6.67',price_gross:'7.94',supplier:'Metro'},
-  {nr:'EL-10',name:'Kitchen Paper Roll',name_de:'Kitchen Paper Roll',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 CTN (12 rolls)',price_net:'10.0',price_gross:'10.0',supplier:'eco life'},
-  {nr:'932027.0',name:'Spontex Microfiber Cloths',name_de:'aro Mikrofasertücher 12 Stück',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'10 pcs pack',price_net:'4.99',price_gross:'5.94',supplier:'Metro'},
-  {nr:'084985.1',name:'ARO Salad Mayonnaise 50%',name_de:'aro Salatmayonnaise 50 % Fett 10 kg Eimer',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'10 kg bucket',price_net:'20.38',price_gross:'21.81',supplier:'Metro'},
-  {nr:'202559.1',name:'ARO Table Mustard Medium',name_de:'aro Tafelsenf mittelscharf - 875 g Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'875 ml bottle',price_net:'1.52',price_gross:'1.63',supplier:'Metro'},
-  {nr:'931075.0',name:'ARO Table Vinegar 5%',name_de:'aro Tafelsenf mittelscharf - 875 g Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'1 L bottle',price_net:'0.51',price_gross:'0.55',supplier:'Metro'},
-  {nr:'095562.5',name:'Appel Worcester Sauce',name_de:'Appel Worcestersauce 1 l Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'1000 ml bottle',price_net:'6.44',price_gross:'6.89',supplier:'Metro'},
-  {nr:'447991.0',name:'Flying Goose Sriracha Hot Sauce',name_de:'Flying Goose Siriacha Chilisauce scharf 61 % - 1 x 455 ml Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'730 ml bottle',price_net:'5.99',price_gross:'6.41',supplier:'Metro'},
-  {nr:'167690.7',name:'Heinz BBQ Sauce',name_de:'Heinz Barbecue Sauce rauchig 11,5 kg Eimer',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'10 L bucket',price_net:'36.31',price_gross:'38.85',supplier:'Metro'},
-  {nr:'LI-03',name:'Lions BBQ Sauce',name_de:'Lions BBQ Sauce',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'2.27 L bottle',price_net:'6.51',price_gross:'6.97',supplier:'Lions'},
-  {nr:'LI-04',name:'Lions Piri Piri Sauce',name_de:'Lions Piri Piri Sauce',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'2.27 L bottle',price_net:'6.51',price_gross:'6.97',supplier:'Lions'},
-  {nr:'LI-05',name:'Lions Ranch Sauce',name_de:'Lions Ranch Sauce',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'2.27 L bottle',price_net:'9.56',price_gross:'10.23',supplier:'Lions'},
-  {nr:'LI-01',name:'Lions Sourcream & Chives Sauce',name_de:'Lions Sourcream & Chives Sauce',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'2.27 L bottle',price_net:'10.0',price_gross:'10.7',supplier:'Lions'},
-  {nr:'LI-02',name:'Lions Very Hot Chili Sauce',name_de:'Lions Very Hot Chili Sauce',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'2.27 L bottle',price_net:'6.58',price_gross:'7.04',supplier:'Lions'},
-  {nr:'951517.2',name:'MC Apple Vinegar',name_de:'METRO Chef Apfelessig - 1 x 500 ml Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'500 ml bottle',price_net:'0.96',price_gross:'1.03',supplier:'Metro'},
-  {nr:'951488.0',name:'MC Balsamic Vinegar of Modena',name_de:'METRO Chef Balsamico Vinegar di Modena Creme Italien - 500 ml Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'1 L bottle',price_net:'3.39',price_gross:'3.63',supplier:'Metro'},
-  {nr:'951005.8',name:'MC Chocolate Dessert Sauce',name_de:'METRO Chef Dessertsauce Schokolade - 1 kg Flasche',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'1 kg bottle',price_net:'4.43',price_gross:'4.74',supplier:'Metro'},
-  {nr:'536148.0',name:'MC Vegan Salad Mayonnaise',name_de:'METRO Chef Salat Mayonnaise vegan',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'2.5 kg bucket',price_net:'7.99',price_gross:'8.55',supplier:'Metro'},
-  {nr:'040769.2',name:'Rioba Salad Mayonnaise 50% Portions',name_de:'RIOBA Salatmayonnaise 50 % 150 Einzelportionen à 20 ml - 3 l Karton',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'180 x 20ml box',price_net:'12.45',price_gross:'13.32',supplier:'Metro'},
-  {nr:'038144.2',name:'Rioba Tomato Ketchup Portions',name_de:'RIOBA Tomatenketchup 180 Portionen à 15 g - 2,7 kg Karton',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'180 x 15ml box',price_net:'9.79',price_gross:'10.48',supplier:'Metro'},
-  {nr:'86799',name:'Butter Lurpak Salted',name_de:'Butter Lurpak Salted',cat:'Dairy - Butter',cat_de:'Dairy - Butter',unit:'1 Case (20x200g)',price_net:'1.97',price_gross:'1.97',supplier:'Arla Foods'},
-  {nr:'978587.0',name:'ARO Shepherd Cheese 45%',name_de:'aro Hirtenkäse 45%',cat:'Dairy - Cheese',cat_de:'Molkerei - Käse',unit:'2 kg block',price_net:'12.99',price_gross:'13.9',supplier:'Metro'},
-  {nr:'40170',name:'Cheddar Shredded',name_de:'Cheddar Shredded',cat:'Dairy - Cheese',cat_de:'Molkerei - Käse',unit:'1 Case (4x1kg)',price_net:'8.64',price_gross:'8.64',supplier:'Arla Foods'},
-  {nr:'65324',name:'Mozzarella Shredded',name_de:'Mozzarella Shredded',cat:'Dairy - Cheese',cat_de:'Molkerei - Käse',unit:'1 Case (4x1kg)',price_net:'7.55',price_gross:'7.55',supplier:'Arla Foods'},
-  {nr:'20759',name:'White Cheese Cubes Apetina',name_de:'White Cheese Cubes Apetina',cat:'Dairy - Cheese',cat_de:'Molkerei - Käse',unit:'1 Bucket (4kg)',price_net:'27.69',price_gross:'27.69',supplier:'Arla Foods'},
-  {nr:'1624',name:'TB Sour Cream 20%',name_de:'TB Sour Cream 20%',cat:'Dairy - Cream',cat_de:'Dairy - Cream',unit:'1 Bucket (5kg)',price_net:'22.44',price_gross:'22.44',supplier:'Arla Foods'},
-  {nr:'88518',name:'UHT Milk Regular',name_de:'UHT Milk Regular',cat:'Dairy - Milk',cat_de:'Dairy - Milk',unit:'1 Case (10x1L)',price_net:'1.3',price_gross:'1.3',supplier:'Arla Foods'},
-  {nr:'918530.0',name:'ARO Greek Yogurt 10%',name_de:'aro Griechischer Joghurt 10%',cat:'Dairy - Yogurt',cat_de:'Molkerei - Joghurt',unit:'5 kg bucket',price_net:'9.39',price_gross:'10.05',supplier:'Metro'},
-  {nr:'918736.0',name:'ARO Natural Yogurt 3.5%',name_de:'aro Thunfischstücke in eigenem Saft - 6 x 1,705 kg Dosen',cat:'Dairy - Yogurt',cat_de:'Molkerei - Joghurt',unit:'5 kg bucket',price_net:'6.99',price_gross:'7.48',supplier:'Metro'},
-  {nr:'21832',name:'Yoghurt Klover Drained 10%',name_de:'Yoghurt Klover Drained 10%',cat:'Dairy - Yogurt',cat_de:'Molkerei - Joghurt',unit:'1 Bucket (5kg)',price_net:'13.27',price_gross:'13.27',supplier:'Arla Foods'},
-  {nr:'052217.7',name:'Violife Gouda Style Shredded',name_de:'Violife Gouda Geschmack, gerieben, vegan, gekühlt - 1 kg Packung',cat:'Dairy Alternative',cat_de:'Milchalternativen',unit:'1 kg bag',price_net:'9.16',price_gross:'9.8',supplier:'Metro'},
-  {nr:'060163.3',name:'Violife Mozzarella Style Shredded',name_de:'Violife Perfect Pizza Mozzarella Geschmack gerieben vegan gekühlt - 500 g Schrumpfpackung',cat:'Dairy Alternative',cat_de:'Milchalternativen',unit:'1 kg bag',price_net:'11.36',price_gross:'12.16',supplier:'Metro'},
-  {nr:'AF-630',name:'Arfiyato Green Peppers with Cream Cheese',name_de:'Arfiyato Green Peppers with Cream Cheese',cat:'Deli - Antipasti',cat_de:'Deli - Antipasti',unit:'1.3 kg container',price_net:'18.99',price_gross:'20.32',supplier:'Arfiyato'},
-  {nr:'AF-645',name:'Arfiyato Stuffed Tomato Peppers',name_de:'Arfiyato Stuffed Tomato Peppers',cat:'Deli - Antipasti',cat_de:'Deli - Antipasti',unit:'1 pc',price_net:'19.99',price_gross:'21.39',supplier:'Arfiyato'},
-  {nr:'AF-623',name:'Balsamic Onions',name_de:'Balsamic Onions',cat:'Deli - Antipasti',cat_de:'Deli - Antipasti',unit:'1 can',price_net:'9.99',price_gross:'10.69',supplier:'Arfiyato'},
-  {nr:'AF-612',name:'Grilled Aubergine Trays',name_de:'Grilled Aubergine Trays',cat:'Deli - Antipasti',cat_de:'Deli - Antipasti',unit:'2.4 kg tray',price_net:'21.99',price_gross:'23.53',supplier:'Arfiyato'},
-  {nr:'AF-323',name:'Grilled Mushrooms',name_de:'Grilled Mushrooms',cat:'Deli - Antipasti',cat_de:'Deli - Antipasti',unit:'5 L canister',price_net:'33.99',price_gross:'36.37',supplier:'Arfiyato'},
-  {nr:'AF-606',name:'Stuffed Vine Leaves with Rice Palirria',name_de:'Stuffed Vine Leaves with Rice Palirria',cat:'Deli - Antipasti',cat_de:'Deli - Antipasti',unit:'2 kg tin',price_net:'59.99',price_gross:'64.19',supplier:'Arfiyato'},
-  {nr:'55445',name:'Eggs Issue Medium',name_de:'Eggs Issue Medium',cat:'Eggs',cat_de:'Eggs',unit:'1 Case (12 trays = 360 pcs)',price_net:'69.57',price_gross:'69.57',supplier:'Arla Foods'},
-  {nr:'278900.6',name:'MC Apples Elstar',name_de:'Äpfel Elstar 10kg',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'10 kg box',price_net:'15.29',price_gross:'16.36',supplier:'Metro'},
-  {nr:'278708.3',name:'MC Apples Jonagold',name_de:'METRO Chef Äpfel Jonagold',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'10 kg box',price_net:'13.99',price_gross:'14.97',supplier:'Metro'},
-  {nr:'016968.0',name:'MC Lemons (Large)',name_de:'Zitronen 1,5kg',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'5 kg bag',price_net:'10.63',price_gross:'11.37',supplier:'Metro'},
-  {nr:'446565.4',name:'MC Lemons (Small)',name_de:'Zitronen 1,5kg',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'1.5 kg bag',price_net:'3.62',price_gross:'3.87',supplier:'Metro'},
-  {nr:'230390.0',name:'MC Mango Ready to Eat',name_de:'Mango Ready To Eat Kiste',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'1 pc',price_net:'2.11',price_gross:'2.26',supplier:'Metro'},
-  {nr:'271702.3',name:'Oranges',name_de:'METRO Chef Saftorangen Spanien - 12,5 kg Kiste',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'3 kg bag',price_net:'4.39',price_gross:'4.7',supplier:'Metro'},
-  {nr:'409327.4',name:'Pineapple',name_de:'Happy Day Fruchtsaft Ananas 100 % Fruchtgehalt Tetra Pack',cat:'Fresh Fruits',cat_de:'Frisches Obst',unit:'1 pc',price_net:'3.19',price_gross:'3.41',supplier:'Metro'},
-  {nr:'154793.4',name:'MC Chives',name_de:'Schnittlauch 100g',cat:'Fresh Herbs',cat_de:'Frische Kräuter',unit:'200 g pack',price_net:'3.79',price_gross:'4.06',supplier:'Metro'},
-  {nr:'327282.0',name:'MC Dill (1kg)',name_de:'METRO Chef Dill (1kg)',cat:'Fresh Herbs',cat_de:'Frische Kräuter',unit:'1 kg bunch',price_net:'8.13',price_gross:'8.7',supplier:'Metro'},
-  {nr:'234834.0',name:'MC Dill (200g)',name_de:'METRO Chef Dill (200g)',cat:'Fresh Herbs',cat_de:'Frische Kräuter',unit:'200 g pack',price_net:'2.47',price_gross:'2.64',supplier:'Metro'},
-  {nr:'244821.5',name:'MC Flat Leaf Parsley',name_de:'Petersilie glatt 1kg',cat:'Fresh Herbs',cat_de:'Frische Kräuter',unit:'300 g bunch',price_net:'2.99',price_gross:'3.2',supplier:'Metro'},
-  {nr:'248141.0',name:'MC Flat Leaf Parsley (1kg)',name_de:'Petersilie glatt 1kg',cat:'Fresh Herbs',cat_de:'Frische Kräuter',unit:'1 kg bunch',price_net:'6.59',price_gross:'7.05',supplier:'Metro'},
-  {nr:'287266.1',name:'Spring Onions',name_de:'Frühlingszwiebeln',cat:'Fresh Herbs',cat_de:'Frische Kräuter',unit:'1 bunch',price_net:'0.64',price_gross:'0.69',supplier:'Metro'},
-  {nr:'287182.0',name:'Baby Spinach (1kg)',name_de:'Babyspinat 1kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 kg bag',price_net:'3.0',price_gross:'3.21',supplier:'Metro'},
-  {nr:'287194.5',name:'Baby Spinach (200g)',name_de:'Babyspinat 1kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'200 g pack',price_net:'1.75',price_gross:'1.87',supplier:'Metro'},
-  {nr:'289093.7',name:'Beetroot Fresh',name_de:'Rote Beete 1kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 kg bag',price_net:'1.53',price_gross:'1.64',supplier:'Metro'},
-  {nr:'299102.4',name:'Bell Pepper Mix (ES)',name_de:'Paprika Mix 16x500g',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'500 g pack',price_net:'2.37',price_gross:'2.54',supplier:'Metro'},
-  {nr:'299368.1',name:'Bell Pepper Mix (NL)',name_de:'Paprika Mix 16x500g',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'500 g pack',price_net:'2.06',price_gross:'2.21',supplier:'Metro'},
-  {nr:'283546.0',name:'Broccoli',name_de:'Broccoli 500g',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'500 g head',price_net:'1.39',price_gross:'1.49',supplier:'Metro'},
-  {nr:'292135.1',name:'Carrots',name_de:'Möhren 10kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'10 kg bag',price_net:'7.68',price_gross:'8.22',supplier:'Metro'},
-  {nr:'012018.8',name:'Cucumber (ES)',name_de:'Gurke (Spanien)',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 pc',price_net:'1.58',price_gross:'1.69',supplier:'Metro'},
-  {nr:'011981.8',name:'Cucumber (NL)',name_de:'Gurke (Niederlande)',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 pc',price_net:'0.59',price_gross:'0.63',supplier:'Metro'},
-  {nr:'049039.1',name:'Head Lettuce',name_de:'Kopfsalat Kiste',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'12 pcs box',price_net:'18.69',price_gross:'20.0',supplier:'Metro'},
-  {nr:'194256.0',name:'Imperfect Cucumbers',name_de:'Gurken Kiste mind. 4,2kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'10 kg box',price_net:'28.59',price_gross:'30.59',supplier:'Metro'},
-  {nr:'024645.0',name:'Lollo Rosso Lettuce',name_de:'Lollo Rosso Salat',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'9 pcs box',price_net:'10.99',price_gross:'11.76',supplier:'Metro'},
-  {nr:'031505.1',name:'MC Bio Ginger (Organic)',name_de:'Bio Ingwer 1,5 kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'200 g pack',price_net:'1.86',price_gross:'1.99',supplier:'Metro'},
-  {nr:'292355.5',name:'MC Carrots',name_de:'Möhren 10kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'10 kg bag',price_net:'8.79',price_gross:'9.41',supplier:'Metro'},
-  {nr:'310725.0',name:'MC Cucumber (ES)',name_de:'METRO Chef Gurke (Spanien)',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 pc',price_net:'1.16',price_gross:'1.24',supplier:'Metro'},
-  {nr:'025606.5',name:'MC Lollo Bionda Lettuce',name_de:'METRO Chef Lollo Bionda Salat',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'9 pcs box',price_net:'10.99',price_gross:'11.76',supplier:'Metro'},
-  {nr:'525350.0',name:'MC Peeled Garlic',name_de:'METRO Chef Knoblauch geschält',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 kg bag',price_net:'7.55',price_gross:'8.08',supplier:'Metro'},
-  {nr:'281599.1',name:'MC Potatoes',name_de:'Speisekartoffeln VWFK übergroß 10kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'10 kg bag',price_net:'5.29',price_gross:'5.66',supplier:'Metro'},
-  {nr:'368188.9',name:'MC Round Tomatoes',name_de:'Tomaten 6kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'6 kg box',price_net:'13.52',price_gross:'14.47',supplier:'Metro'},
-  {nr:'186904.0',name:'MC Salad Mix (FR)',name_de:'METRO Chef Salat Mix (Frankreich)',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'9 pcs box',price_net:'11.1',price_gross:'11.88',supplier:'Metro'},
-  {nr:'240032.3',name:'Organic Beetroot',name_de:'Rote Beete 1kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'500 g pack',price_net:'1.49',price_gross:'1.59',supplier:'Metro'},
-  {nr:'494702.4',name:'Pink Garlic',name_de:'Knoblauch Rosa 1kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'1 kg bag',price_net:'5.79',price_gross:'6.2',supplier:'Metro'},
-  {nr:'615',name:'Potatoes Sack',name_de:'Potatoes Sack',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'25 kg sack',price_net:'18.75',price_gross:'20.06',supplier:'BaDe Handels'},
-  {nr:'014322.2',name:'Red Onions (Large)',name_de:'Zwiebeln rot groß 10kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'10 kg bag',price_net:'7.29',price_gross:'7.8',supplier:'Metro'},
-  {nr:'014240.6',name:'Red Onions (Small)',name_de:'Zwiebeln rot groß 10kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'10 kg bag',price_net:'7.29',price_gross:'7.8',supplier:'Metro'},
-  {nr:'563886.0',name:'Red Palermo Peppers',name_de:'Rote Palermo Paprika',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'500 g pack',price_net:'2.48',price_gross:'2.65',supplier:'Metro'},
-  {nr:'288641.0',name:'Salad Mix (IT)',name_de:'METRO Chef Salatmix Bunte Salatmischung - 1,5 kg Beutel',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'9 pcs box',price_net:'9.45',price_gross:'10.11',supplier:'Metro'},
-  {nr:'187612.7',name:'Sweet Potatoes',name_de:'Süßkartoffeln 1kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'6 kg box',price_net:'6.99',price_gross:'8.32',supplier:'Metro'},
-  {nr:'009054.8',name:'Tomatoes',name_de:'Tomaten 6kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'6 kg box',price_net:'13.19',price_gross:'14.11',supplier:'Metro'},
-  {nr:'008592.0',name:'Vine Tomatoes (NL)',name_de:'Tomaten 6kg',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'5 kg box',price_net:'18.99',price_gross:'20.32',supplier:'Metro'},
-  {nr:'704007.4',name:'Bagel Plain (36 pcs)',name_de:'Edna Bagel Natur Ø 11 cm tiefgefroren, fertig gebacken, geschnitten',cat:'Frozen - Bakery',cat_de:'TK - Backwaren',unit:'36 pcs box',price_net:'28.24',price_gross:'30.22',supplier:'Metro'},
-  {nr:'020610.0',name:'Elviart Pita Flatbread 10x18cm',name_de:'Elviart Pita Fladenbrot Ø 18 cm tiefgefroren 10 Stück - 800 g Packung',cat:'Frozen - Bakery',cat_de:'TK - Backwaren',unit:'10 pcs pack',price_net:'2.88',price_gross:'3.08',supplier:'Metro'},
-  {nr:'671062.8',name:'Mini Pancake (348 pcs)',name_de:'Edna Mini Pancake Ø 4,5 cm tiefgefroren, fertig gebacken 348 Stück',cat:'Frozen - Bakery',cat_de:'TK - Backwaren',unit:'348 pcs box',price_net:'36.29',price_gross:'38.83',supplier:'Metro'},
-  {nr:'784801',name:'Banana Slices Frozen',name_de:'Banana Slices Frozen',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'10 kg box',price_net:'24.99',price_gross:'26.74',supplier:'Transgourmet'},
-  {nr:'958408.7',name:'MC Avocado Cubes',name_de:'METRO Chef Avocadowürfel tiefgefroren - 1 kg Beutel',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'1 kg bag',price_net:'4.99',price_gross:'5.34',supplier:'Metro'},
-  {nr:'009332.0',name:'MC Avocado Slices Frozen',name_de:'METRO Chef Avocadoscheiben tiefgefroren - 1 kg Stück',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'1 kg bag',price_net:'7.49',price_gross:'8.01',supplier:'Metro'},
-  {nr:'912431.4',name:'MC Blueberries',name_de:'METRO Chef Blaubeeren',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'1 kg bag',price_net:'7.6',price_gross:'8.13',supplier:'Metro'},
-  {nr:'912409.0',name:'MC Mango Cubes',name_de:'METRO Chef Mango Würfel tiefgefroren - 1,00 kg Beutel',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'1 kg bag',price_net:'4.5',price_gross:'4.81',supplier:'Metro'},
-  {nr:'912413.2',name:'MC Pineapple Chunks',name_de:'METRO Chef Ananasstücke',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'1 kg bag',price_net:'3.52',price_gross:'3.77',supplier:'Metro'},
-  {nr:'929514.8',name:'MC Raspberries Frozen',name_de:'METRO Chef Himbeeren tiefgefroren - 4 x 2,50 kg Beutel',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'2.5 kg bag',price_net:'20.82',price_gross:'22.28',supplier:'Metro'},
-  {nr:'928844.0',name:'MC Strawberries Frozen',name_de:'METRO Chef Erdbeeren erntefrisch tiefgefroren - 2,5 kg Beutel',cat:'Frozen - Fruits',cat_de:'TK - Obst',unit:'2.5 kg bag',price_net:'6.39',price_gross:'6.84',supplier:'Metro'},
-  {nr:'209034.0',name:'ARO Chicken Nuggets Frozen',name_de:'aro Hähnchen-Nuggets tiefgefroren - 1 kg Beutel',cat:'Frozen - Meat',cat_de:'TK - Fleisch',unit:'1 kg bag',price_net:'6.32',price_gross:'6.76',supplier:'Metro'},
-  {nr:'339051.5',name:'MC Chicken Breast Strips Grilled',name_de:'METRO Chef Hähnchenbrust Streifen 10 -12 mm, tiefgefroren, Ofen gebräunt, IQF, Halal - 2,5 kg Beutel',cat:'Frozen - Meat',cat_de:'TK - Fleisch',unit:'1 kg bag',price_net:'17.64',price_gross:'18.87',supplier:'Metro'},
-  {nr:'537682.7',name:'Aviko Roesti Bites Oven',name_de:'Aviko Rösti Bites Oven tiefgefroren - 2,5 kg Beutel',cat:'Frozen - Potato Products',cat_de:'TK - Kartoffelprodukte',unit:'2.5 kg bag',price_net:'4.71',price_gross:'5.04',supplier:'Metro'},
-  {nr:'546743.6',name:'Aviko Super Crunch Fries 9.5mm',name_de:'Aviko Pommes Frites 11 mm tiefgefroren, vorgebacken 5 x 2,5 kg',cat:'Frozen - Potato Products',cat_de:'TK - Kartoffelprodukte',unit:'2.5 kg bag',price_net:'5.29',price_gross:'5.66',supplier:'Metro'},
-  {nr:'785669.3',name:'Koelln Muesli Honey Nut',name_de:'Kölln Müsli Knusper Honig-Nuss - 1,7 kg Beutel',cat:'Grains & Cereals',cat_de:'Getreide & Cerealien',unit:'1.7 kg pack',price_net:'8.99',price_gross:'9.62',supplier:'Metro'},
-  {nr:'090225.4',name:'Muellers Muehle Quinoa',name_de:'Müllers Mühle Quinoa',cat:'Grains & Cereals',cat_de:'Getreide & Cerealien',unit:'1.8 kg bag',price_net:'9.52',price_gross:'10.19',supplier:'Metro'},
-  {nr:'6602',name:'Dawn Farms Chargrilled Chicken Strips',name_de:'Dawn Farms Chargrilled Chicken Strips',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (10x1kg)',price_net:'9.7',price_gross:'10.38',supplier:'Food-Kings'},
-  {nr:'7200',name:'Dawn Farms Full Slice Bacon Cooked',name_de:'Dawn Farms Full Slice Bacon Cooked',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (6x1kg)',price_net:'19.35',price_gross:'20.7',supplier:'Food-Kings'},
-  {nr:'5291',name:'Dawn Farms Pork Carnitas',name_de:'Dawn Farms Pork Carnitas',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (10x500g)',price_net:'10.22',price_gross:'10.94',supplier:'Food-Kings'},
-  {nr:'6953',name:'Dawn Farms Pulled Chicken',name_de:'Dawn Farms Pulled Chicken',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (10x1kg)',price_net:'9.8',price_gross:'10.49',supplier:'Food-Kings'},
-  {nr:'030675.3',name:'ARO Olive Oil',name_de:'aro Olivenöl Kochöl PET - 5 l Flasche',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'5 L canister',price_net:'27.99',price_gross:'29.95',supplier:'Metro'},
-  {nr:'208622.1',name:'ARO Rapeseed Oil',name_de:'aro Frittieröl - 10 l Kanister',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'10 L canister',price_net:'14.89',price_gross:'15.93',supplier:'Metro'},
-  {nr:'921376.0',name:'ARO Sunflower Oil',name_de:'aro Thunfischstücke in Sonnenblumenöl - 1,705 kg Dose',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'10 L canister',price_net:'16.78',price_gross:'17.95',supplier:'Metro'},
-  {nr:'219405.8',name:'Deli Reform Soft Margarine',name_de:'Deli Reform Halbfettmargarine',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'2 kg tub',price_net:'8.95',price_gross:'9.58',supplier:'Metro'},
-  {nr:'905198.0',name:'MC Extra Virgin Olive Oil',name_de:'aro Virgin Olivenöl - 5 l Flasche',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'5 L canister',price_net:'31.49',price_gross:'33.69',supplier:'Metro'},
-  {nr:'867307.1',name:'MC High Oleic Frying Oil',name_de:'METRO Chef High Oleic Frittieröl - 10 l Kanister',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'10 L canister',price_net:'20.99',price_gross:'22.46',supplier:'Metro'},
-  {nr:'011429.8',name:'Optima Butter Aroma Oil',name_de:'Optima mit feinem Butteraroma, 92 % Fett, vegan, laktosefrei, glutenfrei, gekühlt - 2 l Flasche',cat:'Oils & Fats',cat_de:'Öle & Fette',unit:'2 L bottle',price_net:'12.31',price_gross:'13.17',supplier:'Metro'},
-  {nr:'596093',name:'ARLA Joerd Oat Barista UHT',name_de:'ARLA Joerd Oat Barista UHT',cat:'Plant-Based Beverage',cat_de:'Plant-Based Beverage',unit:'1 Case (10x1L)',price_net:'2.02',price_gross:'2.02',supplier:'Arla Foods'},
-  {nr:'527240.6',name:'BBQ Marshmallows',name_de:'Vandamme Giga BBQ Marshmallows - 400 g Beutel',cat:'Snacks & Confectionery',cat_de:'Snacks & Süßwaren',unit:'400 g bag',price_net:'2.71',price_gross:'2.9',supplier:'Metro'},
-  {nr:'127862.1',name:'Bahlsen Pick Original Crackers',name_de:'Bahlsen Pick Original Cracker',cat:'Snacks & Confectionery',cat_de:'Snacks & Süßwaren',unit:'24 x 28g box',price_net:'12.82',price_gross:'13.72',supplier:'Metro'},
-  {nr:'337326.3',name:'Rocky Mountain Marshmallows',name_de:'Rocky Mountain Marshmallows Classic 24 x 300 g Beutel',cat:'Snacks & Confectionery',cat_de:'Snacks & Süßwaren',unit:'300 g bag',price_net:'4.33',price_gross:'4.63',supplier:'Metro'},
-  {nr:'154301.6',name:'ARO Table Salt',name_de:'aro Tafelsenf mittelscharf - 875 g Flasche',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'500 g pack',price_net:'0.29',price_gross:'0.31',supplier:'Metro'},
-  {nr:'16170014D',name:'Cajun Mix',name_de:'Cajun Mix',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'12.75',price_gross:'13.64',supplier:'Van Beekum'},
-  {nr:'16170073D',name:'Chips & Potato Seasoning with Salt',name_de:'Chips & Potato Seasoning with Salt',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'13.73',price_gross:'14.69',supplier:'Van Beekum'},
-  {nr:'16170073C',name:'Chips & Potato Seasoning with Salt (Shaker)',name_de:'Chips & Potato Seasoning with Salt (Shaker)',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'600 g shaker',price_net:'11.77',price_gross:'12.59',supplier:'Van Beekum'},
-  {nr:'16170003D',name:'Dry Rub All Purpose',name_de:'Dry Rub All Purpose',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'2 kg bag',price_net:'30.92',price_gross:'33.08',supplier:'Van Beekum'},
-  {nr:'16170003C',name:'Dry Rub All Purpose (Shaker)',name_de:'Dry Rub All Purpose (Shaker)',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'600 g shaker',price_net:'13.01',price_gross:'13.92',supplier:'Van Beekum'},
-  {nr:'19080225D',name:'Garlic Granules Coarse 2-3mm',name_de:'Garlic Granules Coarse 2-3mm',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'11.04',price_gross:'11.81',supplier:'Van Beekum'},
-  {nr:'250542.8',name:'Hellma Pepper Sticks (750 pcs)',name_de:'Hellma Rohrzuckersticks Einzelportionen 500 Stück á 4 g, neutral 2 kg Karton',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'750 x 0.2g box',price_net:'10.66',price_gross:'11.41',supplier:'Metro'},
-  {nr:'250536.0',name:'Hellma Salt Sticks (750 pcs)',name_de:'Hellma Rohrzuckersticks Einzelportionen 500 Stück á 4 g, neutral 2 kg Karton',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'750 x 1g box',price_net:'6.99',price_gross:'7.48',supplier:'Metro'},
-  {nr:'20210152D',name:'Honey-Mustard BBQ Rub',name_de:'Honey-Mustard BBQ Rub',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'14.72',price_gross:'15.75',supplier:'Van Beekum'},
-  {nr:'20210176D',name:'Jamaican Jerk Herbs',name_de:'Jamaican Jerk Herbs',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'19.62',price_gross:'20.99',supplier:'Van Beekum'},
-  {nr:'16170139D',name:'Lemon Pepper',name_de:'Lemon Pepper',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'21.84',price_gross:'23.37',supplier:'Van Beekum'},
-  {nr:'019366.4',name:'MC Cayenne Pepper Ground',name_de:'METRO Chef Cayenne Pfeffer gemahlen - 1 x 760 g Beutel',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'390 g tin',price_net:'3.99',price_gross:'4.27',supplier:'Metro'},
-  {nr:'514870.5',name:'MC Ground Cumin',name_de:'METRO Chef Kreuzkümmel gemahlen - 400 g Dose',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'400 g tin',price_net:'5.89',price_gross:'6.3',supplier:'Metro'},
-  {nr:'19080131D',name:'Onion Powder',name_de:'Onion Powder',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'800 g bag',price_net:'11.08',price_gross:'11.86',supplier:'Van Beekum'},
-  {nr:'16170077D',name:'Piri Piri Mix',name_de:'Piri Piri Mix',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'14.22',price_gross:'15.22',supplier:'Van Beekum'},
-  {nr:'16170076D',name:'Smokey BBQ Seasoning',name_de:'Smokey BBQ Seasoning',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'24.53',price_gross:'26.25',supplier:'Van Beekum'},
-  {nr:'16170130C',name:'Spicy Chipotle Mix (Shaker)',name_de:'Spicy Chipotle Mix (Shaker)',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'600 g shaker',price_net:'12.75',price_gross:'13.64',supplier:'Van Beekum'},
-  {nr:'20210125D',name:'Taco Seasoning Mix',name_de:'Taco Seasoning Mix',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'13.01',price_gross:'13.92',supplier:'Van Beekum'},
-  {nr:'16170099D',name:'Tex Mex Mix',name_de:'Tex Mex Mix',cat:'Spices & Seasonings',cat_de:'Gewürze',unit:'1 kg bag',price_net:'11.04',price_gross:'11.81',supplier:'Van Beekum'},
-  {nr:'522896.0',name:'ARO Blossom Honey',name_de:'Breitsamer Blütenhonig flüssig dunkel - 2,5 kg Eimer',cat:'Spreads & Honey',cat_de:'Aufstriche & Honig',unit:'2.5 kg jar',price_net:'14.76',price_gross:'15.79',supplier:'Metro'},
-  {nr:'108233.8',name:'Diamond Peanut Butter',name_de:'Diamond Erdnussbutter - 5 kg Eimer',cat:'Spreads & Honey',cat_de:'Aufstriche & Honig',unit:'5 kg bucket',price_net:'27.29',price_gross:'29.2',supplier:'Metro'},
-  {nr:'675208.3',name:'Sonnland Flower Honey',name_de:'Sonnland Blütenhonig',cat:'Spreads & Honey',cat_de:'Aufstriche & Honig',unit:'2.5 kg jar',price_net:'15.99',price_gross:'17.11',supplier:'Metro'},
-  {nr:'AF-673',name:'Tahini Daabool',name_de:'Tahini Daabool',cat:'Spreads & Honey',cat_de:'Aufstriche & Honig',unit:'4 kg bucket',price_net:'26.99',price_gross:'28.88',supplier:'Arfiyato'},
-  {nr:'EL-05',name:'1000ml Paper Bowl',name_de:'1000ml Paper Bowl',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (300 pcs)',price_net:'13.35',price_gross:'13.35',supplier:'eco life'},
-  {nr:'EL-09',name:'1200ml Two Compartment Sugarcane Bowl',name_de:'1200ml Two Compartment Sugarcane Bowl',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (300 pcs)',price_net:'5.0',price_gross:'5.0',supplier:'eco life'},
-  {nr:'499594.0',name:'ARO Aluminum Foil 44cmx150m',name_de:'aro Alufolie Box 10 my 44 cm x 150 m',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 Roll (150m)',price_net:'12.37',price_gross:'14.72',supplier:'Metro'},
-  {nr:'718787.0',name:'ARO Carrier Bags',name_de:'aro Tragetaschen',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'500 pcs bag',price_net:'9.06',price_gross:'10.78',supplier:'Metro'},
-  {nr:'295978.0',name:'ARO Napkins 33cm Cream',name_de:'aro Servietten 33cm Creme',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'500 pcs pack',price_net:'3.49',price_gross:'4.15',supplier:'Metro'},
-  {nr:'008681.0',name:'ARO Napkins 33cm White',name_de:'aro Servietten 33cm Weiß',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'500 pcs pack',price_net:'4.47',price_gross:'5.32',supplier:'Metro'},
-  {nr:'295981.0',name:'ARO Napkins 33cm Yellow',name_de:'aro Servietten 33cm Gelb',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'500 pcs pack',price_net:'3.49',price_gross:'4.15',supplier:'Metro'},
-  {nr:'485661.3',name:'ARO Paper Hand Towels',name_de:'aro Papierhandtücher',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'20 x 250 pcs',price_net:'44.55',price_gross:'53.01',supplier:'Metro'},
-  {nr:'EL-03',name:'Bamboo Pulp Napkin',name_de:'Bamboo Pulp Napkin',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (3000 pcs)',price_net:'9.3',price_gross:'9.3',supplier:'eco life'},
-  {nr:'EL-02',name:'Disposable Gloves',name_de:'Disposable Gloves',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (10000 pcs)',price_net:'12.64',price_gross:'12.64',supplier:'eco life'},
-  {nr:'EL-11',name:'Disposable Kraft Paper Bowl',name_de:'Disposable Kraft Paper Bowl',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (300 pcs)',price_net:'13.07',price_gross:'13.07',supplier:'eco life'},
-  {nr:'EL-01',name:'Disposable Wooden Tableware',name_de:'Disposable Wooden Tableware',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (5000 pcs)',price_net:'32.3',price_gross:'32.3',supplier:'eco life'},
-  {nr:'499595.0',name:'MPRO Aluminum Foil 44cmx200m',name_de:'METRO PROFESSIONAL Alufolie 12 my 44 cm x 200 m',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 Roll (200m)',price_net:'29.49',price_gross:'35.09',supplier:'Metro'},
-  {nr:'517425.0',name:'MPRO Cling Film 44cmx300m',name_de:'METRO Professional Frischhaltefolie 44cm×300m',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 Roll (300m)',price_net:'12.24',price_gross:'14.57',supplier:'Metro'},
-  {nr:'872490.0',name:'MPRO Latex Gloves Black XL',name_de:'METRO Professional Latex-Handschuhe schwarz XL',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'100 pcs box',price_net:'5.19',price_gross:'6.18',supplier:'Metro'},
-  {nr:'977602.0',name:'MPRO Nitrile Gloves Black L',name_de:'METRO Professional Nitril-Handschuhe schwarz L',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'100 pcs box',price_net:'3.99',price_gross:'4.75',supplier:'Metro'},
-  {nr:'977603.0',name:'MPRO Nitrile Gloves Black XL',name_de:'METRO Professional Nitril-Handschuhe schwarz XL',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'100 pcs box',price_net:'4.99',price_gross:'5.94',supplier:'Metro'},
-  {nr:'060872.9',name:'MPRO Trash Bags 130L (50 pcs)',name_de:'METRO PROFESSIONAL Müllsäcke Black 120 l 70 x 110 cm 40 my 2 Rollen à 25 Stück',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'50 pcs roll',price_net:'13.19',price_gross:'15.7',supplier:'Metro'},
-  {nr:'EL-07',name:'PET Cup',name_de:'PET Cup',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (1000 pcs)',price_net:'33.79',price_gross:'33.79',supplier:'eco life'},
-  {nr:'EL-08',name:'PET Cup Lid',name_de:'PET Cup Lid',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (1000 pcs)',price_net:'8.43',price_gross:'8.43',supplier:'eco life'},
-  {nr:'EL-06',name:'PET Lid (for 1000ml)',name_de:'PET Lid (for 1000ml)',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (300 pcs)',price_net:'7.47',price_gross:'7.47',supplier:'eco life'},
-  {nr:'EL-12',name:'PET Lid (for 1300ml)',name_de:'PET Lid (for 1300ml)',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'1 CTN (300 pcs)',price_net:'9.53',price_gross:'9.53',supplier:'eco life'},
-  {nr:'192809.0',name:'Papstar Pure Snack Trays',name_de:'Papstar Pure Snack-Schalen',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'80 pcs pack',price_net:'12.89',price_gross:'15.34',supplier:'Metro'},
-  {nr:'054354.6',name:'Rioba To-Go Cups Black (50 pcs)',name_de:'RIOBA Coffee To Go Becher Grau, Pappe konisch 200 ml - 50 Stück',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'50 pcs pack',price_net:'3.94',price_gross:'4.69',supplier:'Metro'},
-  {nr:'140527.3',name:'Salad Bowls 1300ml (50 pcs)',name_de:'Salatschalen 1300ml (50 Stk)',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'50 pcs pack',price_net:'18.75',price_gross:'22.31',supplier:'Metro'},
-  {nr:'005545.9',name:'Trash Bags 120L Blue (50 pcs)',name_de:'METRO PROFESSIONAL Müllsäcke Black 120 l 70 x 110 cm 40 my 2 Rollen à 25 Stück',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'50 pcs roll',price_net:'16.7',price_gross:'19.87',supplier:'Metro'},
-  {nr:'932513.5',name:'Wrapping Paper',name_de:'Einwickelpapier',cat:'Supplies - Disposables',cat_de:'Verbrauchsmaterial',unit:'10 kg roll',price_net:'28.99',price_gross:'34.5',supplier:'Metro'},
-  {nr:'862666.5',name:'MPRO Deep Fryer GDF3008 8L',name_de:'METRO Professional Fritteuse GDF3008 8L',cat:'Supplies - Equipment',cat_de:'Ausstattung',unit:'1 pc',price_net:'79.99',price_gross:'95.19',supplier:'Metro'},
-  {nr:'080989.7',name:'MPRO Pizza Tray 30cm',name_de:'METRO Professional Pizzablech 30cm',cat:'Supplies - Equipment',cat_de:'Ausstattung',unit:'1 pc',price_net:'6.99',price_gross:'8.32',supplier:'Metro'},
-  {nr:'EL-04',name:'Kraft Bags',name_de:'Kraft Bags',cat:'Supplies - Packaging',cat_de:'Supplies - Packaging',unit:'1 CTN (500 pcs)',price_net:'27.9',price_gross:'27.9',supplier:'eco life'},
-  {nr:'TBD-01',name:'Pulled Salted Beef Brisket',name_de:'Pulled Salted Beef Brisket',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (1kg)',price_net:'15.1',price_gross:'16.16',supplier:'Food-Kings'},
-  {nr:'TBD-02',name:'Rotisserie Chicken',name_de:'Rotisserie Chicken',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (1kg)',price_net:'9.7',price_gross:'10.38',supplier:'Food-Kings'},
-  {nr:'TBD-03',name:'Garlic Infused Chicken Strips',name_de:'Garlic Infused Chicken Strips',cat:'Meat - Processed',cat_de:'Meat - Processed',unit:'1 Case (1kg)',price_net:'9.7',price_gross:'10.38',supplier:'Food-Kings'},
-  {nr:'AF-HUM',name:'Hummus (ready-made)',name_de:'Hummus (ready-made)',cat:'Deli - Prepared',cat_de:'Deli - Prepared',unit:'TBD',price_net:'0.0',price_gross:'0.0',supplier:'Arfiyato'},
-  {nr:'ASIN-WG',name:'Mammut Weight Gainer 4.5kg',name_de:'Mammut Weight Gainer 4.5kg',cat:'Nutrition & Supplements',cat_de:'Nutrition & Supplements',unit:'4.5 kg bag',price_net:'40.0',price_gross:'42.8',supplier:'Amazon'},
-  {nr:'Hahnchenbrust',name:'Hahnchenbrust',name_de:'Hahnchenbrust',cat:'Meat - Chicken',cat_de:'Meat - Chicken',unit:'kg',price_net:'8.0',price_gross:'8.56',supplier:'Selim\'s Döner'},
-  {nr:'Hahnchenfluegel',name:'Hahnchenfluegel',name_de:'Hahnchenfluegel',cat:'Meat - Chicken',cat_de:'Meat - Chicken',unit:'kg',price_net:'4.0',price_gross:'4.28',supplier:'Selim\'s Döner'},
-  {nr:'83000',name:'Jarritos Mexican Cola 370ml',name_de:'Jarritos Mexican Cola 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'83001',name:'Jarritos Mandarine 370ml',name_de:'Jarritos Mandarine 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'83006',name:'Jarritos Strawberry 370ml',name_de:'Jarritos Strawberry 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'83004',name:'Jarritos Guave 370ml',name_de:'Jarritos Guave 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'43000',name:'Maistortillas 6" TK gelb Øca.15 cm, 60x22g',name_de:'Maistortillas 6" TK gelb Øca.15 cm, 60x22g',cat:'Dry Goods',cat_de:'Dry Goods',unit:'Beutel',price_net:'4.59',price_gross:'4.91',supplier:'Gastroservice Gambert'},
-  {nr:'36383',name:'Quinoa Tricolore, 5kg beutel',name_de:'Quinoa Tricolore, 5kg beutel',cat:'Dry Goods',cat_de:'Dry Goods',unit:'Sack',price_net:'24.8',price_gross:'29.51',supplier:'Gastroservice Gambert'},
-  {nr:'83005',name:'Jarritos Grapefruit 370ml',name_de:'Jarritos Grapefruit 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'83007',name:'Jarritos Pineapple 370ml',name_de:'Jarritos Pineapple 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'83003',name:'Jarritos Mango 370ml',name_de:'Jarritos Mango 370ml',cat:'Beverages - Jarritos',cat_de:'Beverages - Jarritos',unit:'Flasche',price_net:'1.3',price_gross:'1.55',supplier:'Gastroservice Gambert'},
-  {nr:'S5682vgsndfb-1',name:'Reines Matcha Pulver (Pure) von Japan 500g',name_de:'Reines Matcha Pulver (Pure) von Japan 500g',cat:'Dry Goods - Powder',cat_de:'Dry Goods - Powder',unit:'Inhalt: 0,5 kg',price_net:'42.99',price_gross:'51.16',supplier:'Asia Moin'},
-  {nr:'S5680-1',name:'Taro Pulver 1kg - Asia Moin GmbH - 2er Set',name_de:'Taro Pulver 1kg - Asia Moin GmbH - 2er Set',cat:'Dry Goods - Powder',cat_de:'Dry Goods - Powder',unit:'Inhalt: 1 kg',price_net:'39.99',price_gross:'47.59',supplier:'Asia Moin'},
-  {nr:'S5680djdh',name:'Taro Pulver 1kg - Asia Moin GmbH',name_de:'Taro Pulver 1kg - Asia Moin GmbH',cat:'Dry Goods - Powder',cat_de:'Dry Goods - Powder',unit:'Inhalt: 1 kg',price_net:'21.99',price_gross:'23.53',supplier:'Asia Moin'},
-  {nr:'PUL18026',name:'Schale BePulp Eco Street oval 770ml',name_de:'Schale BePulp Eco Street oval 770ml',cat:'Supplies - Packaging',cat_de:'Supplies - Packaging',unit:'VE (300 Stk.)',price_net:'48.45',price_gross:'57.66',supplier:'Plastikbecher.de'},
-  {nr:'PUL58021',name:'Deckel RPET klar oval 190x150mm',name_de:'Deckel RPET klar oval 190x150mm',cat:'Supplies - Packaging',cat_de:'Supplies - Packaging',unit:'VE (300 Stk.)',price_net:'44.47',price_gross:'52.92',supplier:'Plastikbecher.de'},
-  {nr:'TH-21',name:'Papier-Trinkhalme weiss 250x8mm',name_de:'Papier-Trinkhalme weiss 250x8mm',cat:'Supplies - Packaging',cat_de:'Supplies - Packaging',unit:'VE (3.200 Stk.)',price_net:'59.49',price_gross:'70.79',supplier:'Plastikbecher.de'},
-  {nr:'380268001001',name:'Cayenne Red Spain - 75 g Box',name_de:'Cayenne ROT Spanien - 75 g Schachtel',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'75 g',price_net:'1.75',price_gross:'1.87',supplier:'Metro'},
-  {nr:'380268001002',name:'Cayenne Red Spain - 75 g Box (8x)',name_de:'Cayenne ROT Spanien - 75 g Schachtel (8x)',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'75 g',price_net:'13.99',price_gross:'14.97',supplier:'Metro'},
-  {nr:'384574001001',name:'Chaokoh Coconut Water Pure 100 % Natural - 1 l Pack',name_de:'Chaokoh Kokosnusswasser Pur 100 % natürlich - 1 l Packung',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1 l',price_net:'3.62',price_gross:'3.87',supplier:'Metro'},
-  {nr:'384574001002',name:'Chaokoh Coconut Water Pure 100 % Natural - 1 l Pack (12x)',name_de:'Chaokoh Kokosnusswasser Pur 100 % natürlich - 1 l Packung (12x)',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'1 l',price_net:'43.41',price_gross:'46.45',supplier:'Metro'},
-  {nr:'301679001001',name:'Fuze Tea Black Tea Peach PET - 12 x 0,40 l Bottles',name_de:'Fuze Tea Schwarzer Tee Pfirsich-Hibiskus PET - 12 x 0,40 l Flaschen',cat:'Beverages - Tea',cat_de:'Getränke - Tee',unit:'12 x 0,40 l',price_net:'1.07',price_gross:'1.27',supplier:'Metro'},
-  {nr:'375718001002',name:'Bitburger 0,0 % Non-Alcoholic 24 x 0,33 l Bottles (6x)',name_de:'Bitburger 0,0 % alkoholfrei 24 x 0,33 l Flaschen (6x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24 x 0,33 l',price_net:'4.3',price_gross:'5.12',supplier:'Metro'},
-  {nr:'375718001001',name:'Bitburger 0,0 % Non-Alcoholic 24 x 0,33 l Bottles (24x)',name_de:'Bitburger 0,0 % alkoholfrei 24 x 0,33 l Flaschen (24x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24 x 0,33 l',price_net:'18.71',price_gross:'22.26',supplier:'Metro'},
-  {nr:'284659001001',name:'Bulmers Red Berries Cidre - 12 x 0,5 l Box',name_de:'Bulmers Red Berries Cidre - 12 x 0,5 l Karton',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'12 x 0,5 l',price_net:'1.92',price_gross:'2.28',supplier:'Metro'},
-  {nr:'284659001002',name:'Bulmers Red Berries Cidre - 12 x 0,5 l Box (12x)',name_de:'Bulmers Red Berries Cidre - 12 x 0,5 l Karton (12x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 12 x 0,5 l',price_net:'22.99',price_gross:'27.36',supplier:'Metro'},
-  {nr:'398672001001',name:'Jacobs Espresso 12 Nespresso Coffee Capsules Espresso Ristre',name_de:'Jacobs Espresso 12 Nespresso Kaffeekapseln Espresso Ristrett',cat:'Beverages - Coffee',cat_de:'Getränke - Kaffee',unit:'20 pcs',price_net:'5.98',price_gross:'6.4',supplier:'Metro'},
-  {nr:'398672001002',name:'Jacobs Espresso 12 Nespresso Coffee Capsules Espresso Ristre (10x)',name_de:'Jacobs Espresso 12 Nespresso Kaffeekapseln Espresso Ristrett (10x)',cat:'Beverages - Coffee',cat_de:'Getränke - Kaffee',unit:'20 pcs',price_net:'59.84',price_gross:'64.03',supplier:'Metro'},
-  {nr:'160782001001',name:'METRO Professional Degreaser - 5 l Canister',name_de:'METRO PROFESSIONAL Fettlöser - 5 l Kanister',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'5 l',price_net:'10.01',price_gross:'11.91',supplier:'Metro'},
-  {nr:'160782001002',name:'METRO Professional Degreaser - 5 l Canister (4x)',name_de:'METRO PROFESSIONAL Fettlöser - 5 l Kanister (4x)',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'5 l',price_net:'39.56',price_gross:'47.08',supplier:'Metro'},
-  {nr:'390060001002',name:'Monster Absolutely Zero - 12 x 500 ml Cans',name_de:'Monster Absolutely Zero - 12 x 500 ml Dosen',cat:'Beverages - Energy Drinks',cat_de:'Getränke - Energy Drinks',unit:'12 x 500 ml',price_net:'1.34',price_gross:'1.59',supplier:'Metro'},
-  {nr:'390060001001',name:'Monster Absolutely Zero - 12 x 500 ml Cans (12x)',name_de:'Monster Absolutely Zero - 12 x 500 ml Dosen (12x)',cat:'Beverages - Energy Drinks',cat_de:'Getränke - Energy Drinks',unit:'Tray 12 x 500 ml',price_net:'16.02',price_gross:'19.06',supplier:'Metro'},
-  {nr:'350356001003',name:'METRO Chef Shrimp head-on peeled Frozen approx. 31 (10x)',name_de:'METRO Chef Garnelen mit Kopf ohne Schale tiefgefroren ca. 31 (10x)',cat:'Frozen - Meat',cat_de:'TK - Fleisch',unit:'40 pcs',price_net:'106.99',price_gross:'114.48',supplier:'Metro'},
-  {nr:'160615001001',name:'METRO Professional Oven & Grill Cleaner - 750 ml Canister',name_de:'METRO PROFESSIONAL Ofen + Grillreiniger - 750 ml Kanister',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'750 ml',price_net:'1.89',price_gross:'2.25',supplier:'Metro'},
-  {nr:'160615001002',name:'METRO Professional Oven & Grill Cleaner - 750 ml Canister (6x)',name_de:'METRO PROFESSIONAL Ofen + Grillreiniger - 750 ml Kanister (6x)',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'750 ml',price_net:'11.36',price_gross:'13.52',supplier:'Metro'},
-  {nr:'270623001001',name:'Oatly Germany Oat Drink Matcha - 1 l pcs',name_de:'Oatly Germany Oat Drink Matcha - 1 l Stück',cat:'Dairy Alternative',cat_de:'Milchalternativen',unit:'1 l',price_net:'3.09',price_gross:'3.31',supplier:'Metro'},
-  {nr:'270623001002',name:'Oatly Germany Oat Drink Matcha - 1 l pcs (6x)',name_de:'Oatly Germany Oat Drink Matcha - 1 l Stück (6x)',cat:'Dairy Alternative',cat_de:'Milchalternativen',unit:'1 l',price_net:'18.55',price_gross:'19.85',supplier:'Metro'},
-  {nr:'433768001002',name:'San Pellegrino Aranciata Can Disposable - 24 x 330 ml Tray (24x)',name_de:'San Pellegrino Aranciata Dose Einweg - 24 x 330 ml Tray (24x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24 x 330 ml',price_net:'32.22',price_gross:'38.34',supplier:'Metro'},
-  {nr:'240846001001',name:'Sierra Madre Pinata Jalapeño Cheese Sauce - 3 kg Can',name_de:'Sierra Madre Pinata Jalapeño Cheese Sauce - 3 kg Dose',cat:'Condiments & Sauces',cat_de:'Gewürze & Soßen',unit:'3 kg',price_net:'22.4',price_gross:'23.97',supplier:'Metro'},
-  {nr:'384560001001',name:'Valmarone Prosecco Spumante extra Dry - 16 x 0,2 l Box',name_de:'Valmarone Prosecco Spumante extra trocken - 16 x 0,2 l Karton',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'16 x 0,2 l',price_net:'2.19',price_gross:'2.61',supplier:'Metro'},
-  {nr:'384560001002',name:'Valmarone Prosecco Spumante extra Dry - 16 x 0,2 l Box (16x)',name_de:'Valmarone Prosecco Spumante extra trocken - 16 x 0,2 l Karton (16x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 16 x 0,2 l',price_net:'34.99',price_gross:'41.64',supplier:'Metro'},
-  {nr:'433773001001',name:'San Pellegrino Aranciata Rossa Can Disposable - 24 x 330 ml Tray',name_de:'San Pellegrino Aranciata Rossa Dose Einweg - 24 x 330 ml Tray',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'24 x 330 ml',price_net:'1.34',price_gross:'1.59',supplier:'Metro'},
-  {nr:'433773001002',name:'San Pellegrino Aranciata Rossa Can Disposable - 24 x 330 ml Tray (24x)',name_de:'San Pellegrino Aranciata Rossa Dose Einweg - 24 x 330 ml Tray (24x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 24 x 330 ml',price_net:'32.22',price_gross:'38.34',supplier:'Metro'},
-  {nr:'439105001001',name:'San Pellegrino Limonata Can Disposable - 24 x 330 ml Tray',name_de:'San Pellegrino Limonata Dose Einweg - 24 x 330 ml Tray',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'24 x 330 ml',price_net:'1.34',price_gross:'1.59',supplier:'Metro'},
-  {nr:'435479002001',name:'Sweet Potato Egypt - 6 x 1 kg Crate',name_de:'Süßkartoffel Ägypten - 6 x 1 kg Kiste',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'6 x 1 kg',price_net:'2.96',price_gross:'3.17',supplier:'Metro'},
-  {nr:'435479002002',name:'Sweet Potato Egypt - 6 x 1 kg Crate (6x)',name_de:'Süßkartoffel Ägypten - 6 x 1 kg Kiste (6x)',cat:'Fresh Vegetables',cat_de:'Frisches Gemüse',unit:'Tray 6 x 1 kg',price_net:'15.98',price_gross:'17.1',supplier:'Metro'},
-  {nr:'89623001001',name:'Wesergold Pineapple Juice 100 % Fruit Content Tetra Pack - 8 x 1 l Packs',name_de:'Wesergold Ananassaft 100 % Fruchtgehalt Tetra Pack - 8 x 1 l Packungen',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'8 x 1 l',price_net:'2.29',price_gross:'2.45',supplier:'Metro'},
-  {nr:'89623001002',name:'Wesergold Pineapple Juice 100 % Fruit Content Tetra Pack - 8 x 1 l Packs (8x)',name_de:'Wesergold Ananassaft 100 % Fruchtgehalt Tetra Pack - 8 x 1 l Packungen (8x)',cat:'Beverages - Juice',cat_de:'Getränke - Saft',unit:'Tray 8 x 1 l',price_net:'18.31',price_gross:'19.59',supplier:'Metro'},
-  {nr:'179376001001',name:'ViO Organic Lemonade Orange PET - 18 x 500 ml Bottles',name_de:'ViO Bio Limo Orange PET - 18 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'18 x 500 ml',price_net:'1.24',price_gross:'1.48',supplier:'Metro'},
-  {nr:'179376001002',name:'ViO Organic Lemonade Orange PET - 18 x 500 ml Bottles (18x)',name_de:'ViO Bio Limo Orange PET - 18 x 500 ml Flaschen (18x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 18 x 500 ml',price_net:'22.25',price_gross:'26.48',supplier:'Metro'},
-  {nr:'179377001001',name:'ViO Organic Lemonade Lemon-Lime PET - 18 x 500 ml Bottles',name_de:'ViO Bio Limo Zitrone-Limette PET - 18 x 500 ml Flaschen',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'18 x 500 ml',price_net:'1.27',price_gross:'1.51',supplier:'Metro'},
-  {nr:'179377001002',name:'ViO Organic Lemonade Lemon-Lime PET - 18 x 500 ml Bottles (18x)',name_de:'ViO Bio Limo Zitrone-Limette PET - 18 x 500 ml Flaschen (18x)',cat:'Beverages - Soft Drinks',cat_de:'Getränke - Softdrinks',unit:'Tray 18 x 500 ml',price_net:'22.8',price_gross:'27.13',supplier:'Metro'},
-  {nr:'437274001001',name:'aro Apple-Crumble Cake Frozen - 1,25 kg pcs',name_de:'aro Apfel-Streuselkuchen tiefgefroren - 1,25 kg Stück',cat:'Frozen - Bakery',cat_de:'TK - Backwaren',unit:'1,25 kg',price_net:'4.59',price_gross:'4.91',supplier:'Metro'},
-  {nr:'437274001003',name:'aro Apple-Crumble Cake Frozen - 1,25 kg pcs (8x)',name_de:'aro Apfel-Streuselkuchen tiefgefroren - 1,25 kg Stück (8x)',cat:'Frozen - Bakery',cat_de:'TK - Backwaren',unit:'1,25 kg',price_net:'36.72',price_gross:'39.29',supplier:'Metro'},
-  {nr:'401225002001',name:'aro Bathroom Cleaner Apple Liquid - 1 l Bottle',name_de:'aro Badreiniger Apple flüssig - 1 l Flasche',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 l',price_net:'1.17',price_gross:'1.39',supplier:'Metro'},
-  {nr:'401225002002',name:'aro Bathroom Cleaner Apple Liquid - 1 l Bottle (10x)',name_de:'aro Badreiniger Apple flüssig - 1 l Flasche (10x)',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 l',price_net:'11.7',price_gross:'13.92',supplier:'Metro'},
-  {nr:'401209001001',name:'aro Glass Cleaner Spray Liquid - 1 l Bottle',name_de:'aro Glasreiniger Spray flüssig - 1 l Flasche',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 l',price_net:'0.99',price_gross:'1.18',supplier:'Metro'},
-  {nr:'401209001002',name:'aro Glass Cleaner Spray Liquid - 1 l Bottle (10x)',name_de:'aro Glasreiniger Spray flüssig - 1 l Flasche (10x)',cat:'Cleaning Supplies',cat_de:'Reinigungsmittel',unit:'1 l',price_net:'9.9',price_gross:'11.78',supplier:'Metro'}
-];
-
-// ============= Helper Functions =============
-function getProductName(product) {
-  return currentLang === 'en' ? product.name : product.name_de;
-}
-
-function getProductCategory(product) {
-  return currentLang === 'en' ? product.cat : product.cat_de;
-}
-
-function setLang(lang) {
-  currentLang = lang;
-  localStorage.setItem('spudz_lang', lang);
-  document.getElementById('langDE').classList.toggle('active', lang === 'de');
-  document.getElementById('langEN').classList.toggle('active', lang === 'en');
-  updateUIText();
-  renderAll();
-}
-
-function updateUIText() {
-  document.getElementById('headerDesc').textContent = t('headerDesc');
-  document.getElementById('searchInput').placeholder = t('searchPlaceholder');
-  document.getElementById('categoryFilter').options[0].textContent = t('categoryPlaceholder');
-  document.getElementById('clearBtn').textContent = t('clearBtn');
-  document.getElementById('pdfBtn').textContent = t('pdfBtn');
-  document.getElementById('whatsappBtn').textContent = t('whatsappBtn');
-  document.getElementById('shareBtn').textContent = t('shareBtn');
-  document.getElementById('selectedLabel').textContent = t('selectLabel');
-  document.getElementById('totalNetLabel').textContent = t('totalNetLabel');
-  document.getElementById('totalGrossLabel').textContent = t('totalGrossLabel');
-}
-
-function showToast(message, type = 'info') {
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
-
-function handleLogin() {
-  const email = document.getElementById('emailInput').value.toLowerCase();
-  const password = document.getElementById('passwordInput').value;
-  const user = USERS.find(u => u.email === email && u.password === password);
-  if (user) {
-    currentUser = user;
-    localStorage.setItem('spudz_user', email);
-    document.getElementById('loginOverlay').classList.add('hidden');
-    document.getElementById('mainContent').classList.remove('hidden');
-    document.getElementById('userBadge').textContent = user.name;
-    renderAll();
-  } else {
-    showToast('Ungültige Anmeldedaten', 'error');
-  }
-}
-
-function getSuppliers() {
-  const suppliers = new Set(PRODUCTS.map(p => p.supplier));
-  return Array.from(suppliers).sort();
-}
-
-function getCategories() {
-  if (currentLang === 'en') {
-    return [...new Set(PRODUCTS.map(p => p.cat))].sort();
-  } else {
-    return [...new Set(PRODUCTS.map(p => p.cat_de))].sort();
-  }
-}
-
-function getProductsBySupplier(supplier) {
-  if (supplier === 'all') return PRODUCTS;
-  return PRODUCTS.filter(p => p.supplier === supplier);
-}
-
-function getProductsByFilter() {
-  const products = getProductsBySupplier(currentSupplier);
-  return products.filter(p => {
-    const matchesSearch = !filterText || p.name.toLowerCase().includes(filterText.toLowerCase()) || p.name_de.toLowerCase().includes(filterText.toLowerCase());
-    const matchesCategory = !currentCategory || getProductCategory(p) === currentCategory;
-    return matchesSearch && matchesCategory;
-  });
-}
-
-function handleSearch() {
-  filterText = document.getElementById('searchInput').value.trim();
-  renderProducts();
-}
-
-function handleCategoryFilter() {
-  currentCategory = document.getElementById('categoryFilter').value;
-  renderProducts();
-}
-
-function handleSupplierTab(supplier) {
-  currentSupplier = supplier;
-  renderAll();
-}
-
-function toggleProduct(nr) {
-  if (!cart[nr]) cart[nr] = 1;
-  else delete cart[nr];
-  saveCart();
-  renderAll();
-}
-
-function updateQuantity(nr, qty) {
-  const q = parseInt(qty) || 0;
-  if (q > 0) cart[nr] = q;
-  else delete cart[nr];
-  saveCart();
-  updateStats();
-}
-
-function saveCart() {
-  localStorage.setItem('spudz_cart', JSON.stringify(cart));
-}
-
-function clearSelection() {
-  cart = {};
-  saveCart();
-  renderAll();
-}
-
-function getSelectedProducts() {
-  return Object.keys(cart).map(nr => {
-    const product = PRODUCTS.find(p => p.nr === nr);
-    return {...product, quantity: cart[nr]};
-  });
-}
-
-function calculateTotals() {
-  const selected = getSelectedProducts();
-  const totalNet = selected.reduce((sum, p) => sum + parseFloat(p.price_net) * p.quantity, 0);
-  const totalGross = selected.reduce((sum, p) => sum + parseFloat(p.price_gross) * p.quantity, 0);
-  return {count: selected.length, totalNet, totalGross};
-}
-
-function updateStats() {
-  const {count, totalNet, totalGross} = calculateTotals();
-  document.getElementById('selectedCount').textContent = count;
-  document.getElementById('totalNet').textContent = '€' + totalNet.toFixed(2);
-  document.getElementById('totalGross').textContent = '€' + totalGross.toFixed(2);
-  document.getElementById('orderPanel').classList.toggle('hidden', count === 0);
-}
-
-function renderSupplierTabs() {
-  const suppliers = getSuppliers();
-  const html = ['all', ...suppliers].map(sup => {
-    const products = getProductsBySupplier(sup);
-    const count = products.length;
-    const supName = sup === 'all' ? t('allSuppliers') : sup;
-    const isActive = currentSupplier === sup ? 'active' : '';
-    return `<button class="sup-tab ${isActive}" onclick="handleSupplierTab('${sup}')">
-      ${supName} <span class="tab-count">${count}</span>
-    </button>`;
-  }).join('');
-  document.getElementById('supplierTabs').innerHTML = html;
-}
-
-function renderCategoryFilter() {
-  const categories = getCategories();
-  const select = document.getElementById('categoryFilter');
-  const currentVal = select.value;
-  select.innerHTML = `<option value="">${t('categoryPlaceholder')}</option>` +
-    categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
-  select.value = currentVal;
-}
-
-function renderProducts() {
-  const products = getProductsByFilter();
-  const suppliers = new Set(products.map(p => p.supplier));
-  const html = Array.from(suppliers).sort().map(supplier => {
-    const supProducts = products.filter(p => p.supplier === supplier);
-    const rows = supProducts.map(p => {
-      const checked = cart[p.nr] ? 'checked' : '';
-      const qty = cart[p.nr] || '';
-      const netTotal = parseFloat(p.price_net) * (cart[p.nr] || 0);
-      return `<tr>
-        <td><input type="checkbox" ${checked} onchange="toggleProduct('${p.nr}')"></td>
-        <td class="product-name" style="font-size:.8rem">${p.nr}</td>
-        <td class="product-name">${getProductName(p)}</td>
-        <td><span class="supplier-badge">${p.supplier}</span></td>
-        <td style="font-size:.8rem">${p.unit}</td>
-        <td class="price" style="font-size:.85rem">€${p.price_net}</td>
-        <td class="price" style="font-size:.85rem">€${p.price_gross}</td>
-        <td><input type="number" value="${qty}" onchange="updateQuantity('${p.nr}', this.value)" placeholder="0"></td>
-        <td class="price" style="font-size:.85rem">€${netTotal.toFixed(2)}</td>
-      </tr>`;
-    }).join('');
-    return `<div class="supplier-header">
-      <h2>${supplier} <span class="sup-stats">${supProducts.length} ${currentLang === 'en' ? 'products' : 'Produkte'}</span></h2>
-    </div>
-    <table class="products-table">
-      <thead><tr>
-        <th></th>
-        <th style="font-size:.75rem">Nr</th>
-        <th>${currentLang === 'en' ? 'Product' : 'Produkt'}</th>
-        <th>Supplier</th>
-        <th>${currentLang === 'en' ? 'Unit' : 'Einheit'}</th>
-        <th>${currentLang === 'en' ? 'Net' : 'Netto'}</th>
-        <th>${currentLang === 'en' ? 'Gross' : 'Brutto'}</th>
-        <th>${currentLang === 'en' ? 'Qty' : 'Menge'}</th>
-        <th>${currentLang === 'en' ? 'Total' : 'Summe'}</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
-  }).join('');
-  document.getElementById('productsContainer').innerHTML = html || `<p style="padding:2rem;text-align:center">${currentLang === 'en' ? 'No products found' : 'Keine Produkte gefunden'}</p>`;
-}
-
-function renderAll() {
-  renderSupplierTabs();
-  renderCategoryFilter();
-  renderProducts();
-  updateStats();
-}
-
-function exportPDF() {
-  const selected = getSelectedProducts();
-  if (selected.length === 0) {
-    showToast(t('nothingSelected'), 'error');
+function doLogin(){
+  const u = document.getElementById('loginUser').value.trim().toLowerCase();
+  const p = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+  if(!u||!p){err.textContent='Bitte beide Felder ausfuellen';return;}
+  const user = USERS[u];
+  if(!user || user.pass !== p){
+    err.textContent='Falscher Benutzername oder Passwort';
+    document.querySelector('.login-card').classList.add('shake');
+    setTimeout(()=>document.querySelector('.login-card').classList.remove('shake'),500);
     return;
   }
-  const {totalNet, totalGross} = calculateTotals();
-  const doc = new jsPDF();
-  doc.setFontSize(16);
-  doc.text(t('pdfTitle'), 10, 10);
-  doc.setFontSize(10);
-  doc.text(t('pdfDate') + ' ' + new Date().toLocaleDateString(), 10, 20);
-  doc.text(t('pdfUser') + ' ' + currentUser.name, 10, 27);
+  currentUser = {username:u, name:user.name, lager:user.lager, role:user.role};
+  try{localStorage.setItem('spudz_session',JSON.stringify(currentUser));}catch(e){}
+  activateApp();
+}
 
-  const groupedBySupplier = {};
-  selected.forEach(p => {
-    if (!groupedBySupplier[p.supplier]) groupedBySupplier[p.supplier] = [];
-    groupedBySupplier[p.supplier].push(p);
+function doLogout(){
+  currentUser = null;
+  try{localStorage.removeItem('spudz_session');}catch(e){}
+  document.getElementById('appContent').classList.add('hidden-app');
+  document.getElementById('loginOverlay').style.display='flex';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  document.getElementById('loginError').textContent='';
+}
+
+function activateApp(){
+  document.getElementById('loginOverlay').style.display='none';
+  document.getElementById('appContent').classList.remove('hidden-app');
+  // Set user display
+  document.getElementById('userDisplay').textContent = currentUser.name;
+  document.getElementById('userRole').textContent = currentUser.role==='admin' ? 'Admin' : currentUser.lager;
+  // Handle Lager
+  const sel = document.getElementById('lagerSelect');
+  if(currentUser.role==='store' && currentUser.lager){
+    sel.value = currentUser.lager;
+    selectedLager = currentUser.lager;
+    sel.disabled = true;
+    sel.style.opacity = '0.7';
+    try{localStorage.setItem('spudz_lager',selectedLager);}catch(e){}
+  } else {
+    sel.disabled = false;
+    sel.style.opacity = '1';
+  }
+  init();
+}
+
+function checkSession(){
+  try{
+    const s = localStorage.getItem('spudz_session');
+    if(s){
+      const data = JSON.parse(s);
+      if(USERS[data.username]){
+        currentUser = data;
+        activateApp();
+        return;
+      }
+    }
+  }catch(e){}
+  // No valid session — show login
+  document.getElementById('loginOverlay').style.display='flex';
+}
+
+// Enter key on login fields
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+  document.getElementById('loginUser').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginPass').focus()});
+  checkSession();
+});
+
+const PRODUCTS = [{"nr": "007508.5", "name": "MC Wraps 30cm (18 pcs)", "cat": "Bakery", "unit": "18 pcs", "price_net": "4.59", "price_gross": "4.91", "supplier": "Metro"}, {"nr": "534403.1", "name": "ARO Instant Coffee Classic", "cat": "Beverages - Coffee", "unit": "200 g jar", "price_net": "5.39", "price_gross": "5.77", "supplier": "Metro"}, {"nr": "885844.1", "name": "Jacobs Capsules Lungo (20 pcs)", "cat": "Beverages - Coffee", "unit": "20 pcs box", "price_net": "5.98", "price_gross": "6.4", "supplier": "Metro"}, {"nr": "921120.0", "name": "Nescafe Gold Instant Coffee", "cat": "Beverages - Coffee", "unit": "200 g jar", "price_net": "11.19", "price_gross": "11.97", "supplier": "Metro"}, {"nr": "598702.9", "name": "Monster Energy", "cat": "Beverages - Energy Drinks", "unit": "Tray 24x0.5L", "price_net": "26.04", "price_gross": "30.99", "supplier": "Metro"}, {"nr": "337790.0", "name": "Powerade Mountain Blast", "cat": "Beverages - Energy Drinks", "unit": "Tray 24x0.5L", "price_net": "22.8", "price_gross": "27.13", "supplier": "Metro"}, {"nr": "065013.5", "name": "ARO Apple Juice", "cat": "Beverages - Juice", "unit": "1.5 L carton", "price_net": "1.56", "price_gross": "1.86", "supplier": "Metro"}, {"nr": "065000.2", "name": "ARO Orange Juice", "cat": "Beverages - Juice", "unit": "1.5 L carton", "price_net": "2.84", "price_gross": "3.37", "supplier": "Metro"}, {"nr": "014376.8", "name": "Capri Sun Cherry", "cat": "Beverages - Juice", "unit": "Pack 10x0.2L", "price_net": "3.5", "price_gross": "3.75", "supplier": "Metro"}, {"nr": "302267.0", "name": "Capri Sun Fairy Drink", "cat": "Beverages - Juice", "unit": "Pack 10x0.2L", "price_net": "3.5", "price_gross": "3.75", "supplier": "Metro"}, {"nr": "680939.6", "name": "Capri Sun Monster Alarm", "cat": "Beverages - Juice", "unit": "Pack 10x0.2L", "price_net": "4.0", "price_gross": "4.28", "supplier": "Metro"}, {"nr": "045921.4", "name": "Capri Sun Multivitamin", "cat": "Beverages - Juice", "unit": "Pack 10x0.2L", "price_net": "3.5", "price_gross": "3.75", "supplier": "Metro"}, {"nr": "018354.1", "name": "Capri Sun Orange", "cat": "Beverages - Juice", "unit": "Pack 10x0.2L", "price_net": "3.5", "price_gross": "3.75", "supplier": "Metro"}, {"nr": "549304.4", "name": "Happy Day Pineapple Juice", "cat": "Beverages - Juice", "unit": "1 L carton", "price_net": "2.28", "price_gross": "2.71", "supplier": "Metro"}, {"nr": "023366.0", "name": "Rauch Culinary Lemon Juice", "cat": "Beverages - Juice", "unit": "1 L bottle", "price_net": "2.76", "price_gross": "3.28", "supplier": "Metro"}, {"nr": "141926.6", "name": "Rauch Culinary Lime Juice", "cat": "Beverages - Juice", "unit": "1 L bottle", "price_net": "2.56", "price_gross": "3.05", "supplier": "Metro"}, {"nr": "701978.9", "name": "Wesergold Pineapple Juice", "cat": "Beverages - Juice", "unit": "1 L carton", "price_net": "2.29", "price_gross": "2.73", "supplier": "Metro"}, {"nr": "806566.6", "name": "Coca-Cola", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "806563.3", "name": "Coca-Cola Zero", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "806568.2", "name": "Fanta Orange", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "815238.1", "name": "Fanta Zero", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "806571.6", "name": "Lift Apfelschorle", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "806573.2", "name": "Mezzo Mix", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "131401.0", "name": "San Pellegrino Aranciata", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.33L", "price_net": "26.23", "price_gross": "31.21", "supplier": "Metro"}, {"nr": "131391.0", "name": "San Pellegrino Aranciata Rossa", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.33L", "price_net": "21.77", "price_gross": "25.91", "supplier": "Metro"}, {"nr": "262349.0", "name": "San Pellegrino Limonata", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.33L", "price_net": "26.23", "price_gross": "31.21", "supplier": "Metro"}, {"nr": "806576.5", "name": "Sprite", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "786229.5", "name": "Vio Bio Lemonade Lemon", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "24.48", "price_gross": "29.13", "supplier": "Metro"}, {"nr": "786226.1", "name": "Vio Bio Lemonade Orange", "cat": "Beverages - Soft Drinks", "unit": "Tray 24x0.5L", "price_net": "23.76", "price_gross": "28.27", "supplier": "Metro"}, {"nr": "914766.1", "name": "Fuze Tea Green Tea-Mango", "cat": "Beverages - Tea", "unit": "Tray 24x0.4L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "518067.4", "name": "Fuze Tea Lemongrass", "cat": "Beverages - Tea", "unit": "Tray 24x0.4L", "price_net": "19.39", "price_gross": "23.07", "supplier": "Metro"}, {"nr": "994743.3", "name": "Fuze Tea Lime-Mint", "cat": "Beverages - Tea", "unit": "Tray 24x0.4L", "price_net": "26.16", "price_gross": "31.13", "supplier": "Metro"}, {"nr": "914770.3", "name": "Fuze Tea Peach", "cat": "Beverages - Tea", "unit": "Tray 24x0.4L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "499757.3", "name": "Fuze Tea Peach 1.25L", "cat": "Beverages - Tea", "unit": "1.25 L bottle", "price_net": "1.6", "price_gross": "1.9", "supplier": "Metro"}, {"nr": "914768.7", "name": "Fuze Tea Peach-Hibiscus", "cat": "Beverages - Tea", "unit": "Tray 24x0.4L", "price_net": "19.68", "price_gross": "23.42", "supplier": "Metro"}, {"nr": "000083.0", "name": "Mein T Peach Tea", "cat": "Beverages - Tea", "unit": "Tray 24x0.5L", "price_net": "11.52", "price_gross": "13.71", "supplier": "Metro"}, {"nr": "179616.0", "name": "Messmer Classic Tea Bags", "cat": "Beverages - Tea", "unit": "50 bags box", "price_net": "3.79", "price_gross": "4.06", "supplier": "Metro"}, {"nr": "001554.0", "name": "ARO Still Mineral Water", "cat": "Beverages - Water", "unit": "Tray 24x0.5L", "price_net": "9.91", "price_gross": "11.79", "supplier": "Metro"}, {"nr": "362915.1", "name": "Vio Medium Mineral Water", "cat": "Beverages - Water", "unit": "Tray 24x0.5L", "price_net": "15.98", "price_gross": "19.02", "supplier": "Metro"}, {"nr": "057944.1", "name": "Volvic Natural Water", "cat": "Beverages - Water", "unit": "Tray 24x0.5L", "price_net": "13.92", "price_gross": "16.56", "supplier": "Metro"}, {"nr": "999", "name": "Water 0.5L", "cat": "Beverages - Water", "unit": "Pack 18x0.5L", "price_net": "6.75", "price_gross": "8.03", "supplier": "BaDe Handels"}, {"nr": "AF-51", "name": "Amalthia Kalamata Giants Pitted", "cat": "Canned Goods - Olives", "unit": "1 tin", "price_net": "66.99", "price_gross": "71.68", "supplier": "Arfiyato"}, {"nr": "AF-276", "name": "Grilled Olives Egemar", "cat": "Canned Goods - Olives", "unit": "1 canister", "price_net": "69.99", "price_gross": "74.89", "supplier": "Arfiyato"}, {"nr": "AF-6", "name": "Kallina Olives with Garlic", "cat": "Canned Goods - Olives", "unit": "10 kg bucket", "price_net": "64.99", "price_gross": "69.54", "supplier": "Arfiyato"}, {"nr": "AF-5", "name": "Kallina Olives with Paprika", "cat": "Canned Goods - Olives", "unit": "10 kg bucket", "price_net": "64.99", "price_gross": "69.54", "supplier": "Arfiyato"}, {"nr": "AF-188", "name": "Freshland Florini Peppers", "cat": "Canned Goods - Peppers", "unit": "1 can", "price_net": "12.99", "price_gross": "13.9", "supplier": "Arfiyato"}, {"nr": "AF-169", "name": "Pepper Drops Red", "cat": "Canned Goods - Peppers", "unit": "1.2 kg jar", "price_net": "14.99", "price_gross": "16.04", "supplier": "Arfiyato"}, {"nr": "AF-75", "name": "Pepper Drops Yellow", "cat": "Canned Goods - Peppers", "unit": "1.2 kg jar", "price_net": "15.99", "price_gross": "17.11", "supplier": "Arfiyato"}, {"nr": "AF-355", "name": "Whole Chili 1kg", "cat": "Canned Goods - Peppers", "unit": "1 kg jar", "price_net": "19.99", "price_gross": "21.39", "supplier": "Arfiyato"}, {"nr": "978618.7", "name": "ARO Black Olives Pitted", "cat": "Canned Goods - Pickles & Olives", "unit": "4.25 L can", "price_net": "9.98", "price_gross": "10.68", "supplier": "Metro"}, {"nr": "894326.8", "name": "ARO Black Olives Sliced (DS)", "cat": "Canned Goods - Pickles & Olives", "unit": "4.25 L can", "price_net": "11.99", "price_gross": "12.83", "supplier": "Metro"}, {"nr": "071519.3", "name": "ARO Black Olives Sliced (KT)", "cat": "Canned Goods - Pickles & Olives", "unit": "4.25 L can", "price_net": "11.99", "price_gross": "12.83", "supplier": "Metro"}, {"nr": "071629.0", "name": "Alimpex Jalapeno Slices", "cat": "Canned Goods - Pickles & Olives", "unit": "2900 g can", "price_net": "6.9", "price_gross": "7.39", "supplier": "Metro"}, {"nr": "901271.7", "name": "MC Pickled Gherkins 55/60", "cat": "Canned Goods - Pickles & Olives", "unit": "10.2 L can", "price_net": "9.77", "price_gross": "10.45", "supplier": "Metro"}, {"nr": "785515.8", "name": "Menzi Chili Con Carne", "cat": "Canned Goods - Ready Meals", "unit": "4200 ml can", "price_net": "28.77", "price_gross": "30.78", "supplier": "Metro"}, {"nr": "204568.0", "name": "Flying Goose Chili Sauce (Bottle)", "cat": "Canned Goods - Sauces", "unit": "435 ml bottle", "price_net": "3.91", "price_gross": "4.18", "supplier": "Metro"}, {"nr": "983500.0", "name": "Flying Goose Chili Sauce (Case)", "cat": "Canned Goods - Sauces", "unit": "435 ml bottle", "price_net": "3.91", "price_gross": "4.18", "supplier": "Metro"}, {"nr": "346296.7", "name": "La Costena Mexican Salsa", "cat": "Canned Goods - Sauces", "unit": "2.95 L can", "price_net": "12.78", "price_gross": "13.67", "supplier": "Metro"}, {"nr": "901275.8", "name": "ARO Beetroot Slices", "cat": "Canned Goods - Vegetables", "unit": "4250 ml can", "price_net": "5.27", "price_gross": "5.64", "supplier": "Metro"}, {"nr": "457258.2", "name": "ARO Chickpeas", "cat": "Canned Goods - Vegetables", "unit": "2650 ml can", "price_net": "2.99", "price_gross": "3.2", "supplier": "Metro"}, {"nr": "021025.2", "name": "ARO Mushrooms Sliced (DS)", "cat": "Canned Goods - Vegetables", "unit": "2.65 L can", "price_net": "6.29", "price_gross": "6.73", "supplier": "Metro"}, {"nr": "660172.8", "name": "ARO Mushrooms Sliced (TY)", "cat": "Canned Goods - Vegetables", "unit": "2.65 L can", "price_net": "6.29", "price_gross": "6.73", "supplier": "Metro"}, {"nr": "847204.5", "name": "ARO Red Cabbage", "cat": "Canned Goods - Vegetables", "unit": "4.25 L can", "price_net": "5.25", "price_gross": "5.62", "supplier": "Metro"}, {"nr": "457223.6", "name": "ARO Red Kidney Beans", "cat": "Canned Goods - Vegetables", "unit": "2650 ml can", "price_net": "4.0", "price_gross": "4.28", "supplier": "Metro"}, {"nr": "445979.8", "name": "ARO Tomato Pepper Strips", "cat": "Canned Goods - Vegetables", "unit": "4250 ml can", "price_net": "7.9", "price_gross": "8.45", "supplier": "Metro"}, {"nr": "AF-157", "name": "Artichoke Quarters", "cat": "Canned Goods - Vegetables", "unit": "1 can", "price_net": "9.99", "price_gross": "10.69", "supplier": "Arfiyato"}, {"nr": "AF-605", "name": "Giant Beans in Tomato Oil Palirria", "cat": "Canned Goods - Vegetables", "unit": "2 kg tin", "price_net": "49.99", "price_gross": "53.49", "supplier": "Arfiyato"}, {"nr": "927841.7", "name": "MC Grilled Aubergine", "cat": "Canned Goods - Vegetables", "unit": "1.7 L jar", "price_net": "7.69", "price_gross": "8.23", "supplier": "Metro"}, {"nr": "062042.0", "name": "MC Grilled Zucchini", "cat": "Canned Goods - Vegetables", "unit": "1.7 L jar", "price_net": "7.99", "price_gross": "8.55", "supplier": "Metro"}, {"nr": "022812.2", "name": "MC Sweet Corn", "cat": "Canned Goods - Vegetables", "unit": "2650 ml can", "price_net": "4.28", "price_gross": "4.57", "supplier": "Metro"}, {"nr": "519830.4", "name": "ARO Dish Soap", "cat": "Cleaning Supplies", "unit": "10 L canister", "price_net": "7.21", "price_gross": "8.58", "supplier": "Metro"}, {"nr": "519244.8", "name": "ARO Glass Cleaner Spray", "cat": "Cleaning Supplies", "unit": "1 L spray", "price_net": "0.99", "price_gross": "1.18", "supplier": "Metro"}, {"nr": "083385.0", "name": "ARO Non-Woven Cloths", "cat": "Cleaning Supplies", "unit": "5 pcs pack", "price_net": "4.69", "price_gross": "5.58", "supplier": "Metro"}, {"nr": "147228.0", "name": "ARO Stainless Steel Scourers", "cat": "Cleaning Supplies", "unit": "6 pcs pack", "price_net": "0.99", "price_gross": "1.18", "supplier": "Metro"}, {"nr": "807138.0", "name": "ARO Toilet Paper 2-ply", "cat": "Cleaning Supplies", "unit": "24 rolls pack", "price_net": "6.49", "price_gross": "7.72", "supplier": "Metro"}, {"nr": "846250.0", "name": "Bref Degreaser Spray", "cat": "Cleaning Supplies", "unit": "750 ml spray", "price_net": "2.49", "price_gross": "2.96", "supplier": "Metro"}, {"nr": "456619.6", "name": "Dan Klorix Bleach Regular", "cat": "Cleaning Supplies", "unit": "5 L bottle", "price_net": "11.94", "price_gross": "14.21", "supplier": "Metro"}, {"nr": "158516.5", "name": "Degreaser Spray", "cat": "Cleaning Supplies", "unit": "1 L spray", "price_net": "6.67", "price_gross": "7.94", "supplier": "Metro"}, {"nr": "EL-10", "name": "Kitchen Paper Roll", "cat": "Cleaning Supplies", "unit": "1 CTN (12 rolls)", "price_net": "10.0", "price_gross": "10.0", "supplier": "eco life"}, {"nr": "932027.0", "name": "Spontex Microfiber Cloths", "cat": "Cleaning Supplies", "unit": "10 pcs pack", "price_net": "4.99", "price_gross": "5.94", "supplier": "Metro"}, {"nr": "084985.1", "name": "ARO Salad Mayonnaise 50%", "cat": "Condiments & Sauces", "unit": "10 kg bucket", "price_net": "20.38", "price_gross": "21.81", "supplier": "Metro"}, {"nr": "202559.1", "name": "ARO Table Mustard Medium", "cat": "Condiments & Sauces", "unit": "875 ml bottle", "price_net": "1.52", "price_gross": "1.63", "supplier": "Metro"}, {"nr": "931075.0", "name": "ARO Table Vinegar 5%", "cat": "Condiments & Sauces", "unit": "1 L bottle", "price_net": "0.51", "price_gross": "0.55", "supplier": "Metro"}, {"nr": "095562.5", "name": "Appel Worcester Sauce", "cat": "Condiments & Sauces", "unit": "1000 ml bottle", "price_net": "6.44", "price_gross": "6.89", "supplier": "Metro"}, {"nr": "447991.0", "name": "Flying Goose Sriracha Hot Sauce", "cat": "Condiments & Sauces", "unit": "730 ml bottle", "price_net": "5.99", "price_gross": "6.41", "supplier": "Metro"}, {"nr": "167690.7", "name": "Heinz BBQ Sauce", "cat": "Condiments & Sauces", "unit": "10 L bucket", "price_net": "36.31", "price_gross": "38.85", "supplier": "Metro"}, {"nr": "LI-03", "name": "Lions BBQ Sauce", "cat": "Condiments & Sauces", "unit": "2.27 L bottle", "price_net": "6.51", "price_gross": "6.97", "supplier": "Lions"}, {"nr": "LI-04", "name": "Lions Piri Piri Sauce", "cat": "Condiments & Sauces", "unit": "2.27 L bottle", "price_net": "6.51", "price_gross": "6.97", "supplier": "Lions"}, {"nr": "LI-05", "name": "Lions Ranch Sauce", "cat": "Condiments & Sauces", "unit": "2.27 L bottle", "price_net": "9.56", "price_gross": "10.23", "supplier": "Lions"}, {"nr": "LI-01", "name": "Lions Sourcream & Chives Sauce", "cat": "Condiments & Sauces", "unit": "2.27 L bottle", "price_net": "10.0", "price_gross": "10.7", "supplier": "Lions"}, {"nr": "LI-02", "name": "Lions Very Hot Chili Sauce", "cat": "Condiments & Sauces", "unit": "2.27 L bottle", "price_net": "6.58", "price_gross": "7.04", "supplier": "Lions"}, {"nr": "951517.2", "name": "MC Apple Vinegar", "cat": "Condiments & Sauces", "unit": "500 ml bottle", "price_net": "0.96", "price_gross": "1.03", "supplier": "Metro"}, {"nr": "951488.0", "name": "MC Balsamic Vinegar of Modena", "cat": "Condiments & Sauces", "unit": "1 L bottle", "price_net": "3.39", "price_gross": "3.63", "supplier": "Metro"}, {"nr": "951005.8", "name": "MC Chocolate Dessert Sauce", "cat": "Condiments & Sauces", "unit": "1 kg bottle", "price_net": "4.43", "price_gross": "4.74", "supplier": "Metro"}, {"nr": "536148.0", "name": "MC Vegan Salad Mayonnaise", "cat": "Condiments & Sauces", "unit": "2.5 kg bucket", "price_net": "7.99", "price_gross": "8.55", "supplier": "Metro"}, {"nr": "040769.2", "name": "Rioba Salad Mayonnaise 50% Portions", "cat": "Condiments & Sauces", "unit": "180 x 20ml box", "price_net": "12.45", "price_gross": "13.32", "supplier": "Metro"}, {"nr": "038144.2", "name": "Rioba Tomato Ketchup Portions", "cat": "Condiments & Sauces", "unit": "180 x 15ml box", "price_net": "9.79", "price_gross": "10.48", "supplier": "Metro"}, {"nr": "86799", "name": "Butter Lurpak Salted", "cat": "Dairy - Butter", "unit": "1 Case (20x200g)", "price_net": "1.97", "price_gross": "1.97", "supplier": "Arla Foods"}, {"nr": "978587.0", "name": "ARO Shepherd Cheese 45%", "cat": "Dairy - Cheese", "unit": "2 kg block", "price_net": "12.99", "price_gross": "13.9", "supplier": "Metro"}, {"nr": "40170", "name": "Cheddar Shredded", "cat": "Dairy - Cheese", "unit": "1 Case (4x1kg)", "price_net": "8.64", "price_gross": "8.64", "supplier": "Arla Foods"}, {"nr": "65324", "name": "Mozzarella Shredded", "cat": "Dairy - Cheese", "unit": "1 Case (4x1kg)", "price_net": "7.55", "price_gross": "7.55", "supplier": "Arla Foods"}, {"nr": "20759", "name": "White Cheese Cubes Apetina", "cat": "Dairy - Cheese", "unit": "1 Bucket (4kg)", "price_net": "27.69", "price_gross": "27.69", "supplier": "Arla Foods"}, {"nr": "1624", "name": "TB Sour Cream 20%", "cat": "Dairy - Cream", "unit": "1 Bucket (5kg)", "price_net": "22.44", "price_gross": "22.44", "supplier": "Arla Foods"}, {"nr": "88518", "name": "UHT Milk Regular", "cat": "Dairy - Milk", "unit": "1 Case (10x1L)", "price_net": "1.3", "price_gross": "1.3", "supplier": "Arla Foods"}, {"nr": "918530.0", "name": "ARO Greek Yogurt 10%", "cat": "Dairy - Yogurt", "unit": "5 kg bucket", "price_net": "9.39", "price_gross": "10.05", "supplier": "Metro"}, {"nr": "918736.0", "name": "ARO Natural Yogurt 3.5%", "cat": "Dairy - Yogurt", "unit": "5 kg bucket", "price_net": "6.99", "price_gross": "7.48", "supplier": "Metro"}, {"nr": "21832", "name": "Yoghurt Klover Drained 10%", "cat": "Dairy - Yogurt", "unit": "1 Bucket (5kg)", "price_net": "13.27", "price_gross": "13.27", "supplier": "Arla Foods"}, {"nr": "052217.7", "name": "Violife Gouda Style Shredded", "cat": "Dairy Alternative", "unit": "1 kg bag", "price_net": "9.16", "price_gross": "9.8", "supplier": "Metro"}, {"nr": "060163.3", "name": "Violife Mozzarella Style Shredded", "cat": "Dairy Alternative", "unit": "1 kg bag", "price_net": "11.36", "price_gross": "12.16", "supplier": "Metro"}, {"nr": "AF-630", "name": "Arfiyato Green Peppers with Cream Cheese", "cat": "Deli - Antipasti", "unit": "1.3 kg container", "price_net": "18.99", "price_gross": "20.32", "supplier": "Arfiyato"}, {"nr": "AF-645", "name": "Arfiyato Stuffed Tomato Peppers", "cat": "Deli - Antipasti", "unit": "1 pc", "price_net": "19.99", "price_gross": "21.39", "supplier": "Arfiyato"}, {"nr": "AF-623", "name": "Balsamic Onions", "cat": "Deli - Antipasti", "unit": "1 can", "price_net": "9.99", "price_gross": "10.69", "supplier": "Arfiyato"}, {"nr": "AF-612", "name": "Grilled Aubergine Trays", "cat": "Deli - Antipasti", "unit": "2.4 kg tray", "price_net": "21.99", "price_gross": "23.53", "supplier": "Arfiyato"}, {"nr": "AF-323", "name": "Grilled Mushrooms", "cat": "Deli - Antipasti", "unit": "5 L canister", "price_net": "33.99", "price_gross": "36.37", "supplier": "Arfiyato"}, {"nr": "AF-606", "name": "Stuffed Vine Leaves with Rice Palirria", "cat": "Deli - Antipasti", "unit": "2 kg tin", "price_net": "59.99", "price_gross": "64.19", "supplier": "Arfiyato"}, {"nr": "55445", "name": "Eggs Issue Medium", "cat": "Eggs", "unit": "1 Case (12 trays = 360 pcs)", "price_net": "69.57", "price_gross": "69.57", "supplier": "Arla Foods"}, {"nr": "278900.6", "name": "MC Apples Elstar", "cat": "Fresh Fruits", "unit": "10 kg box", "price_net": "15.29", "price_gross": "16.36", "supplier": "Metro"}, {"nr": "278708.3", "name": "MC Apples Jonagold", "cat": "Fresh Fruits", "unit": "10 kg box", "price_net": "13.99", "price_gross": "14.97", "supplier": "Metro"}, {"nr": "016968.0", "name": "MC Lemons (Large)", "cat": "Fresh Fruits", "unit": "5 kg bag", "price_net": "10.63", "price_gross": "11.37", "supplier": "Metro"}, {"nr": "446565.4", "name": "MC Lemons (Small)", "cat": "Fresh Fruits", "unit": "1.5 kg bag", "price_net": "3.62", "price_gross": "3.87", "supplier": "Metro"}, {"nr": "230390.0", "name": "MC Mango Ready to Eat", "cat": "Fresh Fruits", "unit": "1 pc", "price_net": "2.11", "price_gross": "2.26", "supplier": "Metro"}, {"nr": "271702.3", "name": "Oranges", "cat": "Fresh Fruits", "unit": "3 kg bag", "price_net": "4.39", "price_gross": "4.7", "supplier": "Metro"}, {"nr": "409327.4", "name": "Pineapple", "cat": "Fresh Fruits", "unit": "1 pc", "price_net": "3.19", "price_gross": "3.41", "supplier": "Metro"}, {"nr": "154793.4", "name": "MC Chives", "cat": "Fresh Herbs", "unit": "200 g pack", "price_net": "3.79", "price_gross": "4.06", "supplier": "Metro"}, {"nr": "327282.0", "name": "MC Dill (1kg)", "cat": "Fresh Herbs", "unit": "1 kg bunch", "price_net": "8.13", "price_gross": "8.7", "supplier": "Metro"}, {"nr": "234834.0", "name": "MC Dill (200g)", "cat": "Fresh Herbs", "unit": "200 g pack", "price_net": "2.47", "price_gross": "2.64", "supplier": "Metro"}, {"nr": "244821.5", "name": "MC Flat Leaf Parsley", "cat": "Fresh Herbs", "unit": "300 g bunch", "price_net": "2.99", "price_gross": "3.2", "supplier": "Metro"}, {"nr": "248141.0", "name": "MC Flat Leaf Parsley (1kg)", "cat": "Fresh Herbs", "unit": "1 kg bunch", "price_net": "6.59", "price_gross": "7.05", "supplier": "Metro"}, {"nr": "287266.1", "name": "Spring Onions", "cat": "Fresh Herbs", "unit": "1 bunch", "price_net": "0.64", "price_gross": "0.69", "supplier": "Metro"}, {"nr": "287182.0", "name": "Baby Spinach (1kg)", "cat": "Fresh Vegetables", "unit": "1 kg bag", "price_net": "3.0", "price_gross": "3.21", "supplier": "Metro"}, {"nr": "287194.5", "name": "Baby Spinach (200g)", "cat": "Fresh Vegetables", "unit": "200 g pack", "price_net": "1.75", "price_gross": "1.87", "supplier": "Metro"}, {"nr": "289093.7", "name": "Beetroot Fresh", "cat": "Fresh Vegetables", "unit": "1 kg bag", "price_net": "1.53", "price_gross": "1.64", "supplier": "Metro"}, {"nr": "299102.4", "name": "Bell Pepper Mix (ES)", "cat": "Fresh Vegetables", "unit": "500 g pack", "price_net": "2.37", "price_gross": "2.54", "supplier": "Metro"}, {"nr": "299368.1", "name": "Bell Pepper Mix (NL)", "cat": "Fresh Vegetables", "unit": "500 g pack", "price_net": "2.06", "price_gross": "2.21", "supplier": "Metro"}, {"nr": "283546.0", "name": "Broccoli", "cat": "Fresh Vegetables", "unit": "500 g head", "price_net": "1.39", "price_gross": "1.49", "supplier": "Metro"}, {"nr": "292135.1", "name": "Carrots", "cat": "Fresh Vegetables", "unit": "10 kg bag", "price_net": "7.68", "price_gross": "8.22", "supplier": "Metro"}, {"nr": "012018.8", "name": "Cucumber (ES)", "cat": "Fresh Vegetables", "unit": "1 pc", "price_net": "1.58", "price_gross": "1.69", "supplier": "Metro"}, {"nr": "011981.8", "name": "Cucumber (NL)", "cat": "Fresh Vegetables", "unit": "1 pc", "price_net": "0.59", "price_gross": "0.63", "supplier": "Metro"}, {"nr": "049039.1", "name": "Head Lettuce", "cat": "Fresh Vegetables", "unit": "12 pcs box", "price_net": "18.69", "price_gross": "20.0", "supplier": "Metro"}, {"nr": "194256.0", "name": "Imperfect Cucumbers", "cat": "Fresh Vegetables", "unit": "10 kg box", "price_net": "28.59", "price_gross": "30.59", "supplier": "Metro"}, {"nr": "024645.0", "name": "Lollo Rosso Lettuce", "cat": "Fresh Vegetables", "unit": "9 pcs box", "price_net": "10.99", "price_gross": "11.76", "supplier": "Metro"}, {"nr": "031505.1", "name": "MC Bio Ginger (Organic)", "cat": "Fresh Vegetables", "unit": "200 g pack", "price_net": "1.86", "price_gross": "1.99", "supplier": "Metro"}, {"nr": "292355.5", "name": "MC Carrots", "cat": "Fresh Vegetables", "unit": "10 kg bag", "price_net": "8.79", "price_gross": "9.41", "supplier": "Metro"}, {"nr": "310725.0", "name": "MC Cucumber (ES)", "cat": "Fresh Vegetables", "unit": "1 pc", "price_net": "1.16", "price_gross": "1.24", "supplier": "Metro"}, {"nr": "025606.5", "name": "MC Lollo Bionda Lettuce", "cat": "Fresh Vegetables", "unit": "9 pcs box", "price_net": "10.99", "price_gross": "11.76", "supplier": "Metro"}, {"nr": "525350.0", "name": "MC Peeled Garlic", "cat": "Fresh Vegetables", "unit": "1 kg bag", "price_net": "7.55", "price_gross": "8.08", "supplier": "Metro"}, {"nr": "281599.1", "name": "MC Potatoes", "cat": "Fresh Vegetables", "unit": "10 kg bag", "price_net": "5.29", "price_gross": "5.66", "supplier": "Metro"}, {"nr": "368188.9", "name": "MC Round Tomatoes", "cat": "Fresh Vegetables", "unit": "6 kg box", "price_net": "13.52", "price_gross": "14.47", "supplier": "Metro"}, {"nr": "186904.0", "name": "MC Salad Mix (FR)", "cat": "Fresh Vegetables", "unit": "9 pcs box", "price_net": "11.1", "price_gross": "11.88", "supplier": "Metro"}, {"nr": "240032.3", "name": "Organic Beetroot", "cat": "Fresh Vegetables", "unit": "500 g pack", "price_net": "1.49", "price_gross": "1.59", "supplier": "Metro"}, {"nr": "494702.4", "name": "Pink Garlic", "cat": "Fresh Vegetables", "unit": "1 kg bag", "price_net": "5.79", "price_gross": "6.2", "supplier": "Metro"}, {"nr": "615", "name": "Potatoes Sack", "cat": "Fresh Vegetables", "unit": "25 kg sack", "price_net": "18.75", "price_gross": "20.06", "supplier": "BaDe Handels"}, {"nr": "014322.2", "name": "Red Onions (Large)", "cat": "Fresh Vegetables", "unit": "10 kg bag", "price_net": "7.29", "price_gross": "7.8", "supplier": "Metro"}, {"nr": "014240.6", "name": "Red Onions (Small)", "cat": "Fresh Vegetables", "unit": "10 kg bag", "price_net": "7.29", "price_gross": "7.8", "supplier": "Metro"}, {"nr": "563886.0", "name": "Red Palermo Peppers", "cat": "Fresh Vegetables", "unit": "500 g pack", "price_net": "2.48", "price_gross": "2.65", "supplier": "Metro"}, {"nr": "288641.0", "name": "Salad Mix (IT)", "cat": "Fresh Vegetables", "unit": "9 pcs box", "price_net": "9.45", "price_gross": "10.11", "supplier": "Metro"}, {"nr": "187612.7", "name": "Sweet Potatoes", "cat": "Fresh Vegetables", "unit": "6 kg box", "price_net": "6.99", "price_gross": "8.32", "supplier": "Metro"}, {"nr": "009054.8", "name": "Tomatoes", "cat": "Fresh Vegetables", "unit": "6 kg box", "price_net": "13.19", "price_gross": "14.11", "supplier": "Metro"}, {"nr": "008592.0", "name": "Vine Tomatoes (NL)", "cat": "Fresh Vegetables", "unit": "5 kg box", "price_net": "18.99", "price_gross": "20.32", "supplier": "Metro"}, {"nr": "704007.4", "name": "Bagel Plain (36 pcs)", "cat": "Frozen - Bakery", "unit": "36 pcs box", "price_net": "28.24", "price_gross": "30.22", "supplier": "Metro"}, {"nr": "020610.0", "name": "Elviart Pita Flatbread 10x18cm", "cat": "Frozen - Bakery", "unit": "10 pcs pack", "price_net": "2.88", "price_gross": "3.08", "supplier": "Metro"}, {"nr": "671062.8", "name": "Mini Pancake (348 pcs)", "cat": "Frozen - Bakery", "unit": "348 pcs box", "price_net": "36.29", "price_gross": "38.83", "supplier": "Metro"}, {"nr": "784801", "name": "Banana Slices Frozen", "cat": "Frozen - Fruits", "unit": "10 kg box", "price_net": "24.99", "price_gross": "26.74", "supplier": "Transgourmet"}, {"nr": "958408.7", "name": "MC Avocado Cubes", "cat": "Frozen - Fruits", "unit": "1 kg bag", "price_net": "4.99", "price_gross": "5.34", "supplier": "Metro"}, {"nr": "009332.0", "name": "MC Avocado Slices Frozen", "cat": "Frozen - Fruits", "unit": "1 kg bag", "price_net": "7.49", "price_gross": "8.01", "supplier": "Metro"}, {"nr": "912431.4", "name": "MC Blueberries", "cat": "Frozen - Fruits", "unit": "1 kg bag", "price_net": "7.6", "price_gross": "8.13", "supplier": "Metro"}, {"nr": "912409.0", "name": "MC Mango Cubes", "cat": "Frozen - Fruits", "unit": "1 kg bag", "price_net": "4.5", "price_gross": "4.81", "supplier": "Metro"}, {"nr": "912413.2", "name": "MC Pineapple Chunks", "cat": "Frozen - Fruits", "unit": "1 kg bag", "price_net": "3.52", "price_gross": "3.77", "supplier": "Metro"}, {"nr": "929514.8", "name": "MC Raspberries Frozen", "cat": "Frozen - Fruits", "unit": "2.5 kg bag", "price_net": "20.82", "price_gross": "22.28", "supplier": "Metro"}, {"nr": "928844.0", "name": "MC Strawberries Frozen", "cat": "Frozen - Fruits", "unit": "2.5 kg bag", "price_net": "6.39", "price_gross": "6.84", "supplier": "Metro"}, {"nr": "209034.0", "name": "ARO Chicken Nuggets Frozen", "cat": "Frozen - Meat", "unit": "1 kg bag", "price_net": "6.32", "price_gross": "6.76", "supplier": "Metro"}, {"nr": "339051.5", "name": "MC Chicken Breast Strips Grilled", "cat": "Frozen - Meat", "unit": "1 kg bag", "price_net": "17.64", "price_gross": "18.87", "supplier": "Metro"}, {"nr": "537682.7", "name": "Aviko Roesti Bites Oven", "cat": "Frozen - Potato Products", "unit": "2.5 kg bag", "price_net": "4.71", "price_gross": "5.04", "supplier": "Metro"}, {"nr": "546743.6", "name": "Aviko Super Crunch Fries 9.5mm", "cat": "Frozen - Potato Products", "unit": "2.5 kg bag", "price_net": "5.29", "price_gross": "5.66", "supplier": "Metro"}, {"nr": "785669.3", "name": "Koelln Muesli Honey Nut", "cat": "Grains & Cereals", "unit": "1.7 kg pack", "price_net": "8.99", "price_gross": "9.62", "supplier": "Metro"}, {"nr": "090225.4", "name": "Muellers Muehle Quinoa", "cat": "Grains & Cereals", "unit": "1.8 kg bag", "price_net": "9.52", "price_gross": "10.19", "supplier": "Metro"}, {"nr": "6602", "name": "Dawn Farms Chargrilled Chicken Strips", "cat": "Meat - Processed", "unit": "1 Case (10x1kg)", "price_net": "9.7", "price_gross": "10.38", "supplier": "Food-Kings"}, {"nr": "7200", "name": "Dawn Farms Full Slice Bacon Cooked", "cat": "Meat - Processed", "unit": "1 Case (6x1kg)", "price_net": "19.35", "price_gross": "20.7", "supplier": "Food-Kings"}, {"nr": "5291", "name": "Dawn Farms Pork Carnitas", "cat": "Meat - Processed", "unit": "1 Case (10x500g)", "price_net": "10.22", "price_gross": "10.94", "supplier": "Food-Kings"}, {"nr": "6953", "name": "Dawn Farms Pulled Chicken", "cat": "Meat - Processed", "unit": "1 Case (10x1kg)", "price_net": "9.8", "price_gross": "10.49", "supplier": "Food-Kings"}, {"nr": "030675.3", "name": "ARO Olive Oil", "cat": "Oils & Fats", "unit": "5 L canister", "price_net": "27.99", "price_gross": "29.95", "supplier": "Metro"}, {"nr": "208622.1", "name": "ARO Rapeseed Oil", "cat": "Oils & Fats", "unit": "10 L canister", "price_net": "14.89", "price_gross": "15.93", "supplier": "Metro"}, {"nr": "921376.0", "name": "ARO Sunflower Oil", "cat": "Oils & Fats", "unit": "10 L canister", "price_net": "16.78", "price_gross": "17.95", "supplier": "Metro"}, {"nr": "219405.8", "name": "Deli Reform Soft Margarine", "cat": "Oils & Fats", "unit": "2 kg tub", "price_net": "8.95", "price_gross": "9.58", "supplier": "Metro"}, {"nr": "905198.0", "name": "MC Extra Virgin Olive Oil", "cat": "Oils & Fats", "unit": "5 L canister", "price_net": "31.49", "price_gross": "33.69", "supplier": "Metro"}, {"nr": "867307.1", "name": "MC High Oleic Frying Oil", "cat": "Oils & Fats", "unit": "10 L canister", "price_net": "20.99", "price_gross": "22.46", "supplier": "Metro"}, {"nr": "011429.8", "name": "Optima Butter Aroma Oil", "cat": "Oils & Fats", "unit": "2 L bottle", "price_net": "12.31", "price_gross": "13.17", "supplier": "Metro"}, {"nr": "596093", "name": "ARLA Joerd Oat Barista UHT", "cat": "Plant-Based Beverage", "unit": "1 Case (10x1L)", "price_net": "2.02", "price_gross": "2.02", "supplier": "Arla Foods"}, {"nr": "527240.6", "name": "BBQ Marshmallows", "cat": "Snacks & Confectionery", "unit": "400 g bag", "price_net": "2.71", "price_gross": "2.9", "supplier": "Metro"}, {"nr": "127862.1", "name": "Bahlsen Pick Original Crackers", "cat": "Snacks & Confectionery", "unit": "24 x 28g box", "price_net": "12.82", "price_gross": "13.72", "supplier": "Metro"}, {"nr": "337326.3", "name": "Rocky Mountain Marshmallows", "cat": "Snacks & Confectionery", "unit": "300 g bag", "price_net": "4.33", "price_gross": "4.63", "supplier": "Metro"}, {"nr": "154301.6", "name": "ARO Table Salt", "cat": "Spices & Seasonings", "unit": "500 g pack", "price_net": "0.29", "price_gross": "0.31", "supplier": "Metro"}, {"nr": "16170014D", "name": "Cajun Mix", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "12.75", "price_gross": "13.64", "supplier": "Van Beekum"}, {"nr": "16170073D", "name": "Chips & Potato Seasoning with Salt", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "13.73", "price_gross": "14.69", "supplier": "Van Beekum"}, {"nr": "16170073C", "name": "Chips & Potato Seasoning with Salt (Shaker)", "cat": "Spices & Seasonings", "unit": "600 g shaker", "price_net": "11.77", "price_gross": "12.59", "supplier": "Van Beekum"}, {"nr": "16170003D", "name": "Dry Rub All Purpose", "cat": "Spices & Seasonings", "unit": "2 kg bag", "price_net": "30.92", "price_gross": "33.08", "supplier": "Van Beekum"}, {"nr": "16170003C", "name": "Dry Rub All Purpose (Shaker)", "cat": "Spices & Seasonings", "unit": "600 g shaker", "price_net": "13.01", "price_gross": "13.92", "supplier": "Van Beekum"}, {"nr": "19080225D", "name": "Garlic Granules Coarse 2-3mm", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "11.04", "price_gross": "11.81", "supplier": "Van Beekum"}, {"nr": "250542.8", "name": "Hellma Pepper Sticks (750 pcs)", "cat": "Spices & Seasonings", "unit": "750 x 0.2g box", "price_net": "10.66", "price_gross": "11.41", "supplier": "Metro"}, {"nr": "250536.0", "name": "Hellma Salt Sticks (750 pcs)", "cat": "Spices & Seasonings", "unit": "750 x 1g box", "price_net": "6.99", "price_gross": "7.48", "supplier": "Metro"}, {"nr": "20210152D", "name": "Honey-Mustard BBQ Rub", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "14.72", "price_gross": "15.75", "supplier": "Van Beekum"}, {"nr": "20210176D", "name": "Jamaican Jerk Herbs", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "19.62", "price_gross": "20.99", "supplier": "Van Beekum"}, {"nr": "16170139D", "name": "Lemon Pepper", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "21.84", "price_gross": "23.37", "supplier": "Van Beekum"}, {"nr": "019366.4", "name": "MC Cayenne Pepper Ground", "cat": "Spices & Seasonings", "unit": "390 g tin", "price_net": "3.99", "price_gross": "4.27", "supplier": "Metro"}, {"nr": "514870.5", "name": "MC Ground Cumin", "cat": "Spices & Seasonings", "unit": "400 g tin", "price_net": "5.89", "price_gross": "6.3", "supplier": "Metro"}, {"nr": "19080131D", "name": "Onion Powder", "cat": "Spices & Seasonings", "unit": "800 g bag", "price_net": "11.08", "price_gross": "11.86", "supplier": "Van Beekum"}, {"nr": "16170077D", "name": "Piri Piri Mix", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "14.22", "price_gross": "15.22", "supplier": "Van Beekum"}, {"nr": "16170076D", "name": "Smokey BBQ Seasoning", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "24.53", "price_gross": "26.25", "supplier": "Van Beekum"}, {"nr": "16170130C", "name": "Spicy Chipotle Mix (Shaker)", "cat": "Spices & Seasonings", "unit": "600 g shaker", "price_net": "12.75", "price_gross": "13.64", "supplier": "Van Beekum"}, {"nr": "20210125D", "name": "Taco Seasoning Mix", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "13.01", "price_gross": "13.92", "supplier": "Van Beekum"}, {"nr": "16170099D", "name": "Tex Mex Mix", "cat": "Spices & Seasonings", "unit": "1 kg bag", "price_net": "11.04", "price_gross": "11.81", "supplier": "Van Beekum"}, {"nr": "522896.0", "name": "ARO Blossom Honey", "cat": "Spreads & Honey", "unit": "2.5 kg jar", "price_net": "14.76", "price_gross": "15.79", "supplier": "Metro"}, {"nr": "108233.8", "name": "Diamond Peanut Butter", "cat": "Spreads & Honey", "unit": "5 kg bucket", "price_net": "27.29", "price_gross": "29.2", "supplier": "Metro"}, {"nr": "675208.3", "name": "Sonnland Flower Honey", "cat": "Spreads & Honey", "unit": "2.5 kg jar", "price_net": "15.99", "price_gross": "17.11", "supplier": "Metro"}, {"nr": "AF-673", "name": "Tahini Daabool", "cat": "Spreads & Honey", "unit": "4 kg bucket", "price_net": "26.99", "price_gross": "28.88", "supplier": "Arfiyato"}, {"nr": "EL-05", "name": "1000ml Paper Bowl", "cat": "Supplies - Disposables", "unit": "1 CTN (300 pcs)", "price_net": "13.35", "price_gross": "13.35", "supplier": "eco life"}, {"nr": "EL-09", "name": "1200ml Two Compartment Sugarcane Bowl", "cat": "Supplies - Disposables", "unit": "1 CTN (300 pcs)", "price_net": "5.0", "price_gross": "5.0", "supplier": "eco life"}, {"nr": "499594.0", "name": "ARO Aluminum Foil 44cmx150m", "cat": "Supplies - Disposables", "unit": "1 Roll (150m)", "price_net": "12.37", "price_gross": "14.72", "supplier": "Metro"}, {"nr": "718787.0", "name": "ARO Carrier Bags", "cat": "Supplies - Disposables", "unit": "500 pcs bag", "price_net": "9.06", "price_gross": "10.78", "supplier": "Metro"}, {"nr": "295978.0", "name": "ARO Napkins 33cm Cream", "cat": "Supplies - Disposables", "unit": "500 pcs pack", "price_net": "3.49", "price_gross": "4.15", "supplier": "Metro"}, {"nr": "008681.0", "name": "ARO Napkins 33cm White", "cat": "Supplies - Disposables", "unit": "500 pcs pack", "price_net": "4.47", "price_gross": "5.32", "supplier": "Metro"}, {"nr": "295981.0", "name": "ARO Napkins 33cm Yellow", "cat": "Supplies - Disposables", "unit": "500 pcs pack", "price_net": "3.49", "price_gross": "4.15", "supplier": "Metro"}, {"nr": "485661.3", "name": "ARO Paper Hand Towels", "cat": "Supplies - Disposables", "unit": "20 x 250 pcs", "price_net": "44.55", "price_gross": "53.01", "supplier": "Metro"}, {"nr": "EL-03", "name": "Bamboo Pulp Napkin", "cat": "Supplies - Disposables", "unit": "1 CTN (3000 pcs)", "price_net": "9.3", "price_gross": "9.3", "supplier": "eco life"}, {"nr": "EL-02", "name": "Disposable Gloves", "cat": "Supplies - Disposables", "unit": "1 CTN (10000 pcs)", "price_net": "12.64", "price_gross": "12.64", "supplier": "eco life"}, {"nr": "EL-11", "name": "Disposable Kraft Paper Bowl", "cat": "Supplies - Disposables", "unit": "1 CTN (300 pcs)", "price_net": "13.07", "price_gross": "13.07", "supplier": "eco life"}, {"nr": "EL-01", "name": "Disposable Wooden Tableware", "cat": "Supplies - Disposables", "unit": "1 CTN (5000 pcs)", "price_net": "32.3", "price_gross": "32.3", "supplier": "eco life"}, {"nr": "499595.0", "name": "MPRO Aluminum Foil 44cmx200m", "cat": "Supplies - Disposables", "unit": "1 Roll (200m)", "price_net": "29.49", "price_gross": "35.09", "supplier": "Metro"}, {"nr": "517425.0", "name": "MPRO Cling Film 44cmx300m", "cat": "Supplies - Disposables", "unit": "1 Roll (300m)", "price_net": "12.24", "price_gross": "14.57", "supplier": "Metro"}, {"nr": "872490.0", "name": "MPRO Latex Gloves Black XL", "cat": "Supplies - Disposables", "unit": "100 pcs box", "price_net": "5.19", "price_gross": "6.18", "supplier": "Metro"}, {"nr": "977602.0", "name": "MPRO Nitrile Gloves Black L", "cat": "Supplies - Disposables", "unit": "100 pcs box", "price_net": "3.99", "price_gross": "4.75", "supplier": "Metro"}, {"nr": "977603.0", "name": "MPRO Nitrile Gloves Black XL", "cat": "Supplies - Disposables", "unit": "100 pcs box", "price_net": "4.99", "price_gross": "5.94", "supplier": "Metro"}, {"nr": "060872.9", "name": "MPRO Trash Bags 130L (50 pcs)", "cat": "Supplies - Disposables", "unit": "50 pcs roll", "price_net": "13.19", "price_gross": "15.7", "supplier": "Metro"}, {"nr": "EL-07", "name": "PET Cup", "cat": "Supplies - Disposables", "unit": "1 CTN (1000 pcs)", "price_net": "33.79", "price_gross": "33.79", "supplier": "eco life"}, {"nr": "EL-08", "name": "PET Cup Lid", "cat": "Supplies - Disposables", "unit": "1 CTN (1000 pcs)", "price_net": "8.43", "price_gross": "8.43", "supplier": "eco life"}, {"nr": "EL-06", "name": "PET Lid (for 1000ml)", "cat": "Supplies - Disposables", "unit": "1 CTN (300 pcs)", "price_net": "7.47", "price_gross": "7.47", "supplier": "eco life"}, {"nr": "EL-12", "name": "PET Lid (for 1300ml)", "cat": "Supplies - Disposables", "unit": "1 CTN (300 pcs)", "price_net": "9.53", "price_gross": "9.53", "supplier": "eco life"}, {"nr": "192809.0", "name": "Papstar Pure Snack Trays", "cat": "Supplies - Disposables", "unit": "80 pcs pack", "price_net": "12.89", "price_gross": "15.34", "supplier": "Metro"}, {"nr": "054354.6", "name": "Rioba To-Go Cups Black (50 pcs)", "cat": "Supplies - Disposables", "unit": "50 pcs pack", "price_net": "3.94", "price_gross": "4.69", "supplier": "Metro"}, {"nr": "140527.3", "name": "Salad Bowls 1300ml (50 pcs)", "cat": "Supplies - Disposables", "unit": "50 pcs pack", "price_net": "18.75", "price_gross": "22.31", "supplier": "Metro"}, {"nr": "005545.9", "name": "Trash Bags 120L Blue (50 pcs)", "cat": "Supplies - Disposables", "unit": "50 pcs roll", "price_net": "16.7", "price_gross": "19.87", "supplier": "Metro"}, {"nr": "932513.5", "name": "Wrapping Paper", "cat": "Supplies - Disposables", "unit": "10 kg roll", "price_net": "28.99", "price_gross": "34.5", "supplier": "Metro"}, {"nr": "862666.5", "name": "MPRO Deep Fryer GDF3008 8L", "cat": "Supplies - Equipment", "unit": "1 pc", "price_net": "79.99", "price_gross": "95.19", "supplier": "Metro"}, {"nr": "080989.7", "name": "MPRO Pizza Tray 30cm", "cat": "Supplies - Equipment", "unit": "1 pc", "price_net": "6.99", "price_gross": "8.32", "supplier": "Metro"}, {"nr": "EL-04", "name": "Kraft Bags", "cat": "Supplies - Packaging", "unit": "1 CTN (500 pcs)", "price_net": "27.9", "price_gross": "27.9", "supplier": "eco life"}, {"nr": "TBD-01", "name": "Pulled Salted Beef Brisket", "cat": "Meat - Processed", "unit": "1 Case (1kg)", "price_net": "15.1", "price_gross": "16.16", "supplier": "Food-Kings"}, {"nr": "TBD-02", "name": "Rotisserie Chicken", "cat": "Meat - Processed", "unit": "1 Case (1kg)", "price_net": "9.7", "price_gross": "10.38", "supplier": "Food-Kings"}, {"nr": "TBD-03", "name": "Garlic Infused Chicken Strips", "cat": "Meat - Processed", "unit": "1 Case (1kg)", "price_net": "9.7", "price_gross": "10.38", "supplier": "Food-Kings"}, {"nr": "AF-HUM", "name": "Hummus (ready-made)", "cat": "Deli - Prepared", "unit": "TBD", "price_net": "0.0", "price_gross": "0.0", "supplier": "Arfiyato"}, {"nr": "ASIN-WG", "name": "Mammut Weight Gainer 4.5kg", "cat": "Nutrition & Supplements", "unit": "4.5 kg bag", "price_net": "40.0", "price_gross": "42.8", "supplier": "Amazon"}, {"nr": "Hahnchenbrust", "name": "Hahnchenbrust", "cat": "Meat - Chicken", "unit": "kg", "price_net": "8.0", "price_gross": "8.56", "supplier": "Selim's Döner"}, {"nr": "Hahnchenfluegel", "name": "Hahnchenfluegel", "cat": "Meat - Chicken", "unit": "kg", "price_net": "4.0", "price_gross": "4.28", "supplier": "Selim's Döner"}, {"nr": "83000", "name": "Jarritos Mexican Cola 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "83001", "name": "Jarritos Mandarine 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "83006", "name": "Jarritos Strawberry 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "83004", "name": "Jarritos Guave 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "43000", "name": "Maistortillas 6\" TK gelb Øca.15 cm, 60x22g", "cat": "Dry Goods", "unit": "Beutel", "price_net": "4.59", "price_gross": "4.91", "supplier": "Gastroservice Gambert"}, {"nr": "36383", "name": "Quinoa Tricolore, 5kg beutel", "cat": "Dry Goods", "unit": "Sack", "price_net": "24.8", "price_gross": "29.51", "supplier": "Gastroservice Gambert"}, {"nr": "83005", "name": "Jarritos Grapefruit 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "83007", "name": "Jarritos Pineapple 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "83003", "name": "Jarritos Mango 370ml", "cat": "Beverages - Jarritos", "unit": "Flasche", "price_net": "1.3", "price_gross": "1.55", "supplier": "Gastroservice Gambert"}, {"nr": "S5682vgsndfb-1", "name": "Reines Matcha Pulver (Pure) von Japan 500g", "cat": "Dry Goods - Powder", "unit": "Inhalt: 0,5 kg", "price_net": "42.99", "price_gross": "51.16", "supplier": "Asia Moin"}, {"nr": "S5680-1", "name": "Taro Pulver 1kg - Asia Moin GmbH - 2er Set", "cat": "Dry Goods - Powder", "unit": "Inhalt: 1 kg", "price_net": "39.99", "price_gross": "47.59", "supplier": "Asia Moin"}, {"nr": "S5680djdh", "name": "Taro Pulver 1kg - Asia Moin GmbH", "cat": "Dry Goods - Powder", "unit": "Inhalt: 1 kg", "price_net": "21.99", "price_gross": "23.53", "supplier": "Asia Moin"}, {"nr": "PUL18026", "name": "Schale BePulp Eco Street oval 770ml", "cat": "Supplies - Packaging", "unit": "VE (300 Stk.)", "price_net": "48.45", "price_gross": "57.66", "supplier": "Plastikbecher.de"}, {"nr": "PUL58021", "name": "Deckel RPET klar oval 190x150mm", "cat": "Supplies - Packaging", "unit": "VE (300 Stk.)", "price_net": "44.47", "price_gross": "52.92", "supplier": "Plastikbecher.de"}, {"nr": "TH-21", "name": "Papier-Trinkhalme weiss 250x8mm", "cat": "Supplies - Packaging", "unit": "VE (3.200 Stk.)", "price_net": "59.49", "price_gross": "70.79", "supplier": "Plastikbecher.de"}];
+
+const supplierColors = {'Metro':'metro','Arfiyato':'arfiyato','Arla Foods':'arla','Lions':'lions','Van Beekum':'vanbeekum','Food-Kings':'foodkings','eco life':'ecolife','BaDe Handels':'bade','Transgourmet':'transgourmet','Amazon':'amazon',"Selim's Döner":'selim','Gastroservice Gambert':'gambert','Asia Moin':'asiamoin','Plastikbecher.de':'plastikbecher'};
+let state = {};
+let orderedSuppliers = {}; // tracks which suppliers have been ordered
+let activeSupplier = ''; // current supplier tab ('' = all)
+let selectedLager = ''; // mandatory store selection
+
+function saveLager(){
+  selectedLager = document.getElementById('lagerSelect').value;
+  try{localStorage.setItem('spudz_lager', selectedLager);}catch(e){}
+  document.getElementById('lagerWarning').style.display = selectedLager ? 'none' : 'inline';
+}
+
+function requireLager(){
+  if(!selectedLager){
+    document.getElementById('lagerWarning').style.display = 'inline';
+    document.getElementById('lagerSelect').focus();
+    showToast('Bitte zuerst ein Lager auswaehlen!');
+    return false;
+  }
+  return true;
+}
+
+function init(){
+  const cats = [...new Set(PRODUCTS.map(p=>p.cat))].sort();
+  const fC = document.getElementById('filterCat');
+  cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;fC.appendChild(o)});
+
+  try{state=JSON.parse(localStorage.getItem('spudz_order')||'{}');}catch(e){state={};}
+  try{orderedSuppliers=JSON.parse(localStorage.getItem('spudz_ordered')||'{}');}catch(e){orderedSuppliers={};}
+  try{selectedLager=localStorage.getItem('spudz_lager')||'';}catch(e){selectedLager='';}
+  if(selectedLager) document.getElementById('lagerSelect').value = selectedLager;
+
+  buildSupplierTabs();
+  render();
+
+  document.getElementById('search').addEventListener('input',render);
+  document.getElementById('filterCat').addEventListener('change',render);
+  document.getElementById('showMode').addEventListener('change',render);
+}
+
+function buildSupplierTabs(){
+  const suppliers = [...new Set(PRODUCTS.map(p=>p.supplier))].sort();
+  const tabs = document.getElementById('supplierTabs');
+  tabs.innerHTML = '';
+
+  // "Alle" tab
+  const allTab = document.createElement('button');
+  allTab.className = 'sup-tab sup-tab-all' + (activeSupplier===''?' active':'');
+  const totalSelected = PRODUCTS.filter(p=>state[p.nr]).length;
+  allTab.innerHTML = `Alle <span class="tab-count">${PRODUCTS.length}</span>`;
+  allTab.onclick = ()=>{activeSupplier='';document.getElementById('filterCat').value='';render();buildSupplierTabs()};
+  tabs.appendChild(allTab);
+
+  suppliers.forEach(sup=>{
+    const supProducts = PRODUCTS.filter(p=>p.supplier===sup);
+    const selCount = supProducts.filter(p=>state[p.nr]).length;
+    const btn = document.createElement('button');
+    const isActive = activeSupplier===sup;
+    const isDone = orderedSuppliers[sup];
+    btn.className = 'sup-tab' + (isActive?' active':'') + (selCount>0?' has-items':'');
+    btn.innerHTML = `${isDone?'<span class="done-check">&#10003;</span>':''}${sup} <span class="tab-count">${selCount>0?selCount+' / ':''}${supProducts.length}</span>`;
+    btn.onclick = ()=>{activeSupplier=sup;document.getElementById('filterCat').value='';render();buildSupplierTabs()};
+    tabs.appendChild(btn);
+  });
+}
+
+function getFiltered(){
+  const q = document.getElementById('search').value.toLowerCase();
+  const cat = document.getElementById('filterCat').value;
+  const mode = document.getElementById('showMode').value;
+  return PRODUCTS.filter(p=>{
+    if(q && !p.name.toLowerCase().includes(q) && !p.nr.toLowerCase().includes(q) && !p.cat.toLowerCase().includes(q)) return false;
+    if(activeSupplier && p.supplier!==activeSupplier) return false;
+    if(cat && p.cat!==cat) return false;
+    if(mode==='selected' && !state[p.nr]) return false;
+    return true;
+  });
+}
+
+function render(){
+  const filtered = getFiltered();
+  const container = document.getElementById('productContainer');
+  container.innerHTML = '';
+
+  // If viewing a specific supplier, show supplier header with order button
+  if(activeSupplier){
+    const supProducts = PRODUCTS.filter(p=>p.supplier===activeSupplier);
+    const selProducts = supProducts.filter(p=>state[p.nr]);
+    const totalNet = selProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_net)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+    const totalGross = selProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+    const isDone = orderedSuppliers[activeSupplier];
+
+    if(isDone){
+      container.innerHTML = `<div class="done-overlay">
+        <h3>&#10003; ${activeSupplier} — Gesendet!</h3>
+        <p>Bestellung am ${isDone} geteilt. Mengen zurueckgesetzt.</p>
+        <button class="btn btn-outline" onclick="undoOrder('${activeSupplier}')">Rueckgaengig</button>
+        <button class="btn btn-gold" style="margin-left:.5rem" onclick="reopenSupplier('${activeSupplier}')">Neue Bestellung</button>
+      </div>`;
+      updateStats(); buildSupplierTabs();
+      return;
+    }
+
+    const hdr = document.createElement('div');
+    hdr.className = 'supplier-header';
+    hdr.innerHTML = `
+      <div>
+        <h2><span class="supplier-tag tag-${supplierColors[activeSupplier]||'metro'}" style="font-size:.8rem;padding:.2rem .6rem">${activeSupplier}</span></h2>
+        <div class="sup-stats">${selProducts.length} von ${supProducts.length} ausgewaehlt &mdash; Netto: ${totalNet.toFixed(2)} EUR / Brutto: ${totalGross.toFixed(2)} EUR</div>
+      </div>
+      <div class="supplier-actions">
+        <button class="btn btn-outline" onclick="downloadPDF('${activeSupplier}')" ${selProducts.length===0?'disabled':''} style="font-size:.8rem;padding:.45rem .9rem">PDF</button>
+        <button class="btn-order" onclick="placeOrder('${activeSupplier}')" ${selProducts.length===0?'disabled':''}>
+          Senden &#10148;
+        </button>
+      </div>`;
+    container.appendChild(hdr);
+  }
+
+  // Group by category
+  const grouped = {};
+  filtered.forEach(p=>{
+    if(!grouped[p.cat]) grouped[p.cat]=[];
+    grouped[p.cat].push(p);
   });
 
-  let yPos = 35;
-  Object.keys(groupedBySupplier).sort().forEach(supplier => {
-    doc.setFontSize(11);
-    doc.text(t('pdfSupplier') + ': ' + supplier, 10, yPos);
-    yPos += 7;
+  Object.keys(grouped).sort().forEach(cat=>{
+    const items = grouped[cat];
+    const div = document.createElement('div');
+    div.className = 'category-group';
+    div.innerHTML = `
+      <div class="category-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span>${cat}</span>
+        <span class="count">${items.length}</span>
+      </div>
+      <table>
+        <thead><tr>
+          <th class="check-cell">&#10003;</th>
+          <th>Art.Nr</th>
+          <th>Produkt</th>
+          ${activeSupplier?'':'<th>Lieferant</th>'}
+          <th>Einheit</th>
+          <th>Netto</th>
+          <th>Brutto</th>
+          <th>Menge</th>
+          <th>Summe</th>
+        </tr></thead>
+        <tbody>${items.map(p=>{
+          const sel = state[p.nr];
+          const qty = sel ? sel.qty : '';
+          const net = parseFloat(p.price_net)||0;
+          const gross = parseFloat(p.price_gross)||0;
+          const sub = qty ? (Math.round(gross * parseInt(qty)*100)/100).toFixed(2) : '';
+          const tag = supplierColors[p.supplier]||'metro';
+          return `<tr class="${sel?'selected':''}" data-nr="${p.nr}">
+            <td class="check-cell"><input type="checkbox" ${sel?'checked':''} onchange="toggleProduct('${p.nr}',this.checked)"></td>
+            <td style="font-size:.73rem;color:var(--muted)">${p.nr}</td>
+            <td style="font-weight:600">${p.name}</td>
+            ${activeSupplier?'':`<td><span class="supplier-tag tag-${tag}">${p.supplier}</span></td>`}
+            <td>${p.unit}</td>
+            <td class="price">${net.toFixed(2)} EUR</td>
+            <td class="price">${(parseFloat(p.price_gross)||0).toFixed(2)} EUR</td>
+            <td><input type="number" class="qty-input" min="0" value="${qty}" placeholder="0" onchange="setQty('${p.nr}',this.value)" onfocus="if(!state['${p.nr}'])toggleProduct('${p.nr}',true);this.closest('tr').querySelector('input[type=checkbox]').checked=true"></td>
+            <td class="price" style="color:var(--green)">${sub?sub+' EUR':''}</td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table>`;
+    container.appendChild(div);
+  });
 
-    const rows = groupedBySupplier[supplier].map(p => [
-      p.nr,
-      getProductName(p),
-      getProductCategory(p),
-      p.unit,
-      '€' + p.price_net,
-      p.quantity.toString(),
-      '€' + (parseFloat(p.price_net) * p.quantity).toFixed(2)
-    ]);
+  if(filtered.length===0 && !orderedSuppliers[activeSupplier]){
+    container.innerHTML += '<div style="text-align:center;padding:3rem;color:var(--muted)">Keine Produkte gefunden.</div>';
+  }
+
+  updateStats();
+  buildSupplierTabs();
+}
+
+function toggleProduct(nr, checked){
+  if(checked){
+    if(!state[nr]) state[nr]={qty:1};
+  } else {
+    delete state[nr];
+  }
+  save(); render();
+}
+
+function setQty(nr, val){
+  const v = parseInt(val)||0;
+  if(v>0){
+    state[nr]={qty:v};
+  } else {
+    delete state[nr];
+  }
+  save(); render();
+}
+
+function selectAllVisible(){
+  getFiltered().forEach(p=>{if(!state[p.nr])state[p.nr]={qty:1}});
+  save(); render();
+}
+
+function clearSupplier(){
+  if(activeSupplier){
+    if(!confirm(`Alle Mengen fuer ${activeSupplier} zuruecksetzen?`)) return;
+    PRODUCTS.filter(p=>p.supplier===activeSupplier).forEach(p=>delete state[p.nr]);
+  } else {
+    if(!confirm('Gesamte Bestellung zuruecksetzen?')) return;
+    state={};
+  }
+  save(); render();
+}
+
+function updateStats(){
+  const allSelected = PRODUCTS.filter(p=>state[p.nr]);
+  // Filter by active supplier for display totals
+  const displayProducts = activeSupplier ? allSelected.filter(p=>p.supplier===activeSupplier) : allSelected;
+  const totalNet = displayProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_net)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+  const totalGross = displayProducts.reduce((s,p)=>s+Math.round((parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+  document.getElementById('statTotal').textContent = activeSupplier ? PRODUCTS.filter(p=>p.supplier===activeSupplier).length : PRODUCTS.length;
+  document.getElementById('statSelected').textContent = displayProducts.length;
+  document.getElementById('statNet').textContent = totalNet.toFixed(2)+' EUR';
+  document.getElementById('statGross').textContent = totalGross.toFixed(2)+' EUR';
+  // Bottom panel always shows grand total across all suppliers
+  const grandGross = allSelected.reduce((s,p)=>s+Math.round((parseFloat(p.price_gross)||0)*(state[p.nr]?.qty||0)*100)/100,0);
+  document.getElementById('panelCount').textContent = allSelected.length;
+  document.getElementById('panelTotal').textContent = grandGross.toFixed(2)+' EUR';
+  document.getElementById('orderPanel').classList.toggle('visible', allSelected.length>0);
+}
+
+function save(){
+  try{localStorage.setItem('spudz_order',JSON.stringify(state));}catch(e){}
+  try{localStorage.setItem('spudz_ordered',JSON.stringify(orderedSuppliers));}catch(e){}
+}
+
+// Build WhatsApp-friendly order text for a supplier
+function buildOrderText(supplier){
+  const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
+  if(!supProducts.length) return '';
+  const today = new Date().toLocaleDateString('de-DE');
+  let text = `*SPUDZ Bestellung — ${supplier}*\n`;
+  text += `Lager: ${selectedLager}\n`;
+  text += `Bestellt von: ${currentUser?currentUser.name:'Unbekannt'}\n`;
+  text += `Datum: ${today}\n\n`;
+  supProducts.forEach(p=>{
+    const qty = state[p.nr].qty;
+    text += `${qty}x  ${p.nr}  ${p.name} (${p.unit})\n`;
+  });
+  text += `\n${supProducts.length} Artikel`;
+  return text;
+}
+
+// Place order: share text via Web Share API (mobile) or copy to clipboard (desktop)
+function placeOrder(supplier){
+  if(!requireLager()) return;
+  const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
+  if(!supProducts.length){alert('Keine Produkte ausgewaehlt!');return;}
+
+  const text = buildOrderText(supplier);
+  const today = new Date().toLocaleDateString('de-DE');
+
+  // Try Web Share API first (works great on mobile)
+  if(navigator.share){
+    navigator.share({title:'Bestellung '+supplier, text:text}).then(()=>{
+      finishOrder(supplier, today);
+    }).catch(e=>{
+      // User cancelled share — still copy to clipboard as fallback
+      navigator.clipboard.writeText(text).then(()=>{
+        finishOrder(supplier, today);
+        showToast(`${supplier} — Bestellung kopiert!`);
+      }).catch(()=>{ finishOrder(supplier, today); });
+    });
+  } else {
+    // Desktop: copy to clipboard
+    navigator.clipboard.writeText(text).then(()=>{
+      finishOrder(supplier, today);
+      showToast(`${supplier} — Bestellung in Zwischenablage kopiert! Jetzt an Seval senden.`);
+    }).catch(()=>{
+      const w=window.open('','_blank');
+      w.document.write('<pre style="font-family:monospace;white-space:pre-wrap;padding:20px">'+text.replace(/\*/g,'')+'</pre>');
+      finishOrder(supplier, today);
+    });
+  }
+}
+
+function finishOrder(supplier, today){
+  PRODUCTS.filter(p=>p.supplier===supplier).forEach(p=>delete state[p.nr]);
+  orderedSuppliers[supplier] = today + ', ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  save();
+  render();
+}
+
+// Generate PDF for a specific supplier (optional — via PDF button)
+function downloadPDF(supplier){
+  if(!requireLager()) return;
+  const supProducts = PRODUCTS.filter(p=>p.supplier===supplier && state[p.nr]);
+  if(!supProducts.length){alert('Keine Produkte ausgewaehlt!');return;}
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  const today = new Date().toLocaleDateString('de-DE');
+  const pageW = doc.internal.pageSize.getWidth();
+
+  doc.setFillColor(26,58,122);
+  doc.rect(0,0,pageW,38,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(22);
+  doc.setFont('helvetica','bold');
+  doc.text('SPUDZ',14,18);
+  doc.setFontSize(10);
+  doc.setFont('helvetica','normal');
+  doc.text('Bestellliste — Lager: '+selectedLager,14,26);
+  doc.setFontSize(14);
+  doc.setFont('helvetica','bold');
+  doc.text(supplier, pageW-14, 18, {align:'right'});
+  doc.setFontSize(9);
+  doc.setFont('helvetica','normal');
+  doc.text('Datum: '+today, pageW-14, 26, {align:'right'});
+
+  let totalNet=0, totalGross=0;
+  const rows = supProducts.map((p,i)=>{
+    const qty = state[p.nr].qty;
+    const net = Math.round((parseFloat(p.price_net)||0)*qty*100)/100;
+    const gross = Math.round((parseFloat(p.price_gross)||0)*qty*100)/100;
+    totalNet+=net; totalGross+=gross;
+    return [i+1, p.nr, p.name, qty, p.unit, gross.toFixed(2)+' EUR'];
+  });
+
+  doc.autoTable({
+    startY:44,
+    head:[['#','Art.Nr','Produkt','Menge','Einheit','Gesamt (brutto)']],
+    body:rows,
+    theme:'grid',
+    headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold'},
+    bodyStyles:{fontSize:8,cellPadding:2.5},
+    columnStyles:{0:{halign:'center',cellWidth:8},1:{cellWidth:24,fontStyle:'bold'},2:{cellWidth:70},3:{halign:'center',cellWidth:14},4:{cellWidth:30},5:{halign:'right',cellWidth:28,fontStyle:'bold'}},
+    alternateRowStyles:{fillColor:[245,246,250]},
+    margin:{left:10,right:10}
+  });
+
+  const finalY = doc.lastAutoTable.finalY+6;
+  doc.setFontSize(10);
+  doc.setTextColor(26,58,122);
+  doc.setFont('helvetica','bold');
+  doc.text(`${supProducts.length} Artikel — Netto: ${totalNet.toFixed(2)} EUR / Brutto: ${totalGross.toFixed(2)} EUR`, 14, finalY);
+
+  const safeName = supplier.replace(/[^a-zA-Z0-9]/g,'_');
+  doc.save(`Bestellung_${safeName}_${today.replace(/\./g,'-')}.pdf`);
+  showToast(`${supplier} — PDF heruntergeladen!`);
+}
+
+function undoOrder(supplier){
+  delete orderedSuppliers[supplier];
+  save(); render();
+}
+
+function reopenSupplier(supplier){
+  delete orderedSuppliers[supplier];
+  save(); render();
+}
+
+// Export all suppliers as one combined PDF
+function exportAll(){
+  if(!requireLager()) return;
+  const selected = PRODUCTS.filter(p=>state[p.nr]);
+  if(!selected.length){alert('Keine Produkte ausgewaehlt!');return;}
+
+  const bySupplier = {};
+  selected.forEach(p=>{
+    if(!bySupplier[p.supplier])bySupplier[p.supplier]=[];
+    bySupplier[p.supplier].push(p);
+  });
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  const today = new Date().toLocaleDateString('de-DE');
+  const pageW = doc.internal.pageSize.getWidth();
+  const suppliers = Object.keys(bySupplier).sort();
+  let grandNet=0, grandGross=0;
+
+  suppliers.forEach((sup, si)=>{
+    if(si>0) doc.addPage();
+
+    // Header
+    doc.setFillColor(26,58,122);
+    doc.rect(0,0,pageW,38,'F');
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(22);
+    doc.setFont('helvetica','bold');
+    doc.text('SPUDZ',14,18);
+    doc.setFontSize(10);
+    doc.setFont('helvetica','normal');
+    doc.text('Gesamtbestellung — '+sup+' — Lager: '+selectedLager,14,26);
+    doc.setFontSize(9);
+    doc.text('Datum: '+today, pageW-14, 18, {align:'right'});
+    doc.text((si+1)+' / '+suppliers.length+' Lieferanten', pageW-14, 26, {align:'right'});
+
+    let supNet=0, supGross=0;
+    const rows = bySupplier[sup].map((p,i)=>{
+      const qty = state[p.nr].qty;
+      const net = Math.round((parseFloat(p.price_net)||0)*qty*100)/100;
+      const gross = Math.round((parseFloat(p.price_gross)||0)*qty*100)/100;
+      supNet+=net; supGross+=gross;
+      grandNet+=net; grandGross+=gross;
+      return [i+1, p.nr, p.name, qty, p.unit, gross.toFixed(2)+' EUR'];
+    });
 
     doc.autoTable({
-      startY: yPos,
-      head: [[t('pdfProductNr'), t('pdfProductName'), t('pdfCategory'), t('pdfUnit'), t('pdfNetPrice'), t('pdfQuantity'), t('pdfTotal')]],
-      body: rows,
-      headStyles: {fillColor: [26, 58, 122], textColor: 255, fontSize: 8},
-      bodyStyles: {fontSize: 8},
-      margin: 10,
-      didDrawPage: () => {}
+      startY:44,
+      head:[['#','Art.Nr','Produkt','Menge','Einheit','Gesamt Netto']],
+      body:rows,
+      theme:'grid',
+      headStyles:{fillColor:[26,58,122],textColor:255,fontSize:8,fontStyle:'bold'},
+      bodyStyles:{fontSize:7.5,cellPadding:2},
+      columnStyles:{0:{halign:'center',cellWidth:8},1:{cellWidth:22,fontSize:6.5},2:{cellWidth:60,fontStyle:'bold'},3:{halign:'center',cellWidth:14},4:{cellWidth:28,fontSize:6.5},5:{halign:'right',cellWidth:28,fontStyle:'bold'}},
+      alternateRowStyles:{fillColor:[245,246,250]},
+      margin:{left:10,right:10}
     });
-    yPos = doc.lastAutoTable.finalY + 10;
+
+    const fy = doc.lastAutoTable.finalY+5;
+    doc.setFontSize(9);
+    doc.setTextColor(26,58,122);
+    doc.setFont('helvetica','bold');
+    doc.text(`${sup}: ${bySupplier[sup].length} Artikel — Netto ${supNet.toFixed(2)} EUR / Brutto ${supGross.toFixed(2)} EUR`, 14, fy);
   });
 
-  doc.setFontSize(10);
-  doc.text(t('pdfNetTotal') + ' €' + totalNet.toFixed(2), 10, yPos + 5);
-  doc.text(t('pdfGrossTotal') + ' €' + totalGross.toFixed(2), 10, yPos + 12);
-
-  doc.save(`Bestellung_${new Date().toLocaleDateString('de-DE')}.pdf`);
-  showToast(t('toastPdfGenerated'));
+  doc.save(`Bestellung_Gesamt_${today.replace(/\./g,'-')}.pdf`);
+  showToast('Gesamt-PDF heruntergeladen!');
 }
 
-function shareWhatsApp() {
-  const selected = getSelectedProducts();
-  if (selected.length === 0) {
-    showToast(t('nothingSelected'), 'error');
-    return;
-  }
-  const {totalNet, totalGross} = calculateTotals();
-  let text = `Spudz Bestellung von ${currentUser.name}\n\n`;
-  const groupedBySupplier = {};
-  selected.forEach(p => {
-    if (!groupedBySupplier[p.supplier]) groupedBySupplier[p.supplier] = [];
-    groupedBySupplier[p.supplier].push(p);
-  });
-  Object.keys(groupedBySupplier).sort().forEach(supplier => {
-    text += `*${supplier}*\n`;
-    groupedBySupplier[supplier].forEach(p => {
-      text += `${getProductName(p)} x${p.quantity} (€${(parseFloat(p.price_net) * p.quantity).toFixed(2)})\n`;
-    });
-    text += '\n';
-  });
-  text += `Netto: €${totalNet.toFixed(2)}\nBrutto: €${totalGross.toFixed(2)}`;
-  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
+function printOrder(){
+  document.getElementById('showMode').value='selected';
+  render();
+  setTimeout(()=>window.print(),300);
 }
 
-function shareWeb() {
-  const selected = getSelectedProducts();
-  if (selected.length === 0) {
-    showToast(t('nothingSelected'), 'error');
-    return;
-  }
-  const {totalNet, totalGross} = calculateTotals();
-  if (navigator.share) {
-    navigator.share({
-      title: 'Spudz Bestellung',
-      text: `Bestellung vom ${new Date().toLocaleDateString()}\nNetto: €${totalNet.toFixed(2)}\nBrutto: €${totalGross.toFixed(2)}`
-    });
-  } else {
-    showToast(t('toastShareError'), 'error');
-  }
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// ============= Init =============
-window.addEventListener('DOMContentLoaded', () => {
-  const savedUser = localStorage.getItem('spudz_user');
-  if (savedUser) {
-    const user = USERS.find(u => u.email === savedUser);
-    if (user) {
-      currentUser = user;
-      document.getElementById('loginOverlay').classList.add('hidden');
-      document.getElementById('mainContent').classList.remove('hidden');
-      document.getElementById('userBadge').textContent = user.name;
-      renderAll();
-    }
-  }
-  setLang(currentLang);
-});
+// Reset all ordered-states for new day
+function newDay(){
+  if(!confirm('Neuer Tag: Alle Bestellungen und Mengen zuruecksetzen?')) return;
+  state = {};
+  orderedSuppliers = {};
+  save();
+  activeSupplier = '';
+  render();
+  showToast('Alles zurueckgesetzt — neuer Tag!');
+}
+
+
+
+// init() is called by activateApp() after login
 </script>
 </body>
 </html>
